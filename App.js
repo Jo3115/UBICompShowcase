@@ -6,36 +6,38 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './app/screens/loginScreen';
 import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Root = createStackNavigator();
 
 export default function App() {
 	return (
-		<NavigationContainer>
-			<Root.Navigator>
-			<Root.Screen
-				name='LoginScreen'
-				component={LoginScreen}
-				options={{ headerShown: false }}
-			/>
-			<Root.Screen
-				name='MainScreen'
-				component={MainScreen}
-				options={({ route }) => ({
-					title: route.params.name,
-					headerShown: false,
-				})}
-			/>
-		</Root.Navigator>
-		</NavigationContainer >
+		<SafeAreaView style={styles.container}>
+			<NavigationContainer>
+				<Root.Navigator>
+					<Root.Screen
+						name='LoginScreen'
+						component={LoginScreen}
+						options={{ headerShown: false }}
+					/>
+					<Root.Screen
+						name='MainScreen'
+						component={MainScreen}
+						options={({ route }) => ({
+							title: route.params.name,
+							headerShown: false,
+						})}
+					/>
+				</Root.Navigator>
+			</NavigationContainer >
+		</SafeAreaView>
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
 		justifyContent: 'center',
-	},
+		backgroundColor: '#ECF0F1'
+	  },
 });

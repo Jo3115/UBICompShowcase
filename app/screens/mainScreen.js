@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DistanceScreen from './distanceScreen';
@@ -13,8 +13,12 @@ const MainScreen = (props) => {
             screenOptions={{
                 headerShown: false
             }}>
-            <Tab.Screen name="Distance" component={DistanceScreen} />
-            <Tab.Screen name="Log Book" component={LogBookScreen} />
+            <Tab.Screen name="Distance"
+                component={DistanceScreen}
+            />
+            <Tab.Screen name="Log Book"
+                component={LogBookScreen}
+            />
         </Tab.Navigator>
     );
 }
