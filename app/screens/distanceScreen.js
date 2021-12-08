@@ -55,11 +55,13 @@ const DistanceScreen = (props) => {
 	}, [currentHole, holeInfo])
 	return (
 		<View style={styles.container}>
-			<HoleSelectBar currentHole={currentHole} maxHoles={2} setHole={setCurrentHole} />
-			<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
-			<View style={styles.cardRow}>
-				<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
-				<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+			<View style={styles.distanceContainer}>
+				<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
+				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
+				<View style={styles.cardRow}>
+					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+				</View>
 			</View>
 			<StatusBar style="auto" />
 		</View>
@@ -75,7 +77,11 @@ const styles = StyleSheet.create({
 	},
 	cardRow: {
 		flexDirection: 'row',
-	}
+	},
+	distanceContainer: {
+		flex: 0.5,
+		width: "100%"
+	},
 });
 
 export default DistanceScreen;
