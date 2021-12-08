@@ -11,7 +11,7 @@ import { CalculateDistance } from '../../utilities/distance';
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
-const LargeDistanceCard = ({ target, currentLocation, targetLocation, metric }) => {
+const DistanceCard = ({ target, currentLocation, targetLocation, metric, type }) => {
     if (currentLocation === null || targetLocation === null) {
         return (
             <View style={styles.distanceBox}>
@@ -19,42 +19,66 @@ const LargeDistanceCard = ({ target, currentLocation, targetLocation, metric }) 
             </View>
         )
     }
+    let height = 100
+    if (type == "large") {
+        height = 200
+    }
+    let backgroundColor = "yellow"
+    if (target == "front") {
+        backgroundColor = "red"
+    } else if (target == "back"){
+        backgroundColor = "white"
+    }
+
     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
     let distance = (CalculateDistance(startLatLon, targetLatLong, currentLocation.coords.altitude, targetLocation[target].elv))
     if (metric == "ft") {
         distance = distance * 3.28084
+    } else if (metric == "yd"){
+        distance = distance * 1.09361
     }
     distance = Math.round(distance)
     return (
-        <View style={styles.distanceBox}>
-            <View style={styles.textRow}>
-                <Text style={styles.distanceText}>{distance}</Text>
-                <Text style={styles.metricText}>{metric}</Text>
-            </View>
+        <View style={{ ...styles.distanceBox, height: height, backgroundColor: backgroundColor}}>
+            {type == "large"
+                ? <View style={styles.textRow}>
+                    <Text style={styles.distanceTextLarge}>{distance}</Text>
+                    <Text style={styles.metricTextLarge}>{metric}</Text>
+                </View>
+                : <View style={styles.textRow}>
+                    <Text style={styles.distanceTextSmall}>{distance}</Text>
+                    <Text style={styles.metricTextSmallrr}>{metric}</Text>
+                </View>
+            }
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     distanceBox: {
+        flex: 1,
         width: "100%",
-        height: 300,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: "yellow"
+        justifyContent: "center",
     },
-    distanceText: {
-        fontSize: 100
+    distanceTextLarge: {
+        fontSize: 150
     },
-    metricText: {
-        fontSize: 50,
-        alignItems: "flex-end"
+    metricTextLarge: {
+        fontSize: 75
     },
-    textRow:{
+    distanceTextSmall: {
+        fontSize: 50
+    },
+    metricTextSmall: {
+        fontSize: 25
+    },
+    textRow: {
         flexDirection: 'row',
-        alignItems: "flex-end"
+        alignItems: "flex-end",
     }
 })
 
-export default LargeDistanceCard;
+export default DistanceCard;

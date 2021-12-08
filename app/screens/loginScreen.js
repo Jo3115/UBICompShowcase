@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
 
     const getCourse = async () => {
         try {
-            const response = await fetch('https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse?name=gerrardscross');
+            const response = await fetch('https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse?name=unicource');
             const json = await response.json();
             storeData(json);
         } catch (error) {

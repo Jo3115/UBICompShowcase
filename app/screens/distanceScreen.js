@@ -6,8 +6,9 @@ import * as Location from 'expo-location';
 import { ScrollView } from 'react-native-gesture-handler';
 import HoleSelectBar from '../components/holeSelect/holeSelectBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LargeDistanceCard from '../components/distanceScreen/largeDistanceCard';
+import DistanceCard from '../components/distanceScreen/distanceCard';
 
+const metric = "yd"
 
 const DistanceScreen = (props) => {
 	const [currentHole, setCurrentHole] = useState(1)
@@ -47,15 +48,19 @@ const DistanceScreen = (props) => {
 		getLocation()
 	}, [])
 
-	useEffect(()=> {
+	useEffect(() => {
 		if (holeInfo !== null) {
-			setCurrentHoleInfo(holeInfo[currentHole-1])
+			setCurrentHoleInfo(holeInfo[currentHole - 1])
 		}
 	}, [currentHole, holeInfo])
 	return (
 		<View style={styles.container}>
-			<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
-			<LargeDistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric="ft" />
+			<HoleSelectBar currentHole={currentHole} maxHoles={2} setHole={setCurrentHole} />
+			<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
+			<View style={styles.cardRow}>
+				<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+				<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+			</View>
 			<StatusBar style="auto" />
 		</View>
 	);
@@ -68,6 +73,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
+	cardRow: {
+		flexDirection: 'row',
+	}
 });
 
 export default DistanceScreen;
