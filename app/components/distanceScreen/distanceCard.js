@@ -13,13 +13,6 @@ import DistanceIcon from './distanceIcon';
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
 const DistanceCard = ({ target, currentLocation, targetLocation, metric, type }) => {
-    if (currentLocation === null || targetLocation === null) {
-        return (
-            <View style={styles.distanceBox}>
-                <Text>waiting make this look better later</Text>
-            </View>
-        )
-    }
     let height = 100
     if (type == "large") {
         height = 200
@@ -33,16 +26,10 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
 
     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
-    let distance = (CalculateDistance(startLatLon, targetLatLong, currentLocation.coords.altitude, targetLocation[target].elv))
-    if (metric == "ft") {
-        distance = distance * 3.28084
-    } else if (metric == "yd") {
-        distance = distance * 1.09361
-    }
-    distance = Math.round(distance)
+    let distance = CalculateDistance(startLatLon, targetLatLong, metric)//currentLocation.coords.altitude, targetLocation[target].elv
     return (
         <View style={{ ...styles.distanceBox, height: height, backgroundColor: backgroundColor }}>
-            <DistanceIcon target={target} type={type}/>
+            <DistanceIcon target={target} type={type} />
             {type == "large"
                 ? <View style={styles.textRow}>
                     <Text style={styles.distanceTextLarge}>{distance}</Text>
@@ -81,7 +68,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: "flex-end",
     },
-    icon:{
+    icon: {
         width: 50,
         height: 50
     }

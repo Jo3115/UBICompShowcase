@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import HoleSelectBar from '../components/holeSelect/holeSelectBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DistanceCard from '../components/distanceScreen/distanceCard';
+import LoadingIndicator from '../components/general/loadingIndicator';
 
 const metric = "yd"
 
@@ -53,15 +54,23 @@ const DistanceScreen = (props) => {
 			setCurrentHoleInfo(holeInfo[currentHole - 1])
 		}
 	}, [currentHole, holeInfo])
+
+	if (currentLocation === null || currentHoleInfo === null) {
+		return <LoadingIndicator />
+	}
+
 	return (
-		<View style={styles.container}>
-			<View style={styles.distanceContainer}>
-				<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
+		<View style={styles.screen}>
+			<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
+			<View style={styles.container}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 				<View style={styles.cardRow}>
 					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
 					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
 				</View>
+			</View>
+			<View style={styles.container}>
+
 			</View>
 			<StatusBar style="auto" />
 		</View>
@@ -69,7 +78,7 @@ const DistanceScreen = (props) => {
 }
 
 const styles = StyleSheet.create({
-	container: {
+	screen: {
 		flex: 1,
 		backgroundColor: '#fff',
 		alignItems: 'center',
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
 	cardRow: {
 		flexDirection: 'row',
 	},
-	distanceContainer: {
+	container: {
 		flex: 0.5,
 		width: "100%"
 	},

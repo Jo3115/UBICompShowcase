@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
-
-
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyBvRzRFkfsJFWrwO7oa1yTTwUVkvxhYjAw",
-    authDomain: "ubicompshowcase.firebaseapp.com",
-    projectId: "ubicompshowcase",
-    storageBucket: "ubicompshowcase.appspot.com",
-    messagingSenderId: "643860382302",
-    appId: "1:643860382302:web:404dae693f68a8a2162acf",
-    databaseURL: 'https://project-id.firebaseio.com',
-};
-
-initializeApp(firebaseConfig);
+import { GetUserDistances, LogInGoogleUser } from '../utilities/firebase';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -62,17 +48,10 @@ const LoginScreen = ({ navigation }) => {
     });
 
     React.useEffect(() => {
-        if (response?.type === 'success') {
-            const { id_token } = response.params
-            const auth = getAuth()
-            const credential = GoogleAuthProvider.credential(id_token)
-            signInWithCredential(auth, credential).then(
-                (userCredential) => {
-                    console.log(userCredential.user)
-                }
-            )
-        }
+        LogInGoogleUser(response)
     }, [response]);
+
+    GetUserDistances("default")
 
     return (
         <View style={styles.container}>
