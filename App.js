@@ -7,6 +7,7 @@ import LoginScreen from './app/screens/loginScreen';
 import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CourseScreen from './app/screens/courseScreen';
 
 const Root = createStackNavigator();
 
@@ -22,7 +23,7 @@ export default function App() {
 					/>
 					<Root.Screen
 						name='CourseSelectScreen'
-						component={MainScreen}
+						component={CourseScreen}
 						options={({ route }) => ({
 							headerShown: false,
 						})}

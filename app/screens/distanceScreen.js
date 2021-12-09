@@ -18,6 +18,7 @@ const DistanceScreen = ({navigation}) => {
 	const [currentHole, setCurrentHole] = useState(1)
 	const [holeInfo, setHoleInfo] = useState(null)
 	const [currentHoleInfo, setCurrentHoleInfo] = useState(null)
+	const [locationLoading, setLocationLoading] = useState(true)
 	const [currentLocation, setCurrentLocation] = useState(null)
 
 	const getData = async () => {
@@ -31,7 +32,7 @@ const DistanceScreen = ({navigation}) => {
 
 	useEffect(() => {
 		getData()
-		GetLocation(setCurrentLocation)
+		GetLocation(setCurrentLocation, setLocationLoading)
 	}, [])
 
 	useEffect(() => {
