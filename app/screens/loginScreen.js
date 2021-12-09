@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
-import { GetUserDistances, LogInGoogleUser } from '../utilities/firebase';
+import { GetUserDistancesOnce, LogInGoogleUser } from '../utilities/firebase';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -47,11 +47,11 @@ const LoginScreen = ({ navigation }) => {
         clientId: '643860382302-r72jqqrbj8fofkfkq7ro30p1isufh2lv.apps.googleusercontent.com',
     });
 
-    React.useEffect(() => {
+    console.log(GetUserDistancesOnce("default"))
+
+    useEffect(() => {
         LogInGoogleUser(response)
     }, [response]);
-
-    GetUserDistances("default")
 
     return (
         <View style={styles.container}>

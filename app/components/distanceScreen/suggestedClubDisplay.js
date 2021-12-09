@@ -1,72 +1,62 @@
 /**
  * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
  */
- import React from 'react'
- import { StyleSheet, Text, View, Image } from 'react-native'
- import { AntDesign } from '@expo/vector-icons';
- import { TouchableHighlight } from 'react-native-gesture-handler';
- import { useState } from 'react/cjs/react.development';
- import { CalculateDistance } from '../../utilities/distance';
- import DistanceIcon from './distanceIcon';
- 
- /**
-  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
-  */
- const DistanceCard = ({ target, currentLocation, targetLocation, metric, type }) => {
-     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
-     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
-     let distance = CalculateDistance(startLatLon, targetLatLong, metric)// currentLocation.coords.altitude, targetLocation[target].elv
-     if (metric == "ft") {
-         distance = distance * 3.28084
-     } else if (metric == "yd") {
-         distance = distance * 1.09361
-     }
-     distance = Math.round(distance)
-     return (
-         <View style={{ ...styles.distanceBox, height: height, backgroundColor: backgroundColor }}>
-             <DistanceIcon target={target} type={type} />
-             {type == "large"
-                 ? <View style={styles.textRow}>
-                     <Text style={styles.distanceTextLarge}>{distance}</Text>
-                     <Text style={styles.metricTextLarge}>{metric}</Text>
-                 </View>
-                 : <View style={styles.textRow}>
-                     <Text style={styles.distanceTextSmall}>{distance}</Text>
-                     <Text style={styles.metricTextSmallrr}>{metric}</Text>
-                 </View>
-             }
-         </View>
-     );
- }
- 
- const styles = StyleSheet.create({
-     distanceBox: {
-         flex: 1,
-         width: "100%",
-         flexDirection: 'row',
-         alignItems: 'center',
-         justifyContent: "center",
-     },
-     distanceTextLarge: {
-         fontSize: 100
-     },
-     metricTextLarge: {
-         fontSize: 50
-     },
-     distanceTextSmall: {
-         fontSize: 50
-     },
-     metricTextSmall: {
-         fontSize: 25
-     },
-     textRow: {
-         flexDirection: 'row',
-         alignItems: "flex-end",
-     },
-     icon: {
-         width: 50,
-         height: 50
-     }
- })
- 
- export default DistanceCard;
+import React from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { useEffect, useState } from 'react/cjs/react.development';
+import { CalculateDirection, CalculateDistance } from '../../utilities/distance';
+import { CalculateIntoWind, DegToCompass, GetWeather } from '../../utilities/weather';
+import { get } from '@firebase/database';
+import { CalculateClubBounds } from '../../utilities/suggestedClub';
+
+
+/**
+ * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ */
+const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric }) => {
+    const [isLoadingWeather, setLoadingWeather] = useState(true);
+    const [weatherData, setWeatherData] = useState({});
+
+    // calculate distance for current point to target point
+    let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
+    let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
+    let baseDistance = CalculateDistance(startLatLon, targetLatLong, metric)
+    // calculate the height change 
+    let heightChange = currentLocation.coords.altitude - targetLocation[target].elv
+    console.log(heightChange)
+
+    // calculate wind speed and if into wind
+    // need to add 1% for each mph of head wind
+    // need to remove 0.5% for each mph of head wind
+    useEffect(() => {
+        GetWeather(targetLocation[target].lat, targetLocation[target].lon, setWeatherData, setLoadingWeather);
+    }, []);
+    console.log(weatherData.wind)
+    console.log(CalculateDirection(startLatLon, targetLatLong))
+    if (!isLoadingWeather){
+        let windDirectionModifier = CalculateIntoWind(CalculateDirection(startLatLon, targetLatLong), weatherData.wind)
+        let calculatedDistance = baseDistance * (1 + ((windDirectionModifier * weatherData.wind.speed)/100))
+        console.log(calculatedDistance)
+        console.log(CalculateClubBounds("default"))
+    }
+
+    return (
+        <View style={styles.container}>
+
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: "100%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "center",
+    },
+})
+
+export default SuggestedClubDisplay;

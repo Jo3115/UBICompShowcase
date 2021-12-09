@@ -1,14 +1,21 @@
-import { getDistance } from 'geolib';
+import { getDistance, getRhumbLineBearing } from 'geolib';
 
 export function CalculateDistance(start, end, metric){
     let distance = getDistance(start, end, 0.1)
-    console.log(distance)
+    distance = Math.round(convertDistance(distance, metric))
+    return distance
+}
+
+export function CalculateDirection(start, end){
+    return Math.round(getRhumbLineBearing(start, end))
+}
+
+// all mesurements are in M convert to approprate metric
+function convertDistance(distance, metric){
     if (metric == "ft") {
         distance = distance * 3.28084
     } else if (metric == "yd") {
         distance = distance * 1.09361
     }
-    distance = Math.round(distance)
-    console.log(distance)
     return distance
 }

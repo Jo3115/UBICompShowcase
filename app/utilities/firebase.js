@@ -30,15 +30,16 @@ export function LogInGoogleUser(response) {
     }
 }
 
-export function GetUserDistances(userId) {
+export function GetUserDistancesOnce(userId) {
     const dbRef = ref(database);
     get(child(dbRef, `users/${userId}/distances`)).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val());
+            return snapshot.val()
         } else {
             console.log("No data available");
         }
-    }).catch((error) => {
+    }, {onlyOnce: true}).catch((error) => {
         console.error(error);
     });
+    return {}
 }

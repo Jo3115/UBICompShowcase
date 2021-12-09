@@ -8,6 +8,7 @@ import HoleSelectBar from '../components/holeSelect/holeSelectBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DistanceCard from '../components/distanceScreen/distanceCard';
 import LoadingIndicator from '../components/general/loadingIndicator';
+import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisplay';
 
 const metric = "yd"
 
@@ -70,7 +71,7 @@ const DistanceScreen = (props) => {
 				</View>
 			</View>
 			<View style={styles.container}>
-
+				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large"/>
 			</View>
 			<StatusBar style="auto" />
 		</View>
