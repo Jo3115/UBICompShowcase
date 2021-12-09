@@ -21,15 +21,22 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Root.Screen
-						name='MainScreen'
+						name='CourseSelectScreen'
 						component={MainScreen}
 						options={({ route }) => ({
-							title: route.params.name,
+							headerShown: false,
+						})}
+					/>
+					<Root.Screen
+						name='DistanceScreen'
+						component={DistanceScreen}
+						options={({ route }) => ({
 							headerShown: false,
 						})}
 					/>
 				</Root.Navigator>
 			</NavigationContainer >
+			<StatusBar style="auto" />
 		</SafeAreaView>
 	)
 }

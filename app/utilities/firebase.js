@@ -1,6 +1,6 @@
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, child, get } from "firebase/database";
+import { CalculateClubBounds } from './suggestedClub';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -15,8 +15,6 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-const database = getDatabase();
-
 export function LogInGoogleUser(response) {
     if (response?.type === 'success') {
         const { id_token } = response.params
@@ -30,16 +28,16 @@ export function LogInGoogleUser(response) {
     }
 }
 
-export function GetUserDistancesOnce(userId) {
-    const dbRef = ref(database);
-    get(child(dbRef, `users/${userId}/distances`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            return snapshot.val()
-        } else {
-            console.log("No data available");
-        }
-    }, {onlyOnce: true}).catch((error) => {
-        console.error(error);
-    });
-    return {}
+export async function GetUserDistances(userId, setData, setLoading) {
+    try {
+        let url = `https://ubicompshowcase-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/distances.json`
+        const response = await fetch(url)
+        const json = await response.json()
+        const filteredDistances = CalculateClubBounds(json)
+        setData(filteredDistances)
+    } catch (error) {
+        console.error(error)
+    } finally {
+        setLoading(false)
+    }
 }

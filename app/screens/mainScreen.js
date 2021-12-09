@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DistanceScreen from './distanceScreen';
 import LogBookScreen from './logBookScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const MainScreen = (props) => {
     return (

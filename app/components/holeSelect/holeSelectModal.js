@@ -31,8 +31,8 @@ const HoleSelectModal = ({ currentHole, maxHoles, modalVisible, setModalVisible,
             onBackButtonPress={closeModal}
             onBackdropPress={closeModal}
             backdropOpacity={0}
-            animationIn={"slideInDown"}
-            animationOut={"slideOutUp"}
+            animationIn={"slideInUp"}
+            animationOut={"slideOutDown"}
         >
             <View style={styles.holeSelectModalContent}>
                 <FlatList
@@ -50,8 +50,8 @@ const HoleSelectModal = ({ currentHole, maxHoles, modalVisible, setModalVisible,
 const styles = StyleSheet.create({
     holeSelectModal: {
         alignItems: "center",
-        justifyContent: "flex-start",
-        marginTop: 50,
+        justifyContent: "flex-end",
+        marginBottom: 50,
     },
     holeSelectModalContent: {
         backgroundColor: "green",

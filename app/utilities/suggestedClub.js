@@ -1,25 +1,27 @@
-import { GetUserDistancesOnce } from "./firebase";
-
-export function CalculateClubBounds(user) {
-    let distancesIn = GetUserDistancesOnce(user)
-    console.log(distancesIn)
-    let averages = []
-    for (club in distancesIn){
-        let averagedDistances = calculateAverageFromArray(distancesIn[club])
-        console.log({averagedDistances: club})
-        averages.push({averagedDistances: club})
+export function CalculateClubBounds(clubDistanceinfo) {
+    let averages = {}
+    for (club in clubDistanceinfo) {
+        let averagedDistances = calculateAverageFromArray(clubDistanceinfo[club])
+        averages[averagedDistances] = club
     }
-    console.log(averages)
+    return averages
 }
 
 function calculateAverageFromArray(arrayIn) {
     return arrayIn.reduce((a, b) => (a + b)) / arrayIn.length;
 }
 
-async function storeClubBounds(value){
+export function CalculateClosestClub(clubs, targetDistance) {
+    let clubsNo = Object.keys(clubs)
+    return clubsNo.reduce(function (prev, curr) {
+        return (Math.abs(curr - targetDistance) < Math.abs(prev - targetDistance) ? curr : prev);
+    });
+}
+
+async function storeClubBounds(value) {
     try {
         const jsonValue = JSON.stringify(value)
-        await AsyncStorage.setItem('@current_course', jsonValue)
+        await AsyncStorage.setItem('@clubBounds', jsonValue)
     } catch (e) {
         console.error(e);
     }

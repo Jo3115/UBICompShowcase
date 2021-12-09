@@ -11,9 +11,17 @@ import Modal from "react-native-modal";
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
 const HoleSelectModalListItem = ({ holeNumber, currentHole, onPress }) => {
+
+    let getBackgroundColor = () => {
+        if (holeNumber == currentHole){
+            return "white"
+        }
+        return "red"
+    }
+
     return (
         <TouchableHighlight
-            style={styles.touchable}
+            style={{...styles.touchable, backgroundColor: getBackgroundColor()}}
             activeOpacity={0.6}
             underlayColor='#DDDDDD'
             onPress={() => onPress(holeNumber)}>
@@ -26,7 +34,6 @@ const styles = StyleSheet.create({
     touchable: {
         width: 65,
         height: 65,
-        backgroundColor: "red",
         margin: 15,
         display: "flex",
         justifyContent: "center",

@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import * as Progress from 'react-native-progress';
 
-const LoadingIndicator = (props) => {
+const LoadingIndicator = ({ headding }) => {
 	return (
 		<View style={styles.container}>
-            <Text style={styles.text}>Loading</Text>
+            <Text style={styles.text}>{headding}</Text>
 			<Progress.Circle size={100} borderWidth= {5} indeterminate={true} borderColor={"royalblue"}/>
 		</View>
 	);

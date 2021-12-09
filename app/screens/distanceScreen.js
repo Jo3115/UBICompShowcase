@@ -2,17 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import * as Location from 'expo-location';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import HoleSelectBar from '../components/holeSelect/holeSelectBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DistanceCard from '../components/distanceScreen/distanceCard';
 import LoadingIndicator from '../components/general/loadingIndicator';
 import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisplay';
+import CloseButton from '../components/distanceScreen/closeButton';
+import Position from 'react-native/Libraries/Components/Touchable/Position';
+import { GetLocation } from '../utilities/location';
 
 const metric = "yd"
 
-const DistanceScreen = (props) => {
+const DistanceScreen = ({navigation}) => {
 	const [currentHole, setCurrentHole] = useState(1)
 	const [holeInfo, setHoleInfo] = useState(null)
 	const [currentHoleInfo, setCurrentHoleInfo] = useState(null)
@@ -27,27 +29,9 @@ const DistanceScreen = (props) => {
 		}
 	}
 
-	const getLocation = async () => {
-		let { status } = await Location.requestForegroundPermissionsAsync();
-		if (status !== 'granted') {
-			return;
-		}
-		let location = await Location.watchPositionAsync(
-			{
-				distanceInterval: 1,
-				accuracy: Location.Accuracy.High,
-			},
-			(loc) => {
-				let locationStr = JSON.stringify(loc);
-				setCurrentLocation(JSON.parse(locationStr))
-			}
-
-		)
-	}
-
 	useEffect(() => {
 		getData()
-		getLocation()
+		GetLocation(setCurrentLocation)
 	}, [])
 
 	useEffect(() => {
@@ -57,22 +41,23 @@ const DistanceScreen = (props) => {
 	}, [currentHole, holeInfo])
 
 	if (currentLocation === null || currentHoleInfo === null) {
-		return <LoadingIndicator />
+		return <LoadingIndicator headding={"loading"} />
 	}
 
 	return (
 		<View style={styles.screen}>
-			<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
-			<View style={styles.container}>
+			<CloseButton onPress={() => navigation.pop()}/>
+			<View style={styles.distanceContainer}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 				<View style={styles.cardRow}>
 					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
 					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
 				</View>
 			</View>
-			<View style={styles.container}>
-				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large"/>
+			<View style={styles.clubContainer}>
+				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 			</View>
+			<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
 			<StatusBar style="auto" />
 		</View>
 	);
@@ -88,8 +73,12 @@ const styles = StyleSheet.create({
 	cardRow: {
 		flexDirection: 'row',
 	},
-	container: {
-		flex: 0.5,
+	distanceContainer: {
+		flex: 0.6,
+		width: "100%"
+	},
+	clubContainer: {
+		flex: 0.4,
 		width: "100%"
 	},
 });

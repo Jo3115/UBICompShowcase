@@ -9,54 +9,88 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import { CalculateDirection, CalculateDistance } from '../../utilities/distance';
 import { CalculateIntoWind, DegToCompass, GetWeather } from '../../utilities/weather';
 import { get } from '@firebase/database';
-import { CalculateClubBounds } from '../../utilities/suggestedClub';
+import { CalculateClosestClub, CalculateClubBounds } from '../../utilities/suggestedClub';
+import { GetUserDistances } from '../../utilities/firebase';
+import LoadingIndicator from '../general/loadingIndicator';
 
 
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
 const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric }) => {
-    const [isLoadingWeather, setLoadingWeather] = useState(true);
-    const [weatherData, setWeatherData] = useState({});
+    const [isLoadingWeather, setLoadingWeather] = useState(true)
+    const [weatherData, setWeatherData] = useState({})
+    const [isLoadingClubs, setLoadingClubs] = useState(true)
+    const [clubData, setClubData] = useState({})
 
     // calculate distance for current point to target point
     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
-    let baseDistance = CalculateDistance(startLatLon, targetLatLong, metric)
+    let baseDistance = CalculateDistance(startLatLon, targetLatLong, "m")
     // calculate the height change 
     let heightChange = currentLocation.coords.altitude - targetLocation[target].elv
-    console.log(heightChange)
 
     // calculate wind speed and if into wind
-    // need to add 1% for each mph of head wind
-    // need to remove 0.5% for each mph of head wind
     useEffect(() => {
         GetWeather(targetLocation[target].lat, targetLocation[target].lon, setWeatherData, setLoadingWeather);
     }, []);
-    console.log(weatherData.wind)
-    console.log(CalculateDirection(startLatLon, targetLatLong))
-    if (!isLoadingWeather){
-        let windDirectionModifier = CalculateIntoWind(CalculateDirection(startLatLon, targetLatLong), weatherData.wind)
-        let calculatedDistance = baseDistance * (1 + ((windDirectionModifier * weatherData.wind.speed)/100))
-        console.log(calculatedDistance)
-        console.log(CalculateClubBounds("default"))
+
+    // get club information when weather is loaded
+    useEffect(() => {
+        GetUserDistances("default", setClubData, setLoadingClubs)
+    }, [isLoadingWeather]);
+
+    let windDirectionRenderSwitch = (windDirection) => {
+        switch (windDirection) {
+            case '1':
+                return 'HEADWIND'
+            case '0.5':
+                return 'DOWNWIND'
+            default:
+                return 'SIDEWIND'
+        }
     }
 
-    return (
-        <View style={styles.container}>
-
-        </View>
-    );
+    if (!isLoadingWeather) {
+        // need to add 1% for each mph of head wind
+        // need to remove 0.5% for each mph of head wind
+        let windDirection = CalculateDirection(startLatLon, targetLatLong)
+        let windDirectionModifier = CalculateIntoWind(windDirection, weatherData.wind)
+        let calculatedDistance = baseDistance * (1 + ((windDirectionModifier * weatherData.wind.speed) / 100))
+        if (!isLoadingClubs) {
+            let clubToUse = (CalculateClosestClub(clubData, calculatedDistance))
+            return (
+                <View style={styles.container}>
+                    <Text>Suggested Club</Text>
+                    <Text>{clubData[clubToUse]}</Text>
+                    <View style={styles.conditionsRow}>
+                        <Text>
+                            {windDirectionRenderSwitch(windDirection)}
+                        </Text>
+                        <Text>
+                            {weatherData.wind.speed} m/s
+                        </Text>
+                    </View>
+                </View>
+            );
+        }
+    }
+    return (<LoadingIndicator headding={"Deciding on Club"} />)
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "center",
     },
+    conditionsRow: {
+        width: "100%",
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: "center",
+    }
 })
 
 export default SuggestedClubDisplay;
