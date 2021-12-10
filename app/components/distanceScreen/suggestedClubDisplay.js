@@ -61,14 +61,11 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
             let clubToUse = (CalculateClosestClub(clubData, calculatedDistance))
             return (
                 <View style={styles.container}>
-                    <Text>Suggested Club</Text>
-                    <Text>{clubData[clubToUse]}</Text>
+                    <Text style={styles.titleText}>Suggested Club</Text>
+                    <Text style={styles.suggestedClubText}>{clubData[clubToUse]}</Text>
                     <View style={styles.conditionsRow}>
-                        <Text>
-                            {windDirectionRenderSwitch(windDirection)}
-                        </Text>
-                        <Text>
-                            {weatherData.wind.speed} m/s
+                        <Text style={styles.infoText}>
+                            {windDirectionRenderSwitch(windDirection)}: {weatherData.wind.speed}m/s
                         </Text>
                     </View>
                 </View>
@@ -90,6 +87,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: "center",
+    },
+    titleText: {
+        fontSize : 30,
+    },
+    suggestedClubText: {
+        fontSize:60
+    },
+    infoText: {
+        fontSize: 20
     }
 })
 

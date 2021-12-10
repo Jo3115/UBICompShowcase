@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     holeSelectModal: {
         alignItems: "center",
         justifyContent: "flex-end",
-        marginBottom: 50,
+        marginBottom: 75,
     },
     holeSelectModalContent: {
         backgroundColor: "green",

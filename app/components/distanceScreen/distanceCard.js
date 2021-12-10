@@ -17,11 +17,11 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
     if (type == "large") {
         height = 200
     }
-    let backgroundColor = "yellow"
+    let backgroundColor = "rgba(255, 255, 0, 0.8)"
     if (target == "front") {
-        backgroundColor = "red"
+        backgroundColor = "rgba(255, 0, 0, 0.8)"
     } else if (target == "back") {
-        backgroundColor = "white"
+        backgroundColor = "rgb(255, 255, 255)"
     }
 
     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
@@ -37,7 +37,7 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
                 </View>
                 : <View style={styles.textRow}>
                     <Text style={styles.distanceTextSmall}>{distance}</Text>
-                    <Text style={styles.metricTextSmallrr}>{metric}</Text>
+                    <Text style={styles.metricTextSmall}>{metric}</Text>
                 </View>
             }
         </View>

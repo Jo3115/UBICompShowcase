@@ -14,11 +14,13 @@ export async function GetCourse(name, setLoading) {
     }
 }
 
-export async function GetAllCourseByDistance(location, setOut, setLoading) {
+export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {
         const response = await fetch(`https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse`);
-        const json = await response.json();
-        setOut(OrderCourses(location, json))
+        console.log("here")
+        console.log(response)
+        //const json = await response.json();
+        //await setCourses(OrderCourses(location, json))
     } catch (error) {
         console.error(error);
     } finally {
@@ -28,6 +30,7 @@ export async function GetAllCourseByDistance(location, setOut, setLoading) {
 
 
 export function OrderCourses(locationLatLon, courses) {
+    console.log("here")
     distances = []
     for (course in courses){
         let courseLatLon = { latitude: course.course[0]["middle"].lat, longitude: course.course[0]["middle"].lon }

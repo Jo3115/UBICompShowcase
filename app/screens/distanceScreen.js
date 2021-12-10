@@ -11,6 +11,7 @@ import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisp
 import CloseButton from '../components/distanceScreen/closeButton';
 import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocation } from '../utilities/location';
+import Seperator from '../components/general/seperator';
 
 const metric = "yd"
 
@@ -55,6 +56,7 @@ const DistanceScreen = ({navigation}) => {
 					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
 				</View>
 			</View>
+			<Seperator height={2}/>
 			<View style={styles.clubContainer}>
 				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 			</View>

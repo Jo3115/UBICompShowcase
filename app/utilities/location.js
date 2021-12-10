@@ -18,3 +18,14 @@ export async function GetLocation(setCurrentLocation, setLoading) {
 
     )
 }
+
+export async function GetLocationOnce(setCurrentLocation, setLoading) {
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+        return
+    }
+    let location = await Location.getCurrentPositionAsync({})
+    let locationStr = JSON.stringify(location)
+    setCurrentLocation(JSON.parse(locationStr))
+    setLoading(false)
+}

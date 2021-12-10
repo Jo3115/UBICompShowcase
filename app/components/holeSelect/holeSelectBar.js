@@ -19,10 +19,10 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole }) => {
 					activeOpacity={0.6}
 					underlayColor='#DDDDDD'
 					onPress={() => setHole(currentHole - 1)}>
-					<AntDesign name="left" size={30} color="black" />
+					<AntDesign name="left" size={30} color="white" />
 				</TouchableHighlight>
 				: <View style={styles.icon}>
-					<AntDesign name="left" size={30} color="white" />
+					<AntDesign name="left" size={30} color="#6a85e6" />
 				</View>
 			}
 			<View style={styles.holeTextContainer}>
@@ -34,10 +34,10 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole }) => {
 					activeOpacity={0.6}
 					underlayColor='#DDDDDD'
 					onPress={() => setHole(currentHole + 1)}>
-					<AntDesign name="right" size={30} color="black" />
+					<AntDesign name="right" size={30} color="white" />
 				</TouchableHighlight>
 				: <View style={styles.icon}>
-					<AntDesign name="right" size={30} color="white" />
+					<AntDesign name="right" size={30} color="#6a85e6" />
 				</View>
 			}
 		</View>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		backgroundColor: "red"
+		backgroundColor: "#6a85e6"
 	},
 	icon: {
 		width: 50,
@@ -62,9 +62,8 @@ const styles = StyleSheet.create({
 	holeTextContainer: {
 		height: "100%",
 		flex: 1,
-		backgroundColor: "blue",
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 })
 

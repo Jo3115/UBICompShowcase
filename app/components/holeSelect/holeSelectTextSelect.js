@@ -17,8 +17,12 @@ const HoleSelectTextSelect = ({ currentHole, setHole, maxHoles }) => {
     const closeModal = () => {
         setModalVisible(!setModalVisible)
     }
+    let rounded = styles.holeButtonRouded
+    if (modalVisible) {
+        rounded = styles.holeButtonSquare
+    }
     return (
-        <View>
+        <View style={{...styles.holeButton, ...rounded}}>
             <TouchableHighlight
                 style={styles.holeTouchable}
                 activeOpacity={0.6}
@@ -33,12 +37,38 @@ const HoleSelectTextSelect = ({ currentHole, setHole, maxHoles }) => {
 
 const styles = StyleSheet.create({
     holeText: {
-        fontSize: 30
+        fontSize: 30,
+        color: "white"
+    },
+    holeButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 75,
+        backgroundColor: '#0046cf',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        position: 'absolute',
+        bottom: 10,
+        zIndex: 1,
+        elevation: 1,
+        borderColor: "#98a7ed",
+        borderWidth: 2,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+    },
+    holeButtonRouded: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    holeButtonSquare: {
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
     },
     holeTouchable: {
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
         height: "100%",
         width: 150,
-        backgroundColor: "red",
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
@@ -13,10 +12,12 @@ WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
 
-    const loginOnPress = (item) => {
-        navigation.push('DistanceScreen', {
-            spotName: item.location
-        })
+    const loginOnPress = () => {
+        navigation.push('DistanceScreen')
+    }
+
+    const courses = () => {
+        navigation.push('CourseSelectScreen')
     }
 
     useEffect(() => {
@@ -41,10 +42,16 @@ const LoginScreen = ({ navigation }) => {
                 }}
             />
             {!isLoading &&
-                <Button
-                    onPress={loginOnPress}
-                    title="Log In"
-                />
+                <View>
+                    <Button
+                        onPress={loginOnPress}
+                        title="Log In"
+                    />
+                    <Button
+                        onPress={courses}
+                        title="test"
+                    />
+                </View>
             }
         </View>
     );
