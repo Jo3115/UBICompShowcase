@@ -12,8 +12,10 @@ import CloseButton from '../components/distanceScreen/closeButton';
 import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocation } from '../utilities/location';
 import Seperator from '../components/general/seperator';
+import HoleSelectModal from '../components/holeSelect/holeSelectModal';
 
 const metric = "yd"
+const maxHoles = 9
 
 const DistanceScreen = ({navigation}) => {
 	const [currentHole, setCurrentHole] = useState(1)
@@ -21,6 +23,7 @@ const DistanceScreen = ({navigation}) => {
 	const [currentHoleInfo, setCurrentHoleInfo] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(true)
 	const [currentLocation, setCurrentLocation] = useState(null)
+	const [selectModalVisible, setSelectModalVisible] = useState(false);
 
 	const getData = async () => {
 		try {
@@ -49,6 +52,7 @@ const DistanceScreen = ({navigation}) => {
 	return (
 		<View style={styles.screen}>
 			<CloseButton onPress={() => navigation.pop()}/>
+			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole}/>
 			<View style={styles.distanceContainer}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 				<View style={styles.cardRow}>
@@ -60,7 +64,7 @@ const DistanceScreen = ({navigation}) => {
 			<View style={styles.clubContainer}>
 				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 			</View>
-			<HoleSelectBar currentHole={currentHole} maxHoles={9} setHole={setCurrentHole} />
+			<HoleSelectBar currentHole={currentHole} maxHoles={maxHoles} setHole={setCurrentHole} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} />
 			<StatusBar style="auto" />
 		</View>
 	);

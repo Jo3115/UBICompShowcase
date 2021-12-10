@@ -12,17 +12,9 @@ import HoleSelectModal from './holeSelectModal';
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
-const HoleSelectTextSelect = ({ currentHole, setHole, maxHoles }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const closeModal = () => {
-        setModalVisible(!setModalVisible)
-    }
-    let rounded = styles.holeButtonRouded
-    if (modalVisible) {
-        rounded = styles.holeButtonSquare
-    }
+const HoleSelectTextSelect = ({ currentHole, modalVisible, setModalVisible }) => {
     return (
-        <View style={{...styles.holeButton, ...rounded}}>
+        <View style={styles.holeButton}>
             <TouchableHighlight
                 style={styles.holeTouchable}
                 activeOpacity={0.6}
@@ -30,7 +22,6 @@ const HoleSelectTextSelect = ({ currentHole, setHole, maxHoles }) => {
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.holeText}>Hole: {currentHole}</Text>
             </TouchableHighlight>
-            <HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={modalVisible} setModalVisible={setModalVisible} setHole={setHole}/>
         </View>
     );
 }
@@ -45,28 +36,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 75,
         backgroundColor: '#0046cf',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
         position: 'absolute',
         bottom: 10,
-        zIndex: 1,
-        elevation: 1,
+        zIndex: 100,
+        elevation: 100,
         borderColor: "#98a7ed",
         borderWidth: 2,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-    },
-    holeButtonRouded: {
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-    },
-    holeButtonSquare: {
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
+        borderRadius: 20
     },
     holeTouchable: {
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderRadius: 20,
         height: "100%",
         width: 150,
         justifyContent: 'center',

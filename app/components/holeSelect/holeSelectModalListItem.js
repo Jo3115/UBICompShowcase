@@ -14,9 +14,16 @@ const HoleSelectModalListItem = ({ holeNumber, currentHole, onPress }) => {
 
     let getBackgroundColor = () => {
         if (holeNumber == currentHole){
+            return "#0046cf"
+        }
+        return "white"
+    }
+
+    let getTextColor = () => {
+        if (holeNumber == currentHole){
             return "white"
         }
-        return "red"
+        return "black"
     }
 
     return (
@@ -25,7 +32,7 @@ const HoleSelectModalListItem = ({ holeNumber, currentHole, onPress }) => {
             activeOpacity={0.6}
             underlayColor='#DDDDDD'
             onPress={() => onPress(holeNumber)}>
-            <Text style={styles.holeText}>{holeNumber}</Text>
+            <Text style={{...styles.holeText, color: getTextColor()}}>{holeNumber}</Text>
         </TouchableHighlight>
     );
 }
@@ -38,7 +45,10 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 10
+        borderRadius: 20,
+        borderColor: "#98a7ed",
+        borderWidth: 2,
+        borderRadius: 20
     },
     holeText: {
         fontSize:28

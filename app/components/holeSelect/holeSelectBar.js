@@ -6,11 +6,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import HoleSelectTextSelect from './holeSelectTextSelect';
+import HoleSelectModal from './holeSelectModal';
+import { useState } from 'react/cjs/react.development';
 
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
-const HoleSelectBar = ({ currentHole, maxHoles, setHole }) => {
+const HoleSelectBar = ({ currentHole, maxHoles, setHole, modalVisible, setModalVisible }) => {
 	return (
 		<View style={styles.holeSelectBarContainer}>
 			{currentHole > 1
@@ -26,7 +28,7 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole }) => {
 				</View>
 			}
 			<View style={styles.holeTextContainer}>
-				<HoleSelectTextSelect currentHole={currentHole} setHole={setHole} maxHoles={maxHoles}/>
+				<HoleSelectTextSelect currentHole={currentHole} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
 			</View>
 			{currentHole < maxHoles
 				? <TouchableHighlight
@@ -51,7 +53,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		backgroundColor: "#6a85e6"
+		backgroundColor: "#6a85e6",
+		position: 'absolute',
+        zIndex: 100,
+        elevation: 100,
+		bottom: 0
 	},
 	icon: {
 		width: 50,
