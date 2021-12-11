@@ -6,6 +6,7 @@ import { StyleSheet, View, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
+
 /**
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
@@ -22,7 +23,9 @@ const CourseListItem = ({ name, distance, onPress }) => {
                     <Text style={styles.nameText}>{name}</Text>
                     <Text style={styles.distanceText}>{distance / 1000} Km</Text>
                 </View>
-                <AntDesign name="right" size={30} color="black" />
+                <View style = {styles.iconView}>
+                    <AntDesign name="right" size={30} color="black" />
+                </View>
             </View>
         </TouchableHighlight>
     );
@@ -35,13 +38,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        backgroundColor: "white"
     },
     nameText: {
         fontSize: 30
     },
     distanceText: {
         fontSize: 20
+    },
+    iconView: {
+
     }
 });
 
