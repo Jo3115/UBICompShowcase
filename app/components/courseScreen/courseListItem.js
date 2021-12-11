@@ -7,26 +7,20 @@ import { AntDesign } from '@expo/vector-icons';
 import DownloadIcon from './downloadIcon';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { CheckKey } from '../../utilities/asyncStorage';
+import { SaveGetCourse } from '../../utilities/courses';
 
 
 /**
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
  */
-const CourseListItem = ({ name, distance, onPress, downloadStateIn }) => {
-    const [downloadState, setDownloadState] = useState("download")
-
-    useEffect(() => {
-        switch (CheckKey(name)){
-            case true:
-                setDownloadState("downloaded")
-            case false: 
-                setDownloadState("download")
-        }
-    }, [])
+const CourseListItem = ({ name, distance, onPress, downloaded }) => {
+    const [downloadState, setDownloadState] = useState(downloaded)
 
     const downloadOnPress = (name) => {
-        console.log(name)
+        setDownloadState("downloading")
+        SaveGetCourse(name)
+        setDownloadState("downloaded")
     }
 
     return (
@@ -42,8 +36,8 @@ const CourseListItem = ({ name, distance, onPress, downloadStateIn }) => {
                     <Text style={styles.distanceText}>{distance / 1000} Km</Text>
                 </View>
                 <View style={styles.rowCard}>
-                    <DownloadIcon stage={downloadState} size={40} onPress={downloadOnPress((name))}/>
-                    <AntDesign name="right" size={30} color="black" />
+                    <DownloadIcon stage={downloadState} size={40} onPress={() => downloadOnPress(name)}/>
+                    <AntDesign name="right" size={40} color="black" />
                 </View>
             </View>
         </TouchableHighlight>
@@ -59,15 +53,16 @@ const styles = StyleSheet.create({
     listCard: {
         flex: 1,
         height: 75,
-        width: "100%",
+        flexBasis: "100%",
         flexDirection: "row",
         alignItems: 'center',
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         paddingHorizontal: 10,
     },
     rowCard: {
         flexDirection: "row",
         justifyContent: "space-evenly",
+        alignItems: "center"
     },
     nameText: {
         fontSize: 30

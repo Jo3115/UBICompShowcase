@@ -36,7 +36,6 @@ const DownloadIcon = ({ stage, size, onPress }) => {
 const styles = StyleSheet.create({
     touchable: {
         alignContent: "center",
-        backgroundColor: "red",
         padding:10,
     }
 });

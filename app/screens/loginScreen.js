@@ -5,7 +5,7 @@ import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
 import { LogInGoogleUser } from '../utilities/firebase';
-import { GetCourse } from '../utilities/courses';
+
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,10 +19,6 @@ const LoginScreen = ({ navigation }) => {
     const courses = () => {
         navigation.push('CourseSelectScreen')
     }
-
-    useEffect(() => {
-        GetCourse("Westbourne", setLoading);
-    }, []);
 
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         clientId: '643860382302-r72jqqrbj8fofkfkq7ro30p1isufh2lv.apps.googleusercontent.com',
@@ -41,18 +37,12 @@ const LoginScreen = ({ navigation }) => {
                     promptAsync();
                 }}
             />
-            {!isLoading &&
-                <View>
-                    <Button
-                        onPress={loginOnPress}
-                        title="Log In"
-                    />
-                    <Button
-                        onPress={courses}
-                        title="test"
-                    />
-                </View>
-            }
+            <View>
+                <Button
+                    onPress={courses}
+                    title="test"
+                />
+            </View>
         </View>
     );
 }

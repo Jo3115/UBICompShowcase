@@ -10,7 +10,7 @@ import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisp
 import CloseButton from '../components/distanceScreen/closeButton';
 import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocationOnce } from '../utilities/location';
-import { GetAllCourseByDistance } from '../utilities/courses';
+import { CheckDownloaded, GetAllCourseByDistance } from '../utilities/courses';
 import CourseListItem from '../components/courseScreen/courseListItem';
 import { GetAllKeys } from '../utilities/asyncStorage';
 
@@ -21,6 +21,8 @@ const CourseScreen = ({ navigation }) => {
     const [courses, setCourses] = useState([])
     const [checkingDownloads, setCheckingDownloads] = useState(true)
     const [downloadedCourses, setDownloadedCourses] = useState([])
+    const [filteredCourses, setFilteredCourses] = useState([])
+
 
     const goToCourseOnPress = (item) => {
         navigation.push('DistanceScreen', {
@@ -33,6 +35,7 @@ const CourseScreen = ({ navigation }) => {
             GetLocationOnce(setCurrentLocation, setLocationLoading)
         }
     })
+
     useEffect(() => {
         if (!locationLoading) {
             let locationLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
@@ -46,24 +49,33 @@ const CourseScreen = ({ navigation }) => {
         }
     }, [coursesLoading])
 
+    useEffect(() => {
+        if (!checkingDownloads) {
+            CheckDownloaded(courses, setFilteredCourses, downloadedCourses)
+        }
+    }, [checkingDownloads])
+
     if (locationLoading) {
         return <LoadingIndicator headding={"Getting Location"} />
     }
     if (coursesLoading) {
         return <LoadingIndicator headding={"Finding Courses"} />
     }
-
-    console.log(downloadedCourses)
+    if (checkingDownloads) {
+        return <LoadingIndicator headding={"Finding Courses"} />
+    }
 
     return (
         <View style={styles.screen}>
             <Text>Course Select</Text>
             <FlatList
-                data={courses}
+                style={styles.list}
+                data={filteredCourses}
                 renderItem={({ item }) => (
                     <CourseListItem
                         name={item.name}
                         distance={item.distance}
+                        downloaded={item.downloaded}
                         onPress={() => goToCourseOnPress(item.name)}
                     />
                 )}
@@ -76,10 +88,14 @@ const CourseScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+        width: "100%",
         backgroundColor: '#e7eafb',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    list: {
+        width: "100%"
+    }
 });
 
 export default CourseScreen;
