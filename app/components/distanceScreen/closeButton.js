@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 1,
         elevation: 1,
-        left:0,
-        margin: 5
+        left:10,
+        top: 5,
+        marginLeft: 5
     }
 })
 

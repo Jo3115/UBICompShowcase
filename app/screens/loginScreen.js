@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        GetCourse("gerrardscross", setLoading);
+        GetCourse("Westbourne", setLoading);
     }, []);
 
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({

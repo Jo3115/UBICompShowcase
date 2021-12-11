@@ -28,7 +28,7 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
     let baseDistance = CalculateDistance(startLatLon, targetLatLong, "m")
     // calculate the height change 
-    let heightChange = currentLocation.coords.altitude - targetLocation[target].elv
+    let heightChange = Math.round(currentLocation.coords.altitude - targetLocation[target].elv)
 
     // calculate wind speed and if into wind
     useEffect(() => {
@@ -68,6 +68,9 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
                             {windDirectionRenderSwitch(windDirection)}: {weatherData.wind.speed}m/s
                         </Text>
                     </View>
+                    <Text style={styles.infoText}>
+                        Height Change: {heightChange}m
+                    </Text>
                 </View>
             );
         }
@@ -81,6 +84,7 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: 'center',
         justifyContent: "center",
+        marginBottom: 35
     },
     conditionsRow: {
         width: "100%",

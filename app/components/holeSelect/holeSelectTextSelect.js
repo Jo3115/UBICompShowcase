@@ -9,10 +9,17 @@ import Modal from "react-native-modal";
 import HoleSelectModal from './holeSelectModal';
 
 
+
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
  */
 const HoleSelectTextSelect = ({ currentHole, modalVisible, setModalVisible }) => {
+    let getText = () => {
+        if (modalVisible){
+            return <AntDesign name="close" size={40} color="white" />
+        }
+        return <Text style={styles.holeText}>Hole: {currentHole}</Text>
+    }
     return (
         <View style={styles.holeButton}>
             <TouchableHighlight
@@ -20,7 +27,7 @@ const HoleSelectTextSelect = ({ currentHole, modalVisible, setModalVisible }) =>
                 activeOpacity={0.6}
                 underlayColor='#DDDDDD'
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.holeText}>Hole: {currentHole}</Text>
+                {getText()}
             </TouchableHighlight>
         </View>
     );

@@ -56,15 +56,15 @@ const DistanceScreen = ({navigation}) => {
 			<View style={styles.distanceContainer}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 				<View style={styles.cardRow}>
-					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
-					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="small" />
+					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="left" />
+					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="right" />
 				</View>
 			</View>
-			<Seperator height={2}/>
 			<View style={styles.clubContainer}>
 				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 			</View>
 			<HoleSelectBar currentHole={currentHole} maxHoles={maxHoles} setHole={setCurrentHole} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} />
+			<Seperator height={50}/>
 			<StatusBar style="auto" />
 		</View>
 	);
@@ -73,7 +73,7 @@ const DistanceScreen = ({navigation}) => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#e7eafb',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
 	},
 	distanceContainer: {
 		flex: 0.6,
-		width: "100%"
+		width: "95%",
+		justifyContent: "center",
 	},
 	clubContainer: {
 		flex: 0.4,

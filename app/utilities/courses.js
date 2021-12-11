@@ -16,11 +16,10 @@ export async function GetCourse(name, setLoading) {
 
 export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {
-        const response = await fetch(`https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse`);
-        console.log("here")
-        console.log(response)
-        //const json = await response.json();
-        //await setCourses(OrderCourses(location, json))
+        let response = await fetch("https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse");
+        let json = await response.json()
+        let orderedCourses = await orderCourses(location, json)
+        setCourses(orderedCourses)
     } catch (error) {
         console.error(error);
     } finally {
@@ -28,17 +27,14 @@ export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     }
 }
 
-
-export function OrderCourses(locationLatLon, courses) {
-    console.log("here")
+function orderCourses(locationLatLon, coursesIn) {
     distances = []
-    for (course in courses){
-        let courseLatLon = { latitude: course.course[0]["middle"].lat, longitude: course.course[0]["middle"].lon }
+    for (course in coursesIn){
+        let courseLatLon = { latitude: coursesIn[course].cource[0]["middle"].lat, longitude: coursesIn[course].cource[0]["middle"].lon }
         distances.push({
             distance: CalculateDistance(locationLatLon, courseLatLon, "m"),
-            name: "course"
+            name: course
         })
     }
-    console.log(distances)
-    return distances
+    return distances.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 }

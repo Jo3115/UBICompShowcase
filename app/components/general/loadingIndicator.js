@@ -14,7 +14,7 @@ const LoadingIndicator = ({ headding }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#e7eafb',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},

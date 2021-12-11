@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Platform } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import HoleSelectBar from '../components/holeSelect/holeSelectBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DistanceCard from '../components/distanceScreen/distanceCard';
 import LoadingIndicator from '../components/general/loadingIndicator';
 import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisplay';
@@ -12,6 +11,7 @@ import CloseButton from '../components/distanceScreen/closeButton';
 import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocationOnce } from '../utilities/location';
 import { GetAllCourseByDistance } from '../utilities/courses';
+import CourseListItem from '../components/courseScreen/courseListItem';
 
 const CourseScreen = ({ navigation }) => {
     const [locationLoading, setLocationLoading] = useState(true)
@@ -19,30 +19,47 @@ const CourseScreen = ({ navigation }) => {
     const [coursesLoading, setCoursesLoading] = useState(true)
     const [courses, setCourses] = useState([])
 
-    if (locationLoading) {
-        useEffect(() => {
-            GetLocationOnce(setCurrentLocation, setLocationLoading)
-        }, [])
+    const goToCourseOnPress = (item) => {
+        navigation.push('DistanceScreen', {
+            spotName: item.location
+        })
     }
+
+    useEffect(() => {
+        if (locationLoading) {
+            GetLocationOnce(setCurrentLocation, setLocationLoading)
+        }
+    })
+    useEffect(() => {
+        if (!locationLoading) {
+            let locationLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
+            GetAllCourseByDistance(locationLatLon, setCourses, setCoursesLoading)
+        }
+    }, [locationLoading])
 
     if (locationLoading) {
         return <LoadingIndicator headding={"Getting Location"} />
     }
-
-
-    let locationLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
-
-    useEffect(() => {
-        GetAllCourseByDistance(locationLatLon, setCourses, setCoursesLoading)
-    })
-
     if (coursesLoading) {
         return <LoadingIndicator headding={"Finding Courses"} />
     }
 
+    console.log(courses)
+
     return (
         <View style={styles.screen}>
-            <Text>DISPLAY COURSES HERE</Text>
+            <Text>Course Select</Text>
+            <FlatList
+                data={courses}
+                renderItem={({ item }) => (
+                    <CourseListItem
+                        name={item.name}
+                        distance={item.distance}
+                        onPress={() => goToCourseOnPress(item.name)}
+                    />
+                )}
+                keyExtractor={item => item.name}
+            />
         </View>
     );
 }
@@ -50,20 +67,9 @@ const CourseScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#e7eafb',
         alignItems: 'center',
         justifyContent: 'flex-start',
-    },
-    cardRow: {
-        flexDirection: 'row',
-    },
-    distanceContainer: {
-        flex: 0.6,
-        width: "100%"
-    },
-    clubContainer: {
-        flex: 0.4,
-        width: "100%"
     },
 });
 
