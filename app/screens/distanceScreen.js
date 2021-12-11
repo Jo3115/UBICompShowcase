@@ -15,22 +15,24 @@ import Seperator from '../components/general/seperator';
 import HoleSelectModal from '../components/holeSelect/holeSelectModal';
 
 const metric = "yd"
-const maxHoles = 9
 
-const DistanceScreen = ({navigation}) => {
+const DistanceScreen = (props) => {
 	const [currentHole, setCurrentHole] = useState(1)
 	const [holeInfo, setHoleInfo] = useState(null)
 	const [currentHoleInfo, setCurrentHoleInfo] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(true)
 	const [currentLocation, setCurrentLocation] = useState(null)
 	const [selectModalVisible, setSelectModalVisible] = useState(false);
+	const [maxHoles, setMaxHoles] = useState(0);
 
 	const getData = async () => {
 		try {
-			const jsonValue = await AsyncStorage.getItem('@current_course')
-			setHoleInfo((jsonValue != null ? JSON.parse(jsonValue) : null).cource)
+			const jsonValue = await AsyncStorage.getItem(`course-${props.route.params.courseName}`)
+			let courseInfo = (jsonValue != null ? JSON.parse(jsonValue) : null).cource
+			setMaxHoles(courseInfo.length)
+			setHoleInfo(courseInfo)
 		} catch (e) {
-			// error reading value
+			console.error(e)
 		}
 	}
 
@@ -51,7 +53,7 @@ const DistanceScreen = ({navigation}) => {
 
 	return (
 		<View style={styles.screen}>
-			<CloseButton onPress={() => navigation.pop()}/>
+			<CloseButton onPress={() => props.navigation.pop()}/>
 			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole}/>
 			<View style={styles.distanceContainer}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />

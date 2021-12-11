@@ -26,7 +26,7 @@ const CourseScreen = ({ navigation }) => {
 
     const goToCourseOnPress = (item) => {
         navigation.push('DistanceScreen', {
-            spotName: item.name
+            courseName: item
         })
     }
 
