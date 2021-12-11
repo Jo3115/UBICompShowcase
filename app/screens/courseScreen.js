@@ -12,16 +12,19 @@ import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocationOnce } from '../utilities/location';
 import { GetAllCourseByDistance } from '../utilities/courses';
 import CourseListItem from '../components/courseScreen/courseListItem';
+import { GetAllKeys } from '../utilities/asyncStorage';
 
 const CourseScreen = ({ navigation }) => {
     const [locationLoading, setLocationLoading] = useState(true)
     const [currentLocation, setCurrentLocation] = useState(null)
     const [coursesLoading, setCoursesLoading] = useState(true)
     const [courses, setCourses] = useState([])
+    const [checkingDownloads, setCheckingDownloads] = useState(true)
+    const [downloadedCourses, setDownloadedCourses] = useState([])
 
     const goToCourseOnPress = (item) => {
         navigation.push('DistanceScreen', {
-            spotName: item.location
+            spotName: item.name
         })
     }
 
@@ -37,6 +40,12 @@ const CourseScreen = ({ navigation }) => {
         }
     }, [locationLoading])
 
+    useEffect(() => {
+        if (!coursesLoading) {
+            GetAllKeys(setDownloadedCourses, setCheckingDownloads)
+        }
+    }, [coursesLoading])
+
     if (locationLoading) {
         return <LoadingIndicator headding={"Getting Location"} />
     }
@@ -44,7 +53,7 @@ const CourseScreen = ({ navigation }) => {
         return <LoadingIndicator headding={"Finding Courses"} />
     }
 
-    console.log(courses)
+    console.log(downloadedCourses)
 
     return (
         <View style={styles.screen}>
