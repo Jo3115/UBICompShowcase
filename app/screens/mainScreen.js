@@ -4,24 +4,28 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import DistanceScreen from './distanceScreen';
 import ClubLogScreen from './clubLogScreen';
 import CourseSelectScreen from './courseSelectScreen';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const MainScreen = (props) => {
     return (
         <Tab.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown: false,
+                tabBarActiveTintColor: "white",
+                tabBarLabelStyle: {
+                    fontSize: 20
+                },
+                tabBarStyle: {
+                    backgroundColor: '#694fad',
+                    height: 60,
+                    justifyContent: "center",
+                }
             }}
             initialRouteName="selectCourse"
-            barStyle={{
-                backgroundColor: '#694fad',
-                height: 60,
-                justifyContent: "center",
-            }}
         >
             <Tab.Screen name="selectCourse"
                 component={CourseSelectScreen}

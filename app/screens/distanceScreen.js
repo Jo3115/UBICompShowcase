@@ -92,7 +92,7 @@ const DistanceScreen = (props) => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		backgroundColor: '#e7eafb',
+		backgroundColor: '#eeeeee',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
 	},
 	distanceContainer: {
 		flex: 0.6,
-		width: "95%",
+		width: "100%",
+		padding: 10,
 		justifyContent: "center",
 	},
 	clubContainer: {

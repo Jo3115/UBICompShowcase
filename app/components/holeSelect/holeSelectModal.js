@@ -4,7 +4,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import Modal from "react-native-modal";
 import HoleSelectModalListItem from './holeSelectModalListItem';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -31,6 +30,7 @@ const HoleSelectModal = ({ currentHole, maxHoles, modalVisible, setModalVisible,
             >
             </TouchableOpacity>
             <View style={styles.holeSelectModalContent}>
+                <Text>Select Hole</Text>
                 <FlatList
                     columnWrapperStyle={{ justifyContent: "space-evenly" }}
                     data={holeList}
@@ -70,9 +70,11 @@ const styles = StyleSheet.create({
         elevation: 20,
         paddingBottom: 40,
         bottom: 50,
-        borderColor: "#98a7ed",
+        borderColor: "#472e9a",
         borderWidth: 2,
-        borderRadius: 20
+        borderBottomWidth: 0,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius:20,
     }
 })
 

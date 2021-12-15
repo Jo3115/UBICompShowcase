@@ -3,8 +3,6 @@
  */
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import Modal from "react-native-modal";
 
 
 /**
@@ -14,7 +12,7 @@ const HoleSelectModalListItem = ({ holeNumber, currentHole, onPress }) => {
 
     let getBackgroundColor = () => {
         if (holeNumber == currentHole){
-            return "#0046cf"
+            return "#472e9a"
         }
         return "white"
     }
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 20,
-        borderColor: "#98a7ed",
+        borderColor: "#c9c0e1",
         borderWidth: 2,
         borderRadius: 20
     },

@@ -24,7 +24,7 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole, modalVisible, setModalV
 					<AntDesign name="left" size={30} color="white" />
 				</TouchableHighlight>
 				: <View style={styles.icon}>
-					<AntDesign name="left" size={30} color="#6a85e6" />
+					<AntDesign name="left" size={30} color="#694fad" />
 				</View>
 			}
 			<View style={styles.holeTextContainer}>
@@ -39,7 +39,7 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole, modalVisible, setModalV
 					<AntDesign name="right" size={30} color="white" />
 				</TouchableHighlight>
 				: <View style={styles.icon}>
-					<AntDesign name="right" size={30} color="#6a85e6" />
+					<AntDesign name="right" size={30} color="#694fad" />
 				</View>
 			}
 		</View>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		backgroundColor: "#6a85e6",
+		backgroundColor: "#694fad",
 		position: 'absolute',
         zIndex: 100,
         elevation: 100,

@@ -7,6 +7,7 @@ import { GetAllKeys } from '../utilities/asyncStorage';
 import Seperator from '../components/general/seperator';
 import CourseListItem from '../components/courseSelectScreen/courseListItem';
 import CourseListSearch from '../components/courseSelectScreen/courseListSearch';
+import TopMenuBar from '../components/topMenu/topMenuBar';
 
 
 const CourseSelectScreen = ({ navigation }) => {
@@ -16,12 +17,10 @@ const CourseSelectScreen = ({ navigation }) => {
     const [courses, setCourses] = useState([])
     const [checkingDownloads, setCheckingDownloads] = useState(true)
     const [downloadedCourses, setDownloadedCourses] = useState([])
-    const [filteredCourses, setFilteredCourses] = useState([])
+    const [courseList, setCourseList] = useState([])
     const [refreshing, setRefreshing] = useState(false);
     const [searchText, onChangeSearchText] = useState(null);
-
-
-
+    const [filteredCourses, setFilteredCourses] = useState(null)
 
     const goToCourseOnPress = (item, downloaded) => {
         navigation.push('DistanceScreen', {
@@ -31,7 +30,12 @@ const CourseSelectScreen = ({ navigation }) => {
     }
 
     const filterCourses = () => {
-        
+        if (searchText == null) {
+            setFilteredCourses(courseList)
+        } else {
+            const regexp = new RegExp(searchText, 'i');
+            setFilteredCourses(courseList.filter(x => regexp.test(x.name)))
+        }
     }
 
     useEffect(() => {
@@ -55,16 +59,14 @@ const CourseSelectScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (!checkingDownloads) {
-            CheckDownloaded(courses, setFilteredCourses, downloadedCourses)
+            CheckDownloaded(courses, setCourseList, downloadedCourses)
             setRefreshing(false)
         }
     }, [checkingDownloads])
 
     useEffect(() => {
-        if (!checkingDownloads) {
-            
-        }
-    }, [searchText])
+        filterCourses()
+    }, [courseList, searchText])
 
     if (locationLoading && !refreshing) {
         return <LoadingIndicator headding={"Getting Location"} />
@@ -78,9 +80,9 @@ const CourseSelectScreen = ({ navigation }) => {
 
     return (
         <View style={styles.screen}>
-            <Text>Course Select</Text>
+            <TopMenuBar title={"Select Course"}/>
             <FlatList
-                ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText}/>}
+                ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText} />}
                 style={styles.list}
                 data={filteredCourses}
                 ItemSeparatorComponent={Seperator}
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         width: "100%",
-        backgroundColor: '#e7eafb',
+        backgroundColor: '#eeeeee',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },

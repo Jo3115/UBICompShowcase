@@ -37,7 +37,7 @@ export default function App() {
 					/>
 				</Root.Navigator>
 			</NavigationContainer >
-			<StatusBar style="auto" />
+			<StatusBar style="light" />
 		</SafeAreaView>
 	)
 }
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		backgroundColor: "#e7eafb"
+		backgroundColor: "#694fad"
 	  },
 });

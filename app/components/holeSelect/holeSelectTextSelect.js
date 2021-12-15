@@ -5,8 +5,6 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import Modal from "react-native-modal";
-import HoleSelectModal from './holeSelectModal';
 
 
 
@@ -16,7 +14,7 @@ import HoleSelectModal from './holeSelectModal';
 const HoleSelectTextSelect = ({ currentHole, modalVisible, setModalVisible }) => {
     let getText = () => {
         if (modalVisible){
-            return <AntDesign name="close" size={40} color="white" />
+            return <Text style={styles.holeText}>Close</Text>
         }
         return <Text style={styles.holeText}>Hole: {currentHole}</Text>
     }
@@ -42,12 +40,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 75,
-        backgroundColor: '#0046cf',
+        backgroundColor: '#472e9a',
         position: 'absolute',
         bottom: 10,
         zIndex: 100,
         elevation: 100,
-        borderColor: "#98a7ed",
+        borderColor: "#c9c0e1",
         borderWidth: 2,
         borderRadius: 20
     },

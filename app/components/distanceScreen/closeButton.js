@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
-import Modal from "react-native-modal";
 
 
 /**
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         elevation: 1,
         left:10,
-        top: 5,
+        top: 15,
         marginLeft: 5
     }
 })
