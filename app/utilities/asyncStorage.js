@@ -20,6 +20,10 @@ export async function GetAllKeys(setKeys, setLoading) {
     }
 }
 
+export async function ReturnGetAllKeys() {
+    return await AsyncStorage.getAllKeys();
+}
+
 export async function CheckKey(key) {
     try {
         let value = await AsyncStorage.getItem(key);
@@ -31,6 +35,10 @@ export async function CheckKey(key) {
     } catch (e) {
         console.error(e);
     }
+}
+
+export async function GetData(key) {
+    return AsyncStorage.getItem(key)
 }
 
 export async function RemoveKey(key) {

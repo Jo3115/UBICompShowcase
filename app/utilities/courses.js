@@ -1,5 +1,6 @@
-import { RemoveKey, StoreData } from "./asyncStorage";
+import { GetAllKeys, GetData, RemoveKey, ReturnGetAllKeys, StoreData } from "./asyncStorage";
 import { CalculateDistance } from "./distance";
+import { IsConnectedToInternet } from "./network";
 
 
 export async function SaveGetCourse(name) {
@@ -23,10 +24,16 @@ export async function RemoveCourse(name) {
 
 export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {
-        let response = await fetch("https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse");
-        let json = await response.json()
+        let json
+        if (false){
+            let response = await fetch("https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse");
+            json = await response.json()
+        } else {
+            json = await getDownlodedCourses()
+            console.log(json)
+        }
         let orderedCourses = await orderCourses(location, json)
-        setCourses(orderedCourses)
+        await setCourses(orderedCourses)
     } catch (error) {
         console.error(error);
     } finally {
@@ -47,6 +54,19 @@ export function CheckDownloaded(coursesIn, setCourses, download) {
         courses[index] = courseOut
     })
     setCourses(courses)
+}
+
+async function getDownlodedCourses() {
+    let keys = await ReturnGetAllKeys()
+    let coursesOut = {}
+    for (let index in keys){
+        if (keys[index].includes("course-")){
+            let courseInfoJson = await GetData(keys[index])
+            const courseInfo = (courseInfoJson != null ? JSON.parse(courseInfoJson) : null)
+            coursesOut[keys[index].replace("course-", "")] = courseInfo
+        }
+    }
+    return coursesOut
 }
 
 function orderCourses(locationLatLon, coursesIn) {
