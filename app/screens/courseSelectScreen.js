@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native
 import LoadingIndicator from '../components/general/loadingIndicator';
 import { GetLocationOnce } from '../utilities/location';
 import { CheckDownloaded, GetAllCourseByDistance } from '../utilities/courses';
-import CourseListItem from '../components/courseScreen/courseListItem';
 import { GetAllKeys } from '../utilities/asyncStorage';
+import Seperator from '../components/general/seperator';
+import CourseListItem from '../components/courseSelectScreen/courseListItem';
+import CourseListSearch from '../components/courseSelectScreen/courseListSearch';
 
 
 const CourseSelectScreen = ({ navigation }) => {
@@ -16,6 +18,8 @@ const CourseSelectScreen = ({ navigation }) => {
     const [downloadedCourses, setDownloadedCourses] = useState([])
     const [filteredCourses, setFilteredCourses] = useState([])
     const [refreshing, setRefreshing] = useState(false);
+    const [searchText, onChangeSearchText] = useState(null);
+
 
 
 
@@ -24,6 +28,10 @@ const CourseSelectScreen = ({ navigation }) => {
             courseName: item,
             downloaded: downloaded
         })
+    }
+
+    const filterCourses = () => {
+        
     }
 
     useEffect(() => {
@@ -52,6 +60,12 @@ const CourseSelectScreen = ({ navigation }) => {
         }
     }, [checkingDownloads])
 
+    useEffect(() => {
+        if (!checkingDownloads) {
+            
+        }
+    }, [searchText])
+
     if (locationLoading && !refreshing) {
         return <LoadingIndicator headding={"Getting Location"} />
     }
@@ -66,8 +80,10 @@ const CourseSelectScreen = ({ navigation }) => {
         <View style={styles.screen}>
             <Text>Course Select</Text>
             <FlatList
+                ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText}/>}
                 style={styles.list}
                 data={filteredCourses}
+                ItemSeparatorComponent={Seperator}
                 renderItem={({ item }) => (
                     <CourseListItem
                         name={item.name}

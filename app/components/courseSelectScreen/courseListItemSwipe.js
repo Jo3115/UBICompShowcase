@@ -19,7 +19,7 @@ function CourseListItemSwipe({ onPress }) {
             onPress={() => onPress()}
         >
             <View style={styles.button}>
-                <Text>REMOVE LOCAL COPPY</Text>
+                <Text style={styles.text}>REMOVE DOWNLOADED COURSE</Text>
             </View>
         </TouchableOpacity>
     );
@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
         borderTopRightRadius: 20,
         borderBottomRightRadius: 20,
+    },
+    text: {
+        paddingHorizontal: 0,
+        fontSize :16,
+        color: "white",
+        textAlign:"center"
     }
 });
 
