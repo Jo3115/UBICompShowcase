@@ -32,3 +32,11 @@ export async function CheckKey(key) {
         console.error(e);
     }
 }
+
+export async function RemoveKey(key) {
+    try {
+        await AsyncStorage.removeItem(key)
+    } catch (e) {
+        console.error(e)
+    }
+}

@@ -1,20 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import HoleSelectBar from '../components/holeSelect/holeSelectBar';
-import DistanceCard from '../components/distanceScreen/distanceCard';
 import LoadingIndicator from '../components/general/loadingIndicator';
-import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisplay';
-import CloseButton from '../components/distanceScreen/closeButton';
-import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocationOnce } from '../utilities/location';
 import { CheckDownloaded, GetAllCourseByDistance } from '../utilities/courses';
 import CourseListItem from '../components/courseScreen/courseListItem';
 import { GetAllKeys } from '../utilities/asyncStorage';
 
-const CourseScreen = ({ navigation }) => {
+
+const CourseSelectScreen = ({ navigation }) => {
     const [locationLoading, setLocationLoading] = useState(true)
     const [currentLocation, setCurrentLocation] = useState(null)
     const [coursesLoading, setCoursesLoading] = useState(true)
@@ -22,11 +15,14 @@ const CourseScreen = ({ navigation }) => {
     const [checkingDownloads, setCheckingDownloads] = useState(true)
     const [downloadedCourses, setDownloadedCourses] = useState([])
     const [filteredCourses, setFilteredCourses] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
 
 
-    const goToCourseOnPress = (item) => {
+
+    const goToCourseOnPress = (item, downloaded) => {
         navigation.push('DistanceScreen', {
-            courseName: item
+            courseName: item,
+            downloaded: downloaded
         })
     }
 
@@ -52,16 +48,17 @@ const CourseScreen = ({ navigation }) => {
     useEffect(() => {
         if (!checkingDownloads) {
             CheckDownloaded(courses, setFilteredCourses, downloadedCourses)
+            setRefreshing(false)
         }
     }, [checkingDownloads])
 
-    if (locationLoading) {
+    if (locationLoading && !refreshing) {
         return <LoadingIndicator headding={"Getting Location"} />
     }
-    if (coursesLoading) {
+    if (coursesLoading && !refreshing) {
         return <LoadingIndicator headding={"Finding Courses"} />
     }
-    if (checkingDownloads) {
+    if (checkingDownloads && !refreshing) {
         return <LoadingIndicator headding={"Finding Courses"} />
     }
 
@@ -76,10 +73,17 @@ const CourseScreen = ({ navigation }) => {
                         name={item.name}
                         distance={item.distance}
                         downloaded={item.downloaded}
-                        onPress={() => goToCourseOnPress(item.name)}
+                        onPress={() => goToCourseOnPress(item.name, item.downloaded)}
                     />
                 )}
                 keyExtractor={item => item.name}
+                refreshing={refreshing}
+                onRefresh={() => {
+                    setLocationLoading(true)
+                    setCoursesLoading(true)
+                    setCheckingDownloads(true)
+                    setRefreshing(true)
+                }}
             />
         </View>
     );
@@ -98,4 +102,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CourseScreen;
+export default CourseSelectScreen;

@@ -13,6 +13,7 @@ import Position from 'react-native/Libraries/Components/Touchable/Position';
 import { GetLocation } from '../utilities/location';
 import Seperator from '../components/general/seperator';
 import HoleSelectModal from '../components/holeSelect/holeSelectModal';
+import { GetCourseOnline } from '../utilities/courses';
 
 const metric = "yd"
 
@@ -25,10 +26,22 @@ const DistanceScreen = (props) => {
 	const [selectModalVisible, setSelectModalVisible] = useState(false);
 	const [maxHoles, setMaxHoles] = useState(0);
 
-	const getData = async () => {
+	const getLocalCourseData = async () => {
 		try {
 			const jsonValue = await AsyncStorage.getItem(`course-${props.route.params.courseName}`)
-			let courseInfo = (jsonValue != null ? JSON.parse(jsonValue) : null).cource
+			const courseInfo = (jsonValue != null ? JSON.parse(jsonValue) : null).cource
+			setMaxHoles(courseInfo.length)
+			setHoleInfo(courseInfo)
+		} catch (e) {
+			console.error(e)
+		}
+	}
+
+	const getLocalOnlineCourseData = async () => {
+		try {
+			const response = await fetch(`https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse?name=${props.route.params.courseName}`);
+			const jsonValue = await response.json();
+			const courseInfo = jsonValue.cource
 			setMaxHoles(courseInfo.length)
 			setHoleInfo(courseInfo)
 		} catch (e) {
@@ -37,7 +50,11 @@ const DistanceScreen = (props) => {
 	}
 
 	useEffect(() => {
-		getData()
+		if (props.route.params.downloaded == "downloaded") {
+			getLocalCourseData()
+		} else {
+			getLocalOnlineCourseData()
+		}
 		GetLocation(setCurrentLocation, setLocationLoading)
 	}, [])
 
@@ -53,8 +70,8 @@ const DistanceScreen = (props) => {
 
 	return (
 		<View style={styles.screen}>
-			<CloseButton onPress={() => props.navigation.pop()}/>
-			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole}/>
+			<CloseButton onPress={() => props.navigation.pop()} />
+			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole} />
 			<View style={styles.distanceContainer}>
 				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 				<View style={styles.cardRow}>
@@ -66,7 +83,7 @@ const DistanceScreen = (props) => {
 				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
 			</View>
 			<HoleSelectBar currentHole={currentHole} maxHoles={maxHoles} setHole={setCurrentHole} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} />
-			<Seperator height={50}/>
+			<Seperator height={50} />
 			<StatusBar style="auto" />
 		</View>
 	);

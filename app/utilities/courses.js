@@ -1,4 +1,4 @@
-import { StoreData } from "./asyncStorage";
+import { RemoveKey, StoreData } from "./asyncStorage";
 import { CalculateDistance } from "./distance";
 
 
@@ -11,6 +11,15 @@ export async function SaveGetCourse(name) {
         console.error(error);
     } 
 }
+
+export async function RemoveCourse(name) {
+    try {
+        await RemoveKey(`course-${name}`)
+    } catch (error) {
+        console.error(error);
+    } 
+}
+
 
 export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {

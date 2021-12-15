@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     holeTouchable: {
-        borderRadius: 20,
+        borderRadius: 18,
         height: "100%",
         width: 150,
         justifyContent: 'center',

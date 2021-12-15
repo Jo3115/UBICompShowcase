@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 
-const LogBookScreen = (props) =>  {
+const ClubLogScreen = (props) =>  {
   return (
     <View style={styles.container}>
-      <Text>LOG</Text>
+      <Text>CLOG</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogBookScreen;
+export default ClubLogScreen;
