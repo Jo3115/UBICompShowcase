@@ -25,7 +25,7 @@ export async function RemoveCourse(name) {
 export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {
         let json
-        if (false){
+        if (await IsConnectedToInternet()){
             let response = await fetch("https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse");
             json = await response.json()
         } else {
