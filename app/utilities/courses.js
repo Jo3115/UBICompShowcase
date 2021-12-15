@@ -30,7 +30,6 @@ export async function GetAllCourseByDistance(location, setCourses, setLoading) {
             json = await response.json()
         } else {
             json = await getDownlodedCourses()
-            console.log(json)
         }
         let orderedCourses = await orderCourses(location, json)
         await setCourses(orderedCourses)
