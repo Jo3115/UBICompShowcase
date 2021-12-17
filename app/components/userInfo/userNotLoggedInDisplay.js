@@ -22,7 +22,7 @@ const UserNotLoggedInDisplay = ({ setCurrentUser }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Sign in to use personalised distances</Text>
+            <Text style={styles.text}>Sign in to personalise distances</Text>
             <TouchableOpacity
                 onPress={() => {
                     promptAsync();
@@ -39,6 +39,7 @@ const UserNotLoggedInDisplay = ({ setCurrentUser }) => {
 
 const styles = StyleSheet.create({
     container: {
+        width: "95%",
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingHorizontal: 10,
         textAlign: "center",
-        fontSize: 20
+        fontSize: 20,
     },
     logInImage:{
         width: 250,
