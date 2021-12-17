@@ -30,7 +30,6 @@ const MainScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TopMenuBar navigation={navigation} title={"Select Course"} settingsButton={true} />
             <Tab.Navigator
                 screenOptions={{
                     headerShown: false,

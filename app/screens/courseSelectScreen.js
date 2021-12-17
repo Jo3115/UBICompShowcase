@@ -81,6 +81,7 @@ const CourseSelectScreen = ({ navigation }) => {
 
     return (
         <View style={styles.screen}>
+            <TopMenuBar navigation={navigation} title={"Select Course"} settingsButton={true} />
             <FlatList
                 ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText} />}
                 style={styles.list}

@@ -23,7 +23,7 @@ const UserInfoDisplay = () => {
 
     console.log(currentUser)
     if (currentUser == null) {
-        return <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />
+        return <View></View>
     }
 
     return (

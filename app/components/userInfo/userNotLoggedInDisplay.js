@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { LogInGoogleUser } from '../../utilities/firebase';
-import { GetData } from '../../utilities/asyncStorage';
 
 
 WebBrowser.maybeCompleteAuthSession();
 
-const UserNotLoggedInDisplay = ({setCurrentUser}) => {
+const UserNotLoggedInDisplay = ({ setCurrentUser }) => {
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         clientId: '643860382302-r72jqqrbj8fofkfkq7ro30p1isufh2lv.apps.googleusercontent.com',
     });
 
     const LogInUser = async () => {
         LogInGoogleUser(response, setCurrentUser)
-    } 
+    }
 
     useEffect(() => {
         LogInUser()
@@ -23,24 +22,43 @@ const UserNotLoggedInDisplay = ({setCurrentUser}) => {
 
     return (
         <View style={styles.container}>
-            <Text>Not currently Logged In, Log in to use personalised distances</Text>
-            <Button
-                disabled={!request}
-                title="Login"
+            <Text style={styles.text}>Sign in to use personalised distances</Text>
+            <TouchableOpacity
                 onPress={() => {
                     promptAsync();
                 }}
+            >
+                <Image
+                style={styles.logInImage}
+                source={{uri: "https://cdn.discordapp.com/attachments/892432524704354364/921362863711469578/VHSZf.png"}}
             />
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10,
+        paddingBottom: 15,
+        backgroundColor: "white",
+        borderRadius: 20,
+        borderColor: "#694fad",
+        borderWidth: 2,
+        marginTop: 10
     },
+    text: {
+        paddingBottom: 20,
+        paddingHorizontal: 10,
+        textAlign: "center",
+        fontSize: 20
+    },
+    logInImage:{
+        width: 250,
+        height: 59
+    }
 });
 
 export default UserNotLoggedInDisplay;
