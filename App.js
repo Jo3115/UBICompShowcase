@@ -7,7 +7,7 @@ import LoginScreen from './app/screens/loginScreen';
 import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CourseSelectScreen from './app/screens/courseSelectScreen';
+import SettingsScreen from './app/screens/settingsScreen';
 
 const Root = createStackNavigator();
 
@@ -22,18 +22,19 @@ export default function App() {
 						options={{ headerShown: false }}
 					/>
 					<Root.Screen
-						name='CourseSelectScreen'
-						component={CourseSelectScreen}
-						options={({ route }) => ({
-							headerShown: false,
-						})}
+						name='SettingsScreen'
+						component={SettingsScreen}
+						options={{ headerShown: false }}
 					/>
 					<Root.Screen
 						name='DistanceScreen'
 						component={DistanceScreen}
-						options={({ route }) => ({
-							headerShown: false,
-						})}
+						options={{ headerShown: false }}
+					/>
+					<Root.Screen
+						name='LoginScreen'
+						component={LoginScreen}
+						options={{ headerShown: false }}
 					/>
 				</Root.Navigator>
 			</NavigationContainer >
@@ -47,5 +48,5 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		backgroundColor: "#694fad"
-	  },
+	},
 });

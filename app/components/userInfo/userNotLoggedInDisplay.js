@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
-import { initializeApp } from 'firebase/app';
-import { LogInGoogleUser } from '../utilities/firebase';
+import { LogInGoogleUser } from '../../utilities/firebase';
+import { GetData } from '../../utilities/asyncStorage';
 
 
 WebBrowser.maybeCompleteAuthSession();
 
-const LoginScreen = ({ navigation }) => {
-
+const UserNotLoggedInDisplay = ({setCurrentUser}) => {
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         clientId: '643860382302-r72jqqrbj8fofkfkq7ro30p1isufh2lv.apps.googleusercontent.com',
     });
 
+    const LogInUser = async () => {
+        LogInGoogleUser(response, setCurrentUser)
+    } 
+
     useEffect(() => {
-        LogInGoogleUser(response)
-    }, [response]);
+        LogInUser()
+    }, [response])
 
     return (
         <View style={styles.container}>
+            <Text>Not currently Logged In, Log in to use personalised distances</Text>
             <Button
                 disabled={!request}
                 title="Login"
@@ -34,11 +37,10 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
 });
 
-export default LoginScreen;
+export default UserNotLoggedInDisplay;

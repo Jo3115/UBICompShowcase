@@ -1,16 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import TouchableMenuIcon from './touchableMenuIcon';
 
 
-const TopMenuBar = ({ title }) => {
+const TopMenuBar = ({ navigation, title, settingsButton, backButton, backOnPress }) => {
+    let SettingsOnPress = () => {
+        navigation.push("SettingsScreen")
+    }
     return (
         <View style={styles.container}>
-            <Feather name="settings" size={30} color="#694fad" />
+            <TouchableMenuIcon icon={"chevron-left"} active={backButton} onPress={backOnPress}/>
             <Text style={styles.text}>
                 {title}
             </Text>
-            <Feather name="settings" size={30} color="white" />
+            <TouchableMenuIcon icon={"settings"} active={settingsButton} onPress={SettingsOnPress}/>
         </View>
     );
 };

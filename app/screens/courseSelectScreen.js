@@ -8,6 +8,7 @@ import Seperator from '../components/general/seperator';
 import CourseListItem from '../components/courseSelectScreen/courseListItem';
 import CourseListSearch from '../components/courseSelectScreen/courseListSearch';
 import TopMenuBar from '../components/topMenu/topMenuBar';
+import { StatusBar } from 'expo-status-bar';
 
 
 const CourseSelectScreen = ({ navigation }) => {
@@ -80,7 +81,6 @@ const CourseSelectScreen = ({ navigation }) => {
 
     return (
         <View style={styles.screen}>
-            <TopMenuBar title={"Select Course"}/>
             <FlatList
                 ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText} />}
                 style={styles.list}
@@ -103,6 +103,7 @@ const CourseSelectScreen = ({ navigation }) => {
                     setRefreshing(true)
                 }}
             />
+            <StatusBar style="light" />
         </View>
     );
 }

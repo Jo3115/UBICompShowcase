@@ -5,7 +5,7 @@ import React, { useRef } from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import DownloadIcon from './downloadIcon';
-import { useEffect, useState } from 'react/cjs/react.development';
+import { useState } from 'react/cjs/react.development';
 import { CheckKey } from '../../utilities/asyncStorage';
 import { RemoveCourse, SaveGetCourse } from '../../utilities/courses';
 import { Swipeable } from 'react-native-gesture-handler';
@@ -52,8 +52,8 @@ const CourseListItem = ({ name, distance, onPress, downloaded }) => {
                         <Text style={styles.distanceText}>{Math.round((distance / 1000) * 100) / 100} km</Text>
                     </View>
                     <View style={styles.rowCard}>
-                        <DownloadIcon stage={downloadState} size={40} onPress={() => downloadOnPress(name)} />
-                        <AntDesign name="right" size={40} color="black" />
+                        <DownloadIcon stage={downloadState} size={30} onPress={() => downloadOnPress(name)} />
+                        <AntDesign name="right" size={30} color="black" />
                     </View>
                 </View>
             </TouchableHighlight>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     rowCard: {
+        width: 100,
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center"

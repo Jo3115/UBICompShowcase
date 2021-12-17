@@ -14,8 +14,9 @@ import { GetLocation } from '../utilities/location';
 import Seperator from '../components/general/seperator';
 import HoleSelectModal from '../components/holeSelect/holeSelectModal';
 import { GetCourseOnline } from '../utilities/courses';
+import { DefaultSettings } from '../utilities/globalVars';
+import { GetData } from '../utilities/asyncStorage';
 
-const metric = "yd"
 
 const DistanceScreen = (props) => {
 	const [currentHole, setCurrentHole] = useState(1)
@@ -24,7 +25,8 @@ const DistanceScreen = (props) => {
 	const [locationLoading, setLocationLoading] = useState(true)
 	const [currentLocation, setCurrentLocation] = useState(null)
 	const [selectModalVisible, setSelectModalVisible] = useState(false);
-	const [maxHoles, setMaxHoles] = useState(0);
+	const [maxHoles, setMaxHoles] = useState(0)
+	const [settings, setSettings] = useState(DefaultSettings)
 
 	const getLocalCourseData = async () => {
 		try {
@@ -48,6 +50,9 @@ const DistanceScreen = (props) => {
 			console.error(e)
 		}
 	}
+	const GetSettings = async () => {
+        setSettings(JSON.parse(await GetData("settings")))
+    }
 
 	useEffect(() => {
 		if (props.route.params.downloaded == "downloaded") {
@@ -56,6 +61,7 @@ const DistanceScreen = (props) => {
 			getLocalOnlineCourseData()
 		}
 		GetLocation(setCurrentLocation, setLocationLoading)
+		GetSettings()
 	}, [])
 
 	useEffect(() => {
@@ -73,18 +79,18 @@ const DistanceScreen = (props) => {
 			<CloseButton onPress={() => props.navigation.pop()} />
 			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole} />
 			<View style={styles.distanceContainer}>
-				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
+				<DistanceCard target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type="large" />
 				<View style={styles.cardRow}>
-					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="left" />
-					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="right" />
+					<DistanceCard target={"front"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type="left" />
+					<DistanceCard target={"back"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type="right" />
 				</View>
 			</View>
 			<View style={styles.clubContainer}>
-				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={metric} type="large" />
+				<SuggestedClubDisplay target={"middle"} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type="large" />
 			</View>
 			<HoleSelectBar currentHole={currentHole} maxHoles={maxHoles} setHole={setCurrentHole} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} />
 			<Seperator height={50} />
-			<StatusBar style="auto" />
+			<StatusBar style="light" />
 		</View>
 	);
 }

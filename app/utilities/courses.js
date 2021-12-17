@@ -1,4 +1,4 @@
-import { GetAllKeys, GetData, RemoveKey, ReturnGetAllKeys, StoreData } from "./asyncStorage";
+import { GetAllKeys, GetData, RemoveKey, ReturnGetAllKeys, StoreCourse } from "./asyncStorage";
 import { CalculateDistance } from "./distance";
 import { IsConnectedToInternet } from "./network";
 
@@ -7,7 +7,7 @@ export async function SaveGetCourse(name) {
     try {
         const response = await fetch(`https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse?name=${name}`);
         const json = await response.json();
-        StoreData(name, json);
+        StoreCourse(name, json);
     } catch (error) {
         console.error(error);
     } 

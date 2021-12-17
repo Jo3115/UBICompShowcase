@@ -1,6 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { CalculateClubBounds } from './suggestedClub';
+import { StoreJsonData } from './asyncStorage';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -15,14 +16,21 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-export function LogInGoogleUser(response) {
+export async function LogInGoogleUser(response, setCurrentUser) {
     if (response?.type === 'success') {
         const { id_token } = response.params
         const auth = getAuth()
         const credential = GoogleAuthProvider.credential(id_token)
         signInWithCredential(auth, credential).then(
             (userCredential) => {
-                console.log(userCredential.user)
+                formattedUser = {
+                    "displayName": userCredential.user.displayName,
+                    "email": userCredential.user.email,
+                    "photoURL": userCredential.user.photoURL,
+                    "uid": userCredential.user.uid
+                }
+                StoreJsonData("user", formattedUser)
+                setCurrentUser(formattedUser)
             }
         )
     }
