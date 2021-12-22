@@ -21,7 +21,6 @@ const UserInfoDisplay = () => {
         GetCurrentUser()
     }, [])
 
-    console.log(currentUser)
     if (currentUser == null) {
         return <View></View>
     }

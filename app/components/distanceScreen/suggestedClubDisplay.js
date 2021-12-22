@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import { CalculateDirection, CalculateDistance } from '../../utilities/distance';
 import { CalculateIntoWind, DegToCompass, GetWeather } from '../../utilities/weather';
 import { get } from '@firebase/database';
-import { CalculateClosestClub, CalculateClubBounds } from '../../utilities/suggestedClub';
-import { GetUserDistances } from '../../utilities/firebase';
+import { CalculateClosestClub, CalculateClubBounds, GetUserDistances } from '../../utilities/suggestedClub';
 import LoadingIndicator from '../general/loadingIndicator';
 
 
@@ -37,7 +36,7 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
 
     // get club information when weather is loaded
     useEffect(() => {
-        GetUserDistances("default", setClubData, setLoadingClubs)
+        GetUserDistances(setClubData, setLoadingClubs)
     }, [isLoadingWeather]);
 
     let windDirectionRenderSwitch = (windDirection) => {
@@ -51,6 +50,7 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
         }
     }
 
+    
     if (!isLoadingWeather) {
         // need to add 1% for each mph of head wind
         // need to remove 0.5% for each mph of head wind

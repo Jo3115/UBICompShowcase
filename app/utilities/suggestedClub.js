@@ -1,3 +1,5 @@
+import { GetData } from "./asyncStorage";
+
 export function CalculateClubBounds(clubDistanceinfo) {
     let averages = {}
     for (club in clubDistanceinfo) {
@@ -18,11 +20,13 @@ export function CalculateClosestClub(clubs, targetDistance) {
     });
 }
 
-async function storeClubBounds(value) {
+export async function GetUserDistances(setClubData, setLoading) {
     try {
-        const jsonValue = JSON.stringify(value)
-        await AsyncStorage.setItem('@clubBounds', jsonValue)
-    } catch (e) {
-        console.error(e);
+        let clubData = JSON.parse(await GetData("club-data"))
+        setClubData(CalculateClubBounds(clubData))
+    } catch (error) {
+        console.error(error)
+    } finally {
+        setLoading(false)
     }
 }

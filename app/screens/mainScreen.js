@@ -11,21 +11,27 @@ import TopMenuBar from '../components/topMenu/topMenuBar';
 import { CheckKey, StoreJsonData } from '../utilities/asyncStorage';
 import { useEffect } from 'react/cjs/react.development';
 import { DefaultSettings } from '../utilities/globalVars';
+import { SaveDefaultDistances, SaveUserDistances } from '../utilities/firebase';
 
 
 const Tab = createBottomTabNavigator();
 
 const MainScreen = ({ navigation }) => {
-    const FirstLogIn = async () => {
+    const FirstLoad = async () => {
         // if settings does not exist set initial settings
         let checkKey = await CheckKey("settings")
         if (checkKey){
             StoreJsonData("settings", DefaultSettings)
         }
-	}
+        checkKey = await CheckKey("club-data")
+        if (checkKey){
+            SaveUserDistances("default")
+            SaveDefaultDistances()
+        }
+    }
 
     useEffect(() => {
-        FirstLogIn()
+        FirstLoad()
 	}, [])
 
     return (

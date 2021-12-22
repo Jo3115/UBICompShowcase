@@ -3,7 +3,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import DistanceScreen from './app/screens/distanceScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './app/screens/loginScreen';
 import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -29,11 +28,6 @@ export default function App() {
 					<Root.Screen
 						name='DistanceScreen'
 						component={DistanceScreen}
-						options={{ headerShown: false }}
-					/>
-					<Root.Screen
-						name='LoginScreen'
-						component={LoginScreen}
 						options={{ headerShown: false }}
 					/>
 				</Root.Navigator>

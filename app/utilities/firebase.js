@@ -36,16 +36,24 @@ export async function LogInGoogleUser(response, setCurrentUser) {
     }
 }
 
-export async function GetUserDistances(userId, setData, setLoading) {
+export async function SaveUserDistances(userId) {
     try {
         let url = `https://ubicompshowcase-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/distances.json`
         const response = await fetch(url)
         const json = await response.json()
-        const filteredDistances = CalculateClubBounds(json)
-        setData(filteredDistances)
+        await StoreJsonData("club-data", json)
     } catch (error) {
         console.error(error)
-    } finally {
-        setLoading(false)
+    }
+}
+
+export async function SaveDefaultDistances() {
+    try {
+        let url = `https://ubicompshowcase-default-rtdb.europe-west1.firebasedatabase.app/users/default/distances.json`
+        const response = await fetch(url)
+        const json = await response.json()
+        await StoreJsonData("default-club-data", json)
+    } catch (error) {
+        console.error(error)
     }
 }
