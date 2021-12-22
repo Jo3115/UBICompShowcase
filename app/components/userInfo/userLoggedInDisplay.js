@@ -5,6 +5,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import { LogInGoogleUser } from '../../utilities/firebase';
 import { GetData, RemoveKey } from '../../utilities/asyncStorage';
 import { CapitalizeWords } from '../../utilities/strings';
+import { SetDefault } from '../../utilities/suggestedClub';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -13,6 +14,7 @@ const UserLoggedInDisplay = ({ currentUser, setCurrentUser }) => {
     const logOutOnPress =  () => {
         RemoveKey("user")
         RemoveKey("firebase:authUser:AIzaSyBvRzRFkfsJFWrwO7oa1yTTwUVkvxhYjAw:[DEFAULT]")
+        SetDefault()
         setCurrentUser(null)
     }
 

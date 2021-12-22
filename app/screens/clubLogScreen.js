@@ -6,49 +6,42 @@ import TopMenuBar from '../components/topMenu/topMenuBar';
 import { useEffect, useState } from 'react/cjs/react.development';
 import UserNotLoggedInDisplay from '../components/userInfo/userNotLoggedInDisplay';
 import { GetData } from '../utilities/asyncStorage';
-import { GetUserDistances } from '../utilities/suggestedClub';
+import { GetUserDistances, SetDefault } from '../utilities/suggestedClub';
 import { SaveUserDistances } from '../utilities/firebase';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ClubDataDisplay from '../components/clubLogScreen/clubDataDisplay';
 
 
 
 const ClubLogScreen = ({ navigation }) => {
 	const [currentUser, setCurrentUser] = useState(null)
 	const [currentUserLoading, setCurrentUserLoading] = useState(true)
-	const [userClubBounds, setUserClubBounds] = useState(null)
-	const [defaultClubData, setDefaulClubData] = useState(null)
-	const [clubsLoading, setClubsLoading] = useState(true)
 
 	const GetCurrentUser = async () => {
-		setCurrentUser(JSON.parse(await GetData("user")))
-		setCurrentUserLoading(false)
-	}
-
-	const GetClubData = async () => {
-		if (currentUser != null) {
-			await SaveUserDistances(currentUser.uid)
-			await GetUserDistances(setUserClubBounds, setClubsLoading)
+		let gotUser = JSON.parse(await GetData("user"))
+		if (gotUser != null) {
+			if  (gotUser.uid != currentUser.uid) {
+				setCurrentUser(gotUser)
+			}
 		} else {
-			
+			if ((currentUser != gotUser)) {
+				console.log("here")
+				setCurrentUser(null)
+			}
 		}
-		console.log(userClubBounds)
-		setDefaulClubData(JSON.parse(await GetData("default-club-data")))
 	}
-
 	useFocusEffect(() => {
 		GetCurrentUser()
 	})
-	useEffect(() => {
-		GetClubData()
-	}, [currentUserLoading])
 
+	console.log(currentUser)
 
 	return (
 		<View style={styles.container}>
 			<TopMenuBar navigation={navigation} title={"Club Data"} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
-			{(currentUser == null) && <Text>Using Default distances</Text>}
+			<ClubDataDisplay currentUser={currentUser} />
 			<StatusBar style="light" />
 		</View>
 	);
@@ -57,7 +50,7 @@ const ClubLogScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#eeeeee',
 		alignItems: 'center',
 	},
 });

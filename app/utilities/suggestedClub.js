@@ -1,4 +1,4 @@
-import { GetData } from "./asyncStorage";
+import { GetData, StoreJsonData } from "./asyncStorage";
 
 export function CalculateClubBounds(clubDistanceinfo) {
     let averages = {}
@@ -28,5 +28,14 @@ export async function GetUserDistances(setClubData, setLoading) {
         console.error(error)
     } finally {
         setLoading(false)
+    }
+}
+
+export async function SetDefault() {
+    try {
+        let clubData = JSON.parse(await GetData("default-club-data"))
+        await StoreJsonData("club-data", clubData)
+    } catch (error) {
+        console.error(error)
     }
 }
