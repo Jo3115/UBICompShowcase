@@ -2,7 +2,7 @@
  * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
  */
 import React, { useRef } from 'react'
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, Text, TouchableHighlight, Switch } from 'react-native'
 import { ConvertRoundedDistance } from '../../utilities/distance';
 
 const metric = "yd"
@@ -11,34 +11,27 @@ const metric = "yd"
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
  */
-const ClubDataDisplayListItem = ({ club, distance }) => {
+const UsePersonailsedClubsToggle = ({ current, onValueChange }) => {
     return (
-        <View style={styles.listHeader}>
-            <Text style={styles.clubText}>
-                {club}
-            </Text>
-            <Text style={styles.distanceText}>
-                {ConvertRoundedDistance(distance, metric)}{metric}
-            </Text>
+        <View style={styles.container}>
+            <Text>Use Custom Club Distances</Text>
+            <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={current ? '#f5dd4b' : '#f4f3f4'}
+                onValueChange={() => onValueChange()}
+                value={current}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    listHeader: {
-        flexBasis: "100%",
+    container: {
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: "space-between",
         padding: 10,
-        backgroundColor: "white"
     },
-    clubText: {
-        fontSize: 25
-    },
-    distanceText: {
-        fontSize: 25
-    }
 });
 
-export default ClubDataDisplayListItem;
+export default UsePersonailsedClubsToggle;

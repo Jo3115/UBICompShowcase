@@ -20,8 +20,8 @@ const MainScreen = ({ navigation }) => {
     const FirstLoad = async () => {
         // if settings does not exist set initial settings
         let checkKey = await CheckKey("settings")
+        StoreJsonData("settings", DefaultSettings)
         if (checkKey){
-            StoreJsonData("settings", DefaultSettings)
         }
         checkKey = await CheckKey("club-data")
         if (checkKey){

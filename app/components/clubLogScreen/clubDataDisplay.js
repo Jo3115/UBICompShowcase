@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useEffect, useState } from 'react/cjs/react.development';
 import { SaveUserDistances } from '../../utilities/firebase';
-import { GetUserDistances, SetDefault } from '../../utilities/suggestedClub';
+import { GetDefaultDistances, GetUserDistances, SetDefault } from '../../utilities/suggestedClub';
 import LoadingIndicator from '../general/loadingIndicator';
 import Seperator from '../general/seperator';
 import ClubDataDisplayHeader from './clubDataDisplayHeader';
@@ -14,7 +14,7 @@ import ClubDataDisplayListItem from './clubDataDisplayListItem';
 
 const defaultDistances = true
 
-const ClubDataDisplay = ({ currentUser }) => {
+const ClubDataDisplay = ({ currentUser, useCustom }) => {
 	const [userClubBounds, setUserClubBounds] = useState(null)
 	const [clubsLoading, setClubsLoading] = useState(true)
 	const [clubsList, setClubsList] = useState(null)
@@ -22,11 +22,11 @@ const ClubDataDisplay = ({ currentUser }) => {
 
 	const GetClubData = async () => {
 		setClubsLoading(true)
-		if (currentUser != null) {
+		if (currentUser != null && useCustom) {
 			await SaveUserDistances(currentUser.uid)
 			await GetUserDistances(setUserClubBounds, setClubsLoading)
 		} else {
-			await GetUserDistances(setUserClubBounds, setClubsLoading)
+			await GetDefaultDistances(setUserClubBounds, setClubsLoading)
 		}
 	}
 
@@ -63,7 +63,7 @@ const ClubDataDisplay = ({ currentUser }) => {
 
 	useEffect(() => {
 		GetClubData()
-	},[currentUser])
+	},[currentUser, useCustom])
 	useEffect(() => {
 		SortClubData()
 	}, [clubsLoading])
@@ -74,6 +74,7 @@ const ClubDataDisplay = ({ currentUser }) => {
 
 	return (
 		<View style={styles.container}>
+			{(currentUser != null) && <Text>Add Club</Text>}
 			<SafeAreaView style={styles.container}>
 				<SectionList
 					sections={clubsList}

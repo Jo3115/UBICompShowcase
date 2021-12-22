@@ -31,6 +31,17 @@ export async function GetUserDistances(setClubData, setLoading) {
     }
 }
 
+export async function GetDefaultDistances(setClubData, setLoading) {
+    try {
+        let clubData = JSON.parse(await GetData("default-club-data"))
+        setClubData(CalculateClubBounds(clubData))
+    } catch (error) {
+        console.error(error)
+    } finally {
+        setLoading(false)
+    }
+}
+
 export async function SetDefault() {
     try {
         let clubData = JSON.parse(await GetData("default-club-data"))
