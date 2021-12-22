@@ -20,6 +20,13 @@ const ClubDataDisplay = ({ currentUser, useCustom }) => {
 	const [clubsList, setClubsList] = useState(null)
 	const [clubSorting, setClubSorting] = useState(true)
 
+	const getUserID = () => {
+		if (currentUser != null){
+			return currentUser.uid
+		}
+		return ""
+	}
+
 	const GetClubData = async () => {
 		setClubsLoading(true)
 		if (currentUser != null && useCustom) {
@@ -74,16 +81,15 @@ const ClubDataDisplay = ({ currentUser, useCustom }) => {
 
 	return (
 		<View style={styles.container}>
-			{(currentUser != null) && <Text>Add Club</Text>}
 			<SafeAreaView style={styles.container}>
 				<SectionList
 					sections={clubsList}
 					keyExtractor={(item, index) => item + index}
 					renderItem={({ item }) => (
-						<ClubDataDisplayListItem club={item.club} distance={item.distance} />
+						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData}/>
 					)}
 					renderSectionHeader={({ section: { title } }) => (
-						<ClubDataDisplayHeader title={title} />
+						<ClubDataDisplayHeader title={title} custom={useCustom}/>
 					)}
 					ItemSeparatorComponent={() => <Seperator />}
 				/>

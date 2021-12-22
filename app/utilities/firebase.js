@@ -1,7 +1,9 @@
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { CalculateClubBounds } from './suggestedClub';
 import { StoreJsonData } from './asyncStorage';
+import { getDatabase, ref, remove } from "firebase/database";
+
+
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -56,4 +58,11 @@ export async function SaveDefaultDistances() {
     } catch (error) {
         console.error(error)
     }
+}
+
+export async function RemoveClub(userId, clubName) {
+    const db = getDatabase();
+    const reference = ref(db, `users/${userId}/distances/${clubName}`);
+    console.log(reference)
+    await remove(reference);
 }

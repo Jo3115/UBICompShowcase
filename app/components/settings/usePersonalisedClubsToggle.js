@@ -14,7 +14,7 @@ const metric = "yd"
 const UsePersonailsedClubsToggle = ({ current, onValueChange }) => {
     return (
         <View style={styles.container}>
-            <Text>Use Custom Club Distances</Text>
+            <Text style={styles.text}>Use Custom Club Distances</Text>
             <Switch
                 trackColor={{ false: '#767577', true: '#a696ce' }}
                 thumbColor={current ? '#994fad' : '#f4f3f4'}
@@ -30,8 +30,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: "space-between",
-        padding: 10,
     },
+    text: {
+        fontSize:20,
+    }
 });
 
 export default UsePersonailsedClubsToggle;

@@ -3,7 +3,10 @@
  */
 import React, { useRef } from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
+import { Swipeable } from 'react-native-gesture-handler';
 import { ConvertRoundedDistance } from '../../utilities/distance';
+import { RemoveClub } from '../../utilities/firebase';
+import ClubDataDisplayListItemSwipable from './clubDataDisplayListItemSwipable';
 
 const metric = "yd"
 
@@ -11,16 +14,30 @@ const metric = "yd"
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
  */
-const ClubDataDisplayListItem = ({ club, distance }) => {
+const ClubDataDisplayListItem = ({ club, distance, custom, userID, getClubData }) => {
+    const swipeableRef = useRef(null);
+
+    const removeClub = async () => {
+        await RemoveClub(userID, club)
+        getClubData()
+    }
+
     return (
-        <View style={styles.listHeader}>
-            <Text style={styles.clubText}>
-                {club}
-            </Text>
-            <Text style={styles.distanceText}>
-                {ConvertRoundedDistance(distance, metric)}{metric}
-            </Text>
-        </View>
+        <Swipeable
+            ref={swipeableRef}
+            renderRightActions={() => (
+                <ClubDataDisplayListItemSwipable custom={custom} removeOnPress={removeClub}/>
+            )}
+        >
+            <View style={styles.listHeader}>
+                <Text style={styles.clubText}>
+                    {club}
+                </Text>
+                <Text style={styles.distanceText}>
+                    {ConvertRoundedDistance(distance, metric)}{metric}
+                </Text>
+            </View>
+        </Swipeable>
     );
 }
 
