@@ -28,5 +28,6 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     }
-  }
+  },
+  "scheme": "UBICompShowcase" 
 }

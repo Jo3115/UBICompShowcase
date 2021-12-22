@@ -22,7 +22,11 @@ const ClubLogScreen = ({ navigation }) => {
 	const GetCurrentUser = async () => {
 		let gotUser = JSON.parse(await GetData("user"))
 		if (gotUser != null) {
-			if  (gotUser.uid != currentUser.uid) {
+			if (currentUser != null) {
+				if (gotUser.uid != currentUser.uid) {
+					setCurrentUser(gotUser)
+				}
+			} else {
 				setCurrentUser(gotUser)
 			}
 		} else {
@@ -34,17 +38,17 @@ const ClubLogScreen = ({ navigation }) => {
 	const GetSettings = async () => {
 		let gotSettings = JSON.parse(await GetData("settings"))
 		if (gotSettings != null) {
-			if  (gotSettings.metric != settings.metric) {
-				setSettings({...gotSettings})
+			if (gotSettings.metric != settings.metric) {
+				setSettings({ ...gotSettings })
 			}
 		}
 	}
 	const toggleCustomSwitch = async () => {
 		let changedSettings = settings
 		changedSettings.customDistances = !settings.customDistances
-		setSettings({...changedSettings})
+		setSettings({ ...changedSettings })
 		await StoreJsonData("settings", changedSettings)
-    }
+	}
 	// run when returning to screen from settings
 	useFocusEffect(() => {
 		GetCurrentUser()
@@ -55,8 +59,8 @@ const ClubLogScreen = ({ navigation }) => {
 		<View style={styles.container}>
 			<TopMenuBar navigation={navigation} title={"Club Data"} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
-			{(currentUser != null) && <UsePersonailsedClubsToggle current={settings.customDistances} onValueChange={toggleCustomSwitch}/>}
-			<ClubDataDisplay currentUser={currentUser} useCustom={settings.customDistances}/>
+			{(currentUser != null) && <UsePersonailsedClubsToggle current={settings.customDistances} onValueChange={toggleCustomSwitch} />}
+			<ClubDataDisplay currentUser={currentUser} useCustom={settings.customDistances} />
 			<StatusBar style="light" />
 		</View>
 	);

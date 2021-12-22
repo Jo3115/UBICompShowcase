@@ -16,8 +16,8 @@ const UsePersonailsedClubsToggle = ({ current, onValueChange }) => {
         <View style={styles.container}>
             <Text>Use Custom Club Distances</Text>
             <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={current ? '#f5dd4b' : '#f4f3f4'}
+                trackColor={{ false: '#767577', true: '#a696ce' }}
+                thumbColor={current ? '#994fad' : '#f4f3f4'}
                 onValueChange={() => onValueChange()}
                 value={current}
             />
