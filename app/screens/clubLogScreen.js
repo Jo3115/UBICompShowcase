@@ -20,7 +20,7 @@ const ClubLogScreen = ({ navigation }) => {
 	const [currentUser, setCurrentUser] = useState(null)
 	const [settings, setSettings] = useState({})
 	const [addClubModalVisible, setAddClubModalVisible] = useState(false)
-	console.log(addClubModalVisible)
+	const [reload, setReload] = useState(0)
 
 	const GetCurrentUser = async () => {
 		let gotUser = JSON.parse(await GetData("user"))
@@ -60,7 +60,13 @@ const ClubLogScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<AddClubModal modalVisible={addClubModalVisible} setModalVisible={setAddClubModalVisible}/>
+			{(currentUser != null) && <AddClubModal
+				modalVisible={addClubModalVisible}
+				setModalVisible={setAddClubModalVisible}
+				userID={currentUser.uid}
+				reload={reload}
+				setReload={setReload}
+			/>}
 			<TopMenuBar navigation={navigation} title={"Club Data"} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
 			{(currentUser != null) && <UsePersonailsedClubsToggle
@@ -72,6 +78,7 @@ const ClubLogScreen = ({ navigation }) => {
 				useCustom={settings.customDistances}
 				addClubModalVisible={addClubModalVisible}
 				setAddClubModalVisible={setAddClubModalVisible}
+				reload={reload}
 			/>
 			<StatusBar style="light" />
 		</View>

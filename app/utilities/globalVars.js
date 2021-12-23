@@ -26,3 +26,18 @@ export const AvalibleClubs = [
 	"Sand Wedge",
 	"Lob Wedge"
 ]
+
+export const AvalibleShotMetrics = [
+	{
+		label: "m",
+		value: "m"
+	},
+	{
+		label: "ft",
+		value: "ft"
+	},
+	{
+		label: "yd",
+		value: "yd"
+	}
+]

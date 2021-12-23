@@ -12,7 +12,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
  * @param {boolean} pinned - is the current spot pinned
  * @param {Function} onPress - the function to execute when the pinned icon is pressed
  */
-function ClubDataDisplayListItemSwipable({ custom, removeOnPress, editOnPress }) {
+function ClubDataDisplayListItemSwipable({ custom, removeOnPress }) {
     if (!custom) {
         return (
             <View style={styles.container}>
@@ -22,14 +22,6 @@ function ClubDataDisplayListItemSwipable({ custom, removeOnPress, editOnPress })
     }
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                style={styles.edditButton}
-                onPress={() => onPress()}
-            >
-                <View style={styles.button}>
-                    <Text style={styles.buttonText}>EDIT DISTANCE</Text>
-                </View>
-            </TouchableOpacity>
             <TouchableOpacity
                 style={styles.removeButton}
                 onPress={() => removeOnPress()}
@@ -44,31 +36,18 @@ function ClubDataDisplayListItemSwipable({ custom, removeOnPress, editOnPress })
 
 const styles = StyleSheet.create({
     container: {
-        width: "60%",
+        width: "30%",
         height: '100%',
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center',
     },
     removeButton: {
-        width: "50%",
+        width: "100%",
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: "#ab000d",
-    },
-    edditButton: {
-        width: "50%",
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "#92ad4f",
-    },
-    warningText: {
-        paddingHorizontal: 0,
-        fontSize: 16,
-        color: "black",
-        textAlign: "center"
     },
     buttonText: {
         paddingHorizontal: 0,

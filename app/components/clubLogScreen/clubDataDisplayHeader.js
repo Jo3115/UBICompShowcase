@@ -2,22 +2,25 @@
  * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
  */
 import React, { useRef } from 'react'
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, Text, TouchableHighlight, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 
 /**
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
  */
-const ClubDataDisplayHeader = ({ title, custom }) => {
+const ClubDataDisplayHeader = ({ title, custom, modal, setModal, }) => {
     return (
         <View style={styles.listHeader}>
             <Text style={styles.text}>
                 {title}s
             </Text>
-            { custom && <TouchableHighlight style={styles.touchable}>
+            {custom && <TouchableOpacity
+                style={styles.touchable}
+                onPress={() => { setModal(!modal) }}
+            >
                 <AntDesign name="plus" size={26} color="white" />
-            </TouchableHighlight> }
+            </TouchableOpacity>}
         </View>
     );
 }

@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import { reload } from 'firebase/auth';
 import React from 'react';
 import { StyleSheet, Text, View, Button, SectionList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,7 +13,7 @@ import ClubDataDisplayHeader from './clubDataDisplayHeader';
 import ClubDataDisplayListItem from './clubDataDisplayListItem';
 import ClubDataEmptyMesage from './clubDataEmptyMesage';
 
-const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddClubModalVisible }) => {
+const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddClubModalVisible, reload }) => {
 	const [userClubBounds, setUserClubBounds] = useState(null)
 	const [clubsLoading, setClubsLoading] = useState(true)
 	const [clubsList, setClubsList] = useState(null)
@@ -68,7 +69,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 
 	useEffect(() => {
 		GetClubData()
-	}, [currentUser, useCustom])
+	}, [currentUser, useCustom, reload])
 	useEffect(() => {
 		SortClubData()
 	}, [clubsLoading])
@@ -91,7 +92,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} />
 					)}
 					renderSectionHeader={({ section: { title } }) => (
-						<ClubDataDisplayHeader title={title} custom={useCustom} />
+						<ClubDataDisplayHeader title={title} custom={useCustom} modal={addClubModalVisible} setModal={setAddClubModalVisible} />
 					)}
 				/>
 			</SafeAreaView>
