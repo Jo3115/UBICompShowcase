@@ -7,21 +7,19 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import { SaveUserDistances } from '../../utilities/firebase';
 import { GetDefaultDistances, GetUserDistances, SetDefault } from '../../utilities/suggestedClub';
 import LoadingIndicator from '../general/loadingIndicator';
-import Seperator from '../general/seperator';
+import AddClubModal from './addClubModal';
 import ClubDataDisplayHeader from './clubDataDisplayHeader';
 import ClubDataDisplayListItem from './clubDataDisplayListItem';
+import ClubDataEmptyMesage from './clubDataEmptyMesage';
 
-
-const defaultDistances = true
-
-const ClubDataDisplay = ({ currentUser, useCustom }) => {
+const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddClubModalVisible }) => {
 	const [userClubBounds, setUserClubBounds] = useState(null)
 	const [clubsLoading, setClubsLoading] = useState(true)
 	const [clubsList, setClubsList] = useState(null)
 	const [clubSorting, setClubSorting] = useState(true)
 
 	const getUserID = () => {
-		if (currentUser != null){
+		if (currentUser != null) {
 			return currentUser.uid
 		}
 		return ""
@@ -70,7 +68,7 @@ const ClubDataDisplay = ({ currentUser, useCustom }) => {
 
 	useEffect(() => {
 		GetClubData()
-	},[currentUser, useCustom])
+	}, [currentUser, useCustom])
 	useEffect(() => {
 		SortClubData()
 	}, [clubsLoading])
@@ -78,7 +76,11 @@ const ClubDataDisplay = ({ currentUser, useCustom }) => {
 	if (clubsLoading || clubSorting) {
 		return <LoadingIndicator headding={"Loading Club Data"} />
 	}
-
+	if (Object.keys(clubsList).length == 0) {
+		return (
+			<ClubDataEmptyMesage modal={addClubModalVisible} setModal={setAddClubModalVisible} />
+		)
+	}
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.container}>
@@ -86,12 +88,11 @@ const ClubDataDisplay = ({ currentUser, useCustom }) => {
 					sections={clubsList}
 					keyExtractor={(item, index) => item + index}
 					renderItem={({ item }) => (
-						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData}/>
+						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} />
 					)}
 					renderSectionHeader={({ section: { title } }) => (
-						<ClubDataDisplayHeader title={title} custom={useCustom}/>
+						<ClubDataDisplayHeader title={title} custom={useCustom} />
 					)}
-					ItemSeparatorComponent={() => <Seperator />}
 				/>
 			</SafeAreaView>
 		</View>

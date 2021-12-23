@@ -1,7 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { StoreJsonData } from './asyncStorage';
-import { getDatabase, ref, remove } from "firebase/database";
+import { getDatabase, ref, remove, set } from "firebase/database";
 
 
 
@@ -63,6 +63,11 @@ export async function SaveDefaultDistances() {
 export async function RemoveClub(userId, clubName) {
     const db = getDatabase();
     const reference = ref(db, `users/${userId}/distances/${clubName}`);
-    console.log(reference)
     await remove(reference);
+}
+
+export async function AddClub(userId, clubName, distance) {
+    const db = getDatabase();
+    const reference = ref(db, `users/${userId}/distances/${clubName}`);
+    await set(reference, [distance]);
 }

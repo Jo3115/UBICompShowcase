@@ -12,12 +12,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ClubDataDisplay from '../components/clubLogScreen/clubDataDisplay';
 import UsePersonailsedClubsToggle from '../components/settings/usePersonalisedClubsToggle';
+import AddClubModal from '../components/clubLogScreen/addClubModal';
 
 
 
 const ClubLogScreen = ({ navigation }) => {
 	const [currentUser, setCurrentUser] = useState(null)
 	const [settings, setSettings] = useState({})
+	const [addClubModalVisible, setAddClubModalVisible] = useState(false)
+	console.log(addClubModalVisible)
 
 	const GetCurrentUser = async () => {
 		let gotUser = JSON.parse(await GetData("user"))
@@ -57,10 +60,19 @@ const ClubLogScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
+			<AddClubModal modalVisible={addClubModalVisible} setModalVisible={setAddClubModalVisible}/>
 			<TopMenuBar navigation={navigation} title={"Club Data"} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
-			{(currentUser != null) && <UsePersonailsedClubsToggle current={settings.customDistances} onValueChange={toggleCustomSwitch} />}
-			<ClubDataDisplay currentUser={currentUser} useCustom={settings.customDistances} />
+			{(currentUser != null) && <UsePersonailsedClubsToggle
+				current={settings.customDistances}
+				onValueChange={toggleCustomSwitch}
+			/>}
+			<ClubDataDisplay
+				currentUser={currentUser}
+				useCustom={settings.customDistances}
+				addClubModalVisible={addClubModalVisible}
+				setAddClubModalVisible={setAddClubModalVisible}
+			/>
 			<StatusBar style="light" />
 		</View>
 	);
