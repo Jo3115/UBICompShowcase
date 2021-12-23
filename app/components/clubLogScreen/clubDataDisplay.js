@@ -74,9 +74,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 		SortClubData()
 	}, [clubsLoading])
 
-	if (clubsLoading || clubSorting) {
-		return <LoadingIndicator headding={"Loading Club Data"} />
-	}
+	
 	if (Object.keys(clubsList).length == 0) {
 		return (
 			<ClubDataEmptyMesage modal={addClubModalVisible} setModal={setAddClubModalVisible} />
