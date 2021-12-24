@@ -74,11 +74,12 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 		SortClubData()
 	}, [clubsLoading])
 
-	
-	if (Object.keys(clubsList).length == 0) {
-		return (
-			<ClubDataEmptyMesage modal={addClubModalVisible} setModal={setAddClubModalVisible} />
-		)
+	if (clubsList != null) {
+		if (Object.keys(clubsList).length == 0) {
+			return (
+				<ClubDataEmptyMesage modal={addClubModalVisible} setModal={setAddClubModalVisible} />
+			)
+		}
 	}
 	return (
 		<View style={styles.container}>
