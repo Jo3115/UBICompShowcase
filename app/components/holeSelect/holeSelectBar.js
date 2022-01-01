@@ -1,13 +1,12 @@
 /**
  * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
  */
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import HoleSelectTextSelect from './holeSelectTextSelect';
 import HoleSelectModal from './holeSelectModal';
-import { useState } from 'react/cjs/react.development';
 
 /**
  * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
@@ -28,7 +27,7 @@ const HoleSelectBar = ({ currentHole, maxHoles, setHole, modalVisible, setModalV
 				</View>
 			}
 			<View style={styles.holeTextContainer}>
-				<HoleSelectTextSelect currentHole={currentHole} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+				<HoleSelectTextSelect currentHole={currentHole} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 			</View>
 			{currentHole < maxHoles
 				? <TouchableHighlight
@@ -55,8 +54,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: "#694fad",
 		position: 'absolute',
-        zIndex: 100,
-        elevation: 100,
+		zIndex: 100,
+		elevation: 100,
 		bottom: 0
 	},
 	icon: {

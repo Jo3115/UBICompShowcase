@@ -1,11 +1,10 @@
 /**
  * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
  */
-import React from 'react'
+import React, { useEffect, useState }  from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { useEffect, useState } from 'react/cjs/react.development';
 import { CalculateDirection, CalculateDistance } from '../../utilities/distance';
 import { CalculateIntoWind, DegToCompass, GetWeather } from '../../utilities/weather';
 import { get } from '@firebase/database';

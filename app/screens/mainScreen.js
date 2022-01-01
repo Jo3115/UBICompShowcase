@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import DistanceScreen from './distanceScreen';
 import ClubLogScreen from './clubLogScreen';
@@ -9,14 +9,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import TopMenuBar from '../components/topMenu/topMenuBar';
 import { CheckKey, StoreJsonData } from '../utilities/asyncStorage';
-import { useEffect } from 'react/cjs/react.development';
 import { DefaultSettings } from '../utilities/globalVars';
 import { SaveDefaultDistances, SaveUserDistances } from '../utilities/firebase';
+import LoadingIndicator from '../components/general/loadingIndicator';
 
 
 const Tab = createBottomTabNavigator();
 
 const MainScreen = ({ navigation }) => {
+    const [firstLoad, setFirstLoad] = useState(true) 
     const FirstLoad = async () => {
         // if settings does not exist set initial settings
         let checkKey = await CheckKey("settings")
@@ -28,11 +29,16 @@ const MainScreen = ({ navigation }) => {
             SaveUserDistances("default")
             SaveDefaultDistances()
         }
+        setFirstLoad(false)
     }
 
     useEffect(() => {
         FirstLoad()
 	}, [])
+
+    if (firstLoad) {
+        return <LoadingIndicator headding={"Loading"} />
+    }
 
     return (
         <View style={styles.container}>

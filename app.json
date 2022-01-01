@@ -2,7 +2,7 @@
   "expo": {
     "name": "UBICompShowcase",
     "slug": "UBICompShowcase",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -23,11 +23,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.jo3115.UBICompShowcase",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": ""
   },
-  "scheme": "UBICompShowcase" 
+  "scheme": "UBICompShowcase",
+  "plugins": [
+    [
+      "async-storage",
+      {
+        "AsyncStorage_db_size_in_MB": 20
+      }
+    ]
+  ]
 }

@@ -7,6 +7,7 @@ import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SettingsScreen from './app/screens/settingsScreen';
+import CourseSelectScreen from './app/screens/courseSelectScreen';
 
 const Root = createStackNavigator();
 

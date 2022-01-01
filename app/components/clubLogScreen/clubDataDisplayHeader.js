@@ -9,18 +9,26 @@ import { AntDesign } from '@expo/vector-icons';
  * CourseListItem, renders a seperating Line in lightgray with varying height
  * @param {int} height - the height of the seperator to render
  */
-const ClubDataDisplayHeader = ({ title, custom, modal, setModal, }) => {
+const ClubDataDisplayHeader = ({ title, custom, currentUser, modal, setModal, }) => {
+    const renderPlus = () => {
+        if (currentUser != null && custom) {
+            return (
+                <TouchableOpacity
+                    style={styles.touchable}
+                    onPress={() => { setModal(!modal) }}
+                >
+                    <AntDesign name="plus" size={26} color="white" />
+                </TouchableOpacity>
+            )
+        }
+    }
+
     return (
         <View style={styles.listHeader}>
             <Text style={styles.text}>
                 {title}s
             </Text>
-            {custom && <TouchableOpacity
-                style={styles.touchable}
-                onPress={() => { setModal(!modal) }}
-            >
-                <AntDesign name="plus" size={26} color="white" />
-            </TouchableOpacity>}
+            {renderPlus()}
         </View>
     );
 }

@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import TopMenuBar from '../components/topMenu/topMenuBar';
-import { useEffect, useState } from 'react/cjs/react.development';
 import { GetData, StoreJsonData } from '../utilities/asyncStorage';
 import UserLoggedInDisplay from '../components/userInfo/userLoggedInDisplay';
 import UsePersonailsedClubsToggle from '../components/settings/usePersonalisedClubsToggle';
@@ -26,11 +25,11 @@ const SettingsScreen = ({ navigation }) => {
     }
 
     const toggleCustomSwitch = async () => {
-		let changedSettings = settings
-		changedSettings.customDistances = !settings.customDistances
-		setSettings({ ...changedSettings })
-		await StoreJsonData("settings", changedSettings)
-	}
+        let changedSettings = settings
+        changedSettings.customDistances = !settings.customDistances
+        setSettings({ ...changedSettings })
+        await StoreJsonData("settings", changedSettings)
+    }
 
     useEffect(() => {
         GetSettings()

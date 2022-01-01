@@ -1,10 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { reload } from 'firebase/auth';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, SectionList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { useEffect, useState } from 'react/cjs/react.development';
 import { SaveUserDistances } from '../../utilities/firebase';
 import { GetDefaultDistances, GetUserDistances, SetDefault } from '../../utilities/suggestedClub';
 import LoadingIndicator from '../general/loadingIndicator';
@@ -91,7 +89,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} />
 					)}
 					renderSectionHeader={({ section: { title } }) => (
-						<ClubDataDisplayHeader title={title} custom={useCustom} modal={addClubModalVisible} setModal={setAddClubModalVisible} />
+						<ClubDataDisplayHeader title={title} custom={useCustom} currentUser={currentUser} modal={addClubModalVisible} setModal={setAddClubModalVisible} />
 					)}
 				/>
 			</SafeAreaView>

@@ -1,11 +1,10 @@
 /**
  * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
  */
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { useState } from 'react/cjs/react.development';
 import { CalculateDistance } from '../../utilities/distance';
 import DistanceIcon from './distanceIcon';
 

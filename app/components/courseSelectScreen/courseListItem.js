@@ -1,12 +1,10 @@
 /**
  * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
  */
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import DownloadIcon from './downloadIcon';
-import { useState } from 'react/cjs/react.development';
-import { CheckKey } from '../../utilities/asyncStorage';
 import { RemoveCourse, SaveGetCourse } from '../../utilities/courses';
 import { Swipeable } from 'react-native-gesture-handler';
 import CourseListItemSwipe from './courseListItemSwipe';

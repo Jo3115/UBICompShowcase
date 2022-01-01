@@ -1,9 +1,8 @@
 /**
  * @fileoverview this file represents a HoleSelectTextSelect component, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
  */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Modal, Pressable } from 'react-native'
-import { useEffect } from 'react/cjs/react.development';
 import { AvalibleClubs, AvalibleShotMetrics } from '../../utilities/globalVars';
 import { GetUserDistances } from '../../utilities/suggestedClub';
 import DropDownPicker from 'react-native-dropdown-picker';
