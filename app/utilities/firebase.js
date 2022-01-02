@@ -1,3 +1,6 @@
+/**
+ * @fileoverview this file contains functions to communicate with firebase
+ */
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { StoreJsonData } from './asyncStorage';
@@ -18,6 +21,11 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+/**
+ * LogInGoogleUser, function to log in a user using firbase auth when provided with a google auth token
+ * @param {object} response - google login response object containg auth
+ * @param {object} setCurrentUser - set useState to hold the returned user information
+ */
 export async function LogInGoogleUser(response, setCurrentUser) {
     if (response?.type === 'success') {
         const { id_token } = response.params
@@ -38,6 +46,10 @@ export async function LogInGoogleUser(response, setCurrentUser) {
     }
 }
 
+/**
+ * SaveUserDistances, function to save user disctances localy from firbase
+ * @param {string} userId - id of current user
+ */
 export async function SaveUserDistances(userId) {
     try {
         let url = `https://ubicompshowcase-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/distances.json`
@@ -49,6 +61,9 @@ export async function SaveUserDistances(userId) {
     }
 }
 
+/**
+ * SaveDefaultDistances, function to save default disctances localy from firbase
+ */
 export async function SaveDefaultDistances() {
     try {
         let url = `https://ubicompshowcase-default-rtdb.europe-west1.firebasedatabase.app/users/default/distances.json`
@@ -60,12 +75,23 @@ export async function SaveDefaultDistances() {
     }
 }
 
+/**
+ * SaveUserDistances, function to remove club from users clubs stored in firebase
+ * @param {string} userId - id of current user
+ * @param {string} clubName - club to remove
+ */
 export async function RemoveClub(userId, clubName) {
     const db = getDatabase();
     const reference = ref(db, `users/${userId}/distances/${clubName}`);
     await remove(reference);
 }
 
+/**
+ * AddClub, function to add a club to users clubs stored in firebase
+ * @param {string} userId - id of current user
+ * @param {string} clubName - club to add
+ * @param {string} distance - distance to assign to club
+ */
 export async function AddClub(userId, clubName, distance) {
     const db = getDatabase();
     const reference = ref(db, `users/${userId}/distances/${clubName}`);

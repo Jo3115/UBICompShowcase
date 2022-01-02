@@ -1,8 +1,14 @@
+/**
+ * @fileoverview this file contains global varibles used to store consts like default settings and club lists.
+ */
+
+// DefaultSettings set when the user starts the app for the first time
 export const DefaultSettings = {
 	metric: "yd",
 	customDistances: true
 }
 
+// AvalibleClubs a list of clubs that the user could alocate
 export const AvalibleClubs = [
 	"Driver",
 	"3 Wood",
@@ -27,6 +33,7 @@ export const AvalibleClubs = [
 	"Lob Wedge"
 ]
 
+// AvalibleShotMetrics a list of metrics that can be used
 export const AvalibleShotMetrics = [
 	{
 		label: "m",
