@@ -9,7 +9,10 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * HoleSelectTextSelect, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
+ * @param {int} currentHole - currently selected hole
+ * @param {boolean} modalVisible - boolean determining if the HoleSelectModal is visible
+ * @param {Function} setModalVisible - function to set the HoleSelectModal visible value 
  */
 const HoleSelectTextSelect = ({ currentHole, modalVisible, setModalVisible }) => {
     let getText = () => {

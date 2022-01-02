@@ -1,27 +1,34 @@
 /**
- * @fileoverview this file represents a HoleSelectTextSelect component, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
+ * @fileoverview this file represents a HoleSelectModalListItem component, renders a list item containg a hole number with different formating if its the current hole
  */
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * ForcastListItem, renders a list item containg a hole number with different formating if its the current hole
+ * @param {int} holeNumber - number of this list item
+ * @param {int} currentHole - currently selected hole
+ * @param {Function} onPress - on press function to update current hole
  */
 const HoleSelectModalListItem = ({ holeNumber, currentHole, onPress }) => {
-
+    /**
+     * getBackgroundColor, Function, determines background colour bassed on if this hole is the current hole
+     */
     let getBackgroundColor = () => {
         if (holeNumber == currentHole){
-            return "#472e9a"
+            return '#472e9a'
         }
-        return "white"
+        return 'white'
     }
-
+    /**
+     * getTextColor, Function, determines text colour bassed on if this hole is the current hole
+     */
     let getTextColor = () => {
         if (holeNumber == currentHole){
-            return "white"
+            return 'white'
         }
-        return "black"
+        return 'black'
     }
 
     return (
@@ -40,11 +47,11 @@ const styles = StyleSheet.create({
         width: 65,
         height: 65,
         margin: 15,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 20,
-        borderColor: "#c9c0e1",
+        borderColor: '#c9c0e1',
         borderWidth: 2,
         borderRadius: 20
     },

@@ -1,21 +1,21 @@
 /**
- * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
+ * @fileoverview this file represents a SuggestedClubDisplay component, renders a component displaying sugested club along with infomation used to make that calculation
  */
 import React, { useEffect, useState }  from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from 'react-native'
 import { CalculateDirection, CalculateDistance } from '../../utilities/distance';
-import { CalculateIntoWind, DegToCompass, GetWeather } from '../../utilities/weather';
-import { get } from '@firebase/database';
-import { CalculateClosestClub, CalculateClubBounds, GetUserDistances } from '../../utilities/suggestedClub';
+import { CalculateIntoWind, GetWeather } from '../../utilities/weather';
+import { CalculateClosestClub, GetUserDistances } from '../../utilities/suggestedClub';
 import LoadingIndicator from '../general/loadingIndicator';
 
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * SuggestedClubDisplay, renders a component displaying sugested club along with infomation used to make that calculation
+ * @param {string} target - type of icon to display
+ * @param {object} currentLocation - current location object
+ * @param {object} targetLocation - target location object
  */
-const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric }) => {
+const SuggestedClubDisplay = ({ target, currentLocation, targetLocation }) => {
     const [isLoadingWeather, setLoadingWeather] = useState(true)
     const [weatherData, setWeatherData] = useState({})
     const [isLoadingClubs, setLoadingClubs] = useState(true)
@@ -24,7 +24,7 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
     // calculate distance for current point to target point
     let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
-    let baseDistance = CalculateDistance(startLatLon, targetLatLong, "m")
+    let baseDistance = CalculateDistance(startLatLon, targetLatLong, 'm')
     // calculate the height change 
     let heightChange = Math.round(currentLocation.coords.altitude - targetLocation[target].elv)
 
@@ -74,22 +74,22 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation, metric 
             );
         }
     }
-    return (<LoadingIndicator headding={"Deciding on Club"} />)
+    return (<LoadingIndicator headding={'Deciding on Club'} />)
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: "100%",
+        width: '100%',
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: 'center',
         marginBottom: 35
     },
     conditionsRow: {
-        width: "100%",
+        width: '100%',
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: 'center',
     },
     titleText: {
         fontSize : 30,

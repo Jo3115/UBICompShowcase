@@ -1,5 +1,5 @@
 /**
- * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
+ * @fileoverview this file represents a DownloadIcon compoenent used to render a icon showing download status
  */
 import React from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
@@ -9,17 +9,19 @@ import * as Progress from 'react-native-progress';
 
 
 /**
- * CourseListItem, renders a seperating Line in lightgray with varying height
- * @param {int} height - the height of the seperator to render
+ * CourseListItem, renders a icon showing download status
+ * @param {int} stage - stage of the download to display
+ * @param {int} size - stage of icon to display
+ * @param {Function} onPress - function to execute icon is pressed
  */
 const DownloadIcon = ({ stage, size, onPress }) => {
     let getIcon = () => {
-        if (stage == "downloaded"){
-            return <Feather name="check-circle" size={size} color="black" />
-        } else if (stage == "downloading"){
-            return <Progress.CircleSnail size={size} indeterminate={true} color={"black"} thickness={2}/>
+        if (stage == 'downloaded'){
+            return <Feather name='check-circle' size={size} color='black' />
+        } else if (stage == 'downloading'){
+            return <Progress.CircleSnail size={size} indeterminate={true} color={'black'} thickness={2}/>
         }
-        return <Feather name="download" size={size} color="black" />
+        return <Feather name='download' size={size} color='black' />
     }
     return (
         <TouchableHighlight
@@ -35,7 +37,7 @@ const DownloadIcon = ({ stage, size, onPress }) => {
 
 const styles = StyleSheet.create({
     touchable: {
-        alignContent: "center",
+        alignContent: 'center',
         padding:10,
     }
 });

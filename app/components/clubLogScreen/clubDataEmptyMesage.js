@@ -1,7 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
+/**
+ * @fileoverview this file represents a ClubDataEmptyMesage compoenent used to render a message if no custom clubs are found
+ */
 import React from 'react';
-import { StyleSheet, Text, View, Button, SectionList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
+/**
+ * ClubDataEmptyMesage, renders a message if no custom clubs are found and adds a button to alow a user to add a club
+ * @param {boolean} modal - boolean determining if the addClubModal is visible
+ * @param {Function} setModal - function to set the addClubModal visible value
+ */
 const ClubDataEmptyMesage = ({ modal, setModal }) => {
     return (
         <TouchableOpacity
@@ -15,10 +22,10 @@ const ClubDataEmptyMesage = ({ modal, setModal }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around"
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around'
     },
 });
 

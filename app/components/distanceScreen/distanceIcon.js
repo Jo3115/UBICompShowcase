@@ -1,20 +1,22 @@
 /**
- * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
+ * @fileoverview this file represents a DistanceIcon component, renders a image displaying appropate icon bassed on target
  */
 import React from 'react'
-import { StyleSheet, Image, View } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * DistanceIcon, renders a image displaying appropate icon bassed on target
+ * @param {string} target - type of icon to display
+ * @param {string} type - size of icon to display bassed on card type
  */
 const DistanceIcon = ({ target, type }) => {
-    let url = "https://cdn.discordapp.com/attachments/636495064914198529/918160207098568714/middle.png"
-    if (target == "front") {
+    let url = 'https://cdn.discordapp.com/attachments/636495064914198529/918160207098568714/middle.png'
+    if (target == 'front') {
         url = 'https://cdn.discordapp.com/attachments/636495064914198529/918160207631253574/front.png'
-    } else if (target == "back") {
+    } else if (target == 'back') {
         url = 'https://cdn.discordapp.com/attachments/636495064914198529/918160207455080448/back.png'
     }
-    if (type == "large") {
+    if (type == 'large') {
         return <Image
             style={styles.iconLarge}
             source={{

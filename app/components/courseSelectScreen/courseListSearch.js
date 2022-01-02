@@ -1,5 +1,5 @@
 /**
- * @fileoverview This file represents the component that is rendered when a spotsListItem is swipped to the right
+ * @fileoverview this file represents a CourseListSearch compoenent used to render a search bar for filtering the course list
  */
 
 import React from 'react';
@@ -7,19 +7,17 @@ import { StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import Seperator from '../general/seperator';
 
-
-
 /**
- * SpotsListItemPin Component, render a pin icon indicating if the item is pinned or not and allow it to be presed to pin the spot
- * @param {boolean} pinned - is the current spot pinned
- * @param {Function} onPress - the function to execute when the pinned icon is pressed
+ * SpotsListItemPin Component, render a search bar for filtering the course list
+ * @param {string} searchText - current search text
+ * @param {Function} onChangeSearchText - function to execute when search text changes
  */
 function CourseListSearch({ searchText, onChangeSearchText }) {
     return (
         <View>
             <Searchbar
                 style={styles.searchBar}
-                placeholder="Type to start filtering"
+                placeholder='Type to start filtering'
                 value={searchText}
                 onChangeText={onChangeSearchText}
             />
@@ -30,7 +28,7 @@ function CourseListSearch({ searchText, onChangeSearchText }) {
 
 const styles = StyleSheet.create({
     searchBar: {
-        width: "100%",
+        width: '100%',
         height: 60,
     }
 });

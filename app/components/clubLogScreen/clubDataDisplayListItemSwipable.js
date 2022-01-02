@@ -1,16 +1,13 @@
 /**
- * @fileoverview This file represents the component that is rendered when a spotsListItem is swipped to the right
+ * @fileoverview this file represents a ClubDataDisplayListItemSwipable compoenent used to render a right swipable revealing a delete button
  */
-
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-
-
 /**
- * SpotsListItemPin Component, render a pin icon indicating if the item is pinned or not and allow it to be presed to pin the spot
- * @param {boolean} pinned - is the current spot pinned
- * @param {Function} onPress - the function to execute when the pinned icon is pressed
+ * ClubDataDisplayListItemSwipable Component, render a right swipable revealing a delete button
+ * @param {boolean} custom - boolean determining if using custom club data
+ * @param {Function} removeOnPress - the function to execute when the delet button is pressed
  */
 function ClubDataDisplayListItemSwipable({ custom, removeOnPress }) {
     if (!custom) {
@@ -36,24 +33,24 @@ function ClubDataDisplayListItemSwipable({ custom, removeOnPress }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: "30%",
+        width: '30%',
         height: '100%',
-        flexDirection: "row",
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
     removeButton: {
-        width: "100%",
+        width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: "#ab000d",
+        backgroundColor: '#ab000d',
     },
     buttonText: {
         paddingHorizontal: 0,
         fontSize: 16,
-        color: "#f5f5f5",
-        textAlign: "center"
+        color: '#f5f5f5',
+        textAlign: 'center'
     }
 });
 
