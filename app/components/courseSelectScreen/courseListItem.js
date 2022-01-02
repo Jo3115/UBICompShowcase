@@ -1,5 +1,5 @@
 /**
- * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
+ * @fileoverview this file represents a CourseListItem compoenent used to render course information as a list item
  */
 import React, { useRef, useState } from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
@@ -11,21 +11,33 @@ import CourseListItemSwipe from './courseListItemSwipe';
 
 
 /**
- * CourseListItem, renders a seperating Line in lightgray with varying height
- * @param {int} height - the height of the seperator to render
+ * CourseListItem, renders course information as a list item
+ * @param {string} name - the name of the course
+ * @param {number} distance - the distance from current location to the course
+ * @param {Function} onPress - the function to run when the ontouch is pressed
+ * @param {boolean} downloaded - is the course downloaded
  */
 const CourseListItem = ({ name, distance, onPress, downloaded }) => {
     const [downloadState, setDownloadState] = useState(downloaded)
     const swipeableRef = useRef(null);
 
+    /**
+     * downloadOnPress, Function, downloads the course when pressed
+     * @param {string} name - name of course to download
+     */
     const downloadOnPress = (name) => {
-        setDownloadState("downloading")
+        setDownloadState('downloading')
         SaveGetCourse(name)
-        setDownloadState("downloaded")
+        setDownloadState('downloaded')
     }
+    
+    /**
+     * removeOnPress, Function, removes the course from storage when pressed
+     * @param {string} name - name of course to remove
+     */
     const removeOnPress = (name) => {
         RemoveCourse(name)
-        setDownloadState("download")
+        setDownloadState('download')
         swipeableRef.current.close()
     }
 
@@ -51,7 +63,7 @@ const CourseListItem = ({ name, distance, onPress, downloaded }) => {
                     </View>
                     <View style={styles.rowCard}>
                         <DownloadIcon stage={downloadState} size={30} onPress={() => downloadOnPress(name)} />
-                        <AntDesign name="right" size={30} color="black" />
+                        <AntDesign name='right' size={30} color='black' />
                     </View>
                 </View>
             </TouchableHighlight>
@@ -62,23 +74,23 @@ const CourseListItem = ({ name, distance, onPress, downloaded }) => {
 const styles = StyleSheet.create({
     touchable: {
         height: 75,
-        width: "100%",
-        backgroundColor: "white"
+        width: '100%',
+        backgroundColor: 'white'
     },
     listCard: {
         flex: 1,
         height: 75,
-        flexBasis: "100%",
-        flexDirection: "row",
+        flexBasis: '100%',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
     },
     rowCard: {
         width: 100,
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center"
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
     },
     nameText: {
         fontSize: 30

@@ -1,6 +1,7 @@
 /**
  * @fileoverview this file represents the CourseSelectScreen screen renders a list of courses their distances as well as if they are downloaded or not.
  */
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native';
 import LoadingIndicator from '../components/general/loadingIndicator';
