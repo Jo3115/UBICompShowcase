@@ -1,3 +1,6 @@
+/**
+ * @fileoverview this file represents the CourseSelectScreen screen renders a list of courses their distances as well as if they are downloaded or not.
+ */
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native';
 import LoadingIndicator from '../components/general/loadingIndicator';
@@ -10,7 +13,10 @@ import CourseListSearch from '../components/courseSelectScreen/courseListSearch'
 import TopMenuBar from '../components/topMenu/topMenuBar';
 import { StatusBar } from 'expo-status-bar';
 
-
+/**
+ * MainScreen Screen, renders a list of courses their distances as well as if they are downloaded or not.
+ * @param {object} navigation - navigation object passed from previous screen allows for navigating to different screens
+ */
 const CourseSelectScreen = ({ navigation }) => {
     const [locationLoading, setLocationLoading] = useState(true)
     const [currentLocation, setCurrentLocation] = useState(null)
@@ -23,6 +29,11 @@ const CourseSelectScreen = ({ navigation }) => {
     const [searchText, onChangeSearchText] = useState(null);
     const [filteredCourses, setFilteredCourses] = useState(null)
 
+    /**
+     * goToCourseOnPress, Function, Navigates to DistanceScreen with the relivant course information passed
+     * @param {string} item - the course name
+     * @param {boolean} downloaded - if the course is downloaded or not
+     */
     const goToCourseOnPress = (item, downloaded) => {
         navigation.push('DistanceScreen', {
             courseName: item,
@@ -30,6 +41,9 @@ const CourseSelectScreen = ({ navigation }) => {
         })
     }
 
+    /**
+     * filterCourses, Function, filters the course information bassed on text string
+     */
     const filterCourses = () => {
         if (searchText == null) {
             setFilteredCourses(courseList)
@@ -70,18 +84,18 @@ const CourseSelectScreen = ({ navigation }) => {
     }, [courseList, searchText])
 
     if (locationLoading && !refreshing) {
-        return <LoadingIndicator headding={"Getting Location"} />
+        return <LoadingIndicator headding={'Getting Location'} />
     }
     if (coursesLoading && !refreshing) {
-        return <LoadingIndicator headding={"Finding Courses"} />
+        return <LoadingIndicator headding={'Finding Courses'} />
     }
     if (checkingDownloads && !refreshing) {
-        return <LoadingIndicator headding={"Finding Courses"} />
+        return <LoadingIndicator headding={'Finding Courses'} />
     }
 
     return (
         <View style={styles.screen}>
-            <TopMenuBar navigation={navigation} title={"Select Course"} settingsButton={true} />
+            <TopMenuBar navigation={navigation} title={'Select Course'} settingsButton={true} />
             <FlatList
                 ListHeaderComponent={<CourseListSearch searchText={searchText} onChangeSearchText={onChangeSearchText} />}
                 style={styles.list}
@@ -104,7 +118,7 @@ const CourseSelectScreen = ({ navigation }) => {
                     setRefreshing(true)
                 }}
             />
-            <StatusBar style="light" />
+            <StatusBar style='light' />
         </View>
     );
 }
@@ -112,13 +126,13 @@ const CourseSelectScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        width: "100%",
+        width: '100%',
         backgroundColor: '#eeeeee',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     list: {
-        width: "100%"
+        width: '100%'
     }
 });
 
