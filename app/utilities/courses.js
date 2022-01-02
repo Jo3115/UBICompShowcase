@@ -36,8 +36,8 @@ export async function RemoveCourse(name) {
  * if user is connected to the internet it returns a list from the api
  * if the user is not connected it returns a list of downloaded courses from storage
  * @param {object} location - object containing lat, long representing the location to order by
- * @param {object} setCourses - useState to hold the returned courses
- * @param {object} setLoading - useState to say function is complete
+ * @param {Function} setCourses - useState set to hold the returned courses
+ * @param {Function} setLoading - useState set to say function is complete
  */
 export async function GetAllCourseByDistance(location, setCourses, setLoading) {
     try {
@@ -60,7 +60,7 @@ export async function GetAllCourseByDistance(location, setCourses, setLoading) {
 /**
  * CheckDownloaded, function checks which courses in a list are downloaded to display their download status
  * @param {array} coursesIn - array containing course information objects
- * @param {string} setCourses - useState set to update with the returned courses
+ * @param {Function} setCourses - useState set to update with the returned courses
  * @param {array} setLoading - array containing list of downloaded courses
  */
 export function CheckDownloaded(coursesIn, setCourses, download) {

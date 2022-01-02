@@ -1,8 +1,8 @@
 /**
- * @fileoverview this file represents a HoleSelectTextSelect component, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
+ * @fileoverview this file represents a AddClubModal component, renders a modal allowing the user to input information to add a new club
  */
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, FlatList, Modal, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
 import { AvalibleClubs, AvalibleShotMetrics } from '../../utilities/globalVars';
 import { GetUserDistances } from '../../utilities/suggestedClub';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -12,7 +12,12 @@ import { ConvertRoundedDistanceToM } from '../../utilities/distance';
 
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * AddClubModal, renders a modal allowing the user to input information to add a new club
+ * @param {boolean} modalVisible - boolean determining if the modal is visible
+ * @param {Function} setModalVisible - function to set the modal visible value
+ * @param {string} userID - string containg user id
+ * @param {number} reload - boolean telling the component to reload
+ * @param {Function} setReload - function to set the reload value
  */
 const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload }) => {
     const [userClubBounds, setUserClubBounds] = useState(null)
@@ -22,20 +27,27 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
     const [clubList, setClubList] = useState([])
     const [distance, setDistance] = React.useState(null);
     const [metricListOpen, setMetricListOpen] = useState(false);
-    const [selectedMetric, setSelectedMetric] = useState("m");
+    const [selectedMetric, setSelectedMetric] = useState('m');
     const [metricList, setmetricList] = useState(AvalibleShotMetrics)
     const [showWarning, setShowWarning] = useState(false)
 
+    /**
+     * onChangeTextInput, Function, format distance input text to only allow numbers
+     * @param {string} text - Id to pin
+     */
     const onChangeTextInput = (text) => {
         setDistance(text.replace(/[^0-9]/g, ''))
     }
 
+    /**
+     * addClubOnPress, Function, add club to firebase with given value
+     */
     const addClubOnPress = async () => {
         if (selectedClub == null) {
-            console.log("no club")
+            console.log('no club')
             setShowWarning(true)
         } else if (distance == null) {
-            console.log("no distance")
+            console.log('no distance')
             setShowWarning(true)
         } else {
             await AddClub(userID, selectedClub, ConvertRoundedDistanceToM(distance))
@@ -44,6 +56,9 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
         }
     }
 
+    /**
+     * getClubList, Function, get list of avalible clubs and remove any clubs that already have values
+     */
     const getClubList = async () => {
         await GetUserDistances(setUserClubBounds, setClubsLoading)
         if (userClubBounds != null) { 
@@ -70,11 +85,11 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
     return (
         <Modal
             transparent={true}
-            animationType="slide"
+            animationType='slide'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
+                Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
             }}
         >
@@ -84,9 +99,9 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
                     <DropDownPicker
                         zIndex={3000}
                         zIndexInverse={1000}
-                        placeholder="Select a Club"
+                        placeholder='Select a Club'
                         searchable={true}
-                        searchPlaceholder="Search..."
+                        searchPlaceholder='Search...'
                         style={styles.clubDropdown}
                         containerStyle={styles.clubDropdownContainer}
                         open={clubListOpen}
@@ -102,8 +117,8 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
                             style={styles.textInput}
                             onChangeText={onChangeTextInput}
                             value={distance}
-                            placeholder="Distance"
-                            keyboardType="numeric"
+                            placeholder='Distance'
+                            keyboardType='numeric'
                             allowFontScaling={true}
                         />
                         <DropDownPicker
@@ -142,20 +157,20 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 22,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalView: {
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         borderRadius: 20,
         borderWidth: 2,
-        borderColor: "#472e9a",
+        borderColor: '#472e9a',
         padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
+        alignItems: 'center',
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2
@@ -170,18 +185,18 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonCancel: {
-        backgroundColor: "#ab000d",
+        backgroundColor: '#ab000d',
     },
     buttonSubmit: {
-        backgroundColor: "#4b642d",
+        backgroundColor: '#4b642d',
     },
     buttonText: {
-        color: "white",
-        textAlign: "center",
+        color: 'white',
+        textAlign: 'center',
         fontSize: 18
     },
     rowContainer: {
-        flexDirection: "row",
+        flexDirection: 'row',
     },
     clubDropdown: {
         zIndex: 10,
@@ -207,15 +222,15 @@ const styles = StyleSheet.create({
     lableText: {
         fontSize: 18,
         padding: 10,
-        alignSelf: "flex-start"
+        alignSelf: 'flex-start'
     },
     textInput: {
         width: 200,
         height: 50,
-        textAlignVertical: "center",
+        textAlignVertical: 'center',
         borderWidth: 1,
         borderRightWidth: 0,
-        borderColor: "black",
+        borderColor: 'black',
         paddingBottom: 10,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,

@@ -33,8 +33,8 @@ export async function StoreJsonData(key, value) {
 
 /**
  * GetAllKeys, function to retrieve all the currently stored keys to check which courses are downloaded.
- * @param {object} setKeys - useState to hold the returned keys
- * @param {object} setLoading - useState to say function is complete
+ * @param {Function} setKeys - useState set to hold the returned keys
+ * @param {Function} setLoading - useState set to say function is complete
  */
 export async function GetAllKeys(setKeys, setLoading) {
     try {
