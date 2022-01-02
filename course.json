@@ -252,6 +252,258 @@
                     "red": 4
                 },
                 "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole9.png"
+            },
+            {
+                "front": {
+                    "lat": 51.599958, 
+                    "lon": -0.539715,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.599876,
+                    "lon": -0.539932,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.599803,
+                    "lon": -0.540109,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole10.png"
+            },
+            {
+                "front": {
+                    "lat": 51.601670,
+                    "lon": -0.537011,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.601660, 
+                    "lon": -0.536818,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.601628,
+                    "lon": -0.536628,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole11.png"
+            },
+            {
+                "front": {
+                    "lat": 51.601215,
+                    "lon": -0.540930,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.601112, 
+                    "lon": -0.540978,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.600995,
+                    "lon": -0.540981,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole12.png"
+            },
+            {
+                "front": {
+                    "lat": 51.600177,
+                    "lon": -0.542665,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.600114,
+                    "lon": -0.542770,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.600049, 
+                    "lon": -0.542883,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole13.png"
+            },
+            {
+                "front": {
+                    "lat": 51.597283, 
+                    "lon": -0.540997,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.597176, 
+                    "lon": -0.541064,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.597071,
+                    "lon": -0.541107,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole14.png"
+            },
+            {
+                "front": {
+                    "lat": 51.594529, 
+                    "lon": -0.537521,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.594425,
+                    "lon": -0.537430,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.594325,
+                    "lon": -0.537341,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole15.png"
+            },
+            {
+                "front": {
+                    "lat": 51.594727, 
+                    "lon": -0.539804,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.594825,
+                    "lon": -0.539962,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.594930,
+                    "lon": -0.540101,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole16.png"
+            },
+            {
+                "front": {
+                    "lat": 51.597339, 
+                    "lon": -0.542498,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.597449,
+                    "lon": -0.542629,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.597536,
+                    "lon": -0.542774,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole17.png"
+            },
+            {
+                "front": {
+                    "lat": 551.598001,
+                    "lon": -0.547083,
+                    "elv": 93
+                },
+                "middle": {
+                    "lat": 51.597919,
+                    "lon": -0.547292,
+                    "elv": 93
+                },
+                "back": {
+                    "lat": 51.597842,
+                    "lon": -0.547496,
+                    "elv": 93
+                },
+                "total": {
+                    "white": 392,
+                    "yellow": 389,
+                    "red": 346
+                },
+                "par": {
+                    "white": 4,
+                    "yellow": 4,
+                    "red": 4
+                },
+                "image": "https://www.gxgolf.co.uk/images/resources/gerrardscross/GXMapHole17.png"
             }
         ]
     },
