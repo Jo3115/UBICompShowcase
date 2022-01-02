@@ -1,15 +1,18 @@
 /**
- * @fileoverview this file represents a HoleSelectTextSelect component, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
+ * @fileoverview this file represents a HoleSelectModal component, renders a modal displaying current hole and allowing the user to select a hole
  */
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
 import HoleSelectModalListItem from './holeSelectModalListItem';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * ForcastListItem, renders a modal displaying current hole and allowing the user to select a hole
+ * @param {int} currentHole - currently selected hole
+ * @param {int} maxHoles - maximum holes on given corse
+ * @param {boolean} modalVisible - boolean determining if the HoleSelectModal is visible
+ * @param {Function} setModalVisible - function to set the HoleSelectModal visible value 
+ * @param {Function} setHole - set current hole
  */
 const HoleSelectModal = ({ currentHole, maxHoles, modalVisible, setModalVisible, setHole }) => {
     let holeList = Array.from({ length: maxHoles }, (_, i) => i + 1)
