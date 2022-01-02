@@ -1,12 +1,19 @@
+/**
+ * @fileoverview this file represents a LoadingIndicator component, renders a spinning icon with text to display that the app is loading in the background
+ */
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 
+/**
+ * CloseButton, renders a spinning icon with text to display that the app is loading in the background
+ * @param {string} headding - text to display on top of animated indicator
+ */
 const LoadingIndicator = ({ headding }) => {
 	return (
 		<View style={styles.container}>
             <Text style={styles.text}>{headding}</Text>
-			<Progress.Circle size={100} borderWidth= {5} indeterminate={true} borderColor={"royalblue"}/>
+			<Progress.Circle size={100} borderWidth= {5} indeterminate={true} borderColor={'royalblue'}/>
 		</View>
 	);
 }
@@ -20,7 +27,7 @@ const styles = StyleSheet.create({
 	},
     text: {
         fontSize: 35,
-        textAlign: "center",
+        textAlign: 'center',
         paddingBottom: 40
     }
 });
