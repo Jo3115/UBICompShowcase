@@ -1,52 +1,61 @@
 /**
- * @fileoverview this file represents a HoleSelect component, renders a component displaying current hole and allowing the user to navigate to a given hole.
+ * @fileoverview this file represents 
  */
-import React, {useState} from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { CalculateDistance } from '../../utilities/distance';
 import DistanceIcon from './distanceIcon';
 
 /**
- * ForcastListItem, renders a list item for the spotForcast list containing a ForcastListItemExpanded which is revield when pressed
+ * DistanceCard, renders a DistanceCard component, renders a component displaying distance from current hole with approprate icon and colour depending on target
+ * @param {string} target - type of target
+ * @param {object} currentLocation - current location object
+ * @param {object} targetLocation - target location object
+ * @param {string} metric - metric to use
+ * @param {string} type - type of card
  */
 const DistanceCard = ({ target, currentLocation, targetLocation, metric, type }) => {
-    let height = 100
-    if (type == "large") {
-        height = 200
-    }
-    let backgroundColor = "rgba(255, 255, 0, 0.8)"
-    if (target == "front") {
-        backgroundColor = "rgba(255, 0, 0, 0.8)"
-    } else if (target == "back") {
-        backgroundColor = "rgb(255, 255, 255)"
-    }
-
-
-    let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
-    let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
-    let distance = CalculateDistance(startLatLon, targetLatLong, metric)//currentLocation.coords.altitude, targetLocation[target].elv
-
-    let getBorder = () => {
-        if (type == "large") {
+    /**
+     * getBorder, Function, get border style for card
+     */
+     let getBorder = () => {
+        if (type == 'large') {
             return styles.largeRadius
-        } else if (type == "left") {
+        } else if (type == 'left') {
             return styles.leftRadius
         }
         return styles.rightRadius
     }
 
-    let getDistanceDisplay = () => {
+    let height = 100
+    if (type == 'large') {
+        height = 200
+    }
+    let backgroundColor = 'rgba(255, 255, 0, 0.8)'
+    if (target == 'front') {
+        backgroundColor = 'rgba(255, 0, 0, 0.8)'
+    } else if (target == 'back') {
+        backgroundColor = 'rgb(255, 255, 255)'
+    }
+
+
+    let startLatLon = { latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }
+    let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
+    let distance = CalculateDistance(startLatLon, targetLatLong, metric)
+
+     /**
+     * getDistanceDisplay, Function, get distance display 
+     */
+      let getDistanceDisplay = () => {
         let filteredDistance = distance
         let filteredMetric = metric
         let icon = <DistanceIcon target={target} type={type} />
         if (distance > 999) {
-            filteredDistance = "Too Far"
-            filteredMetric = ""
+            filteredDistance = 'Too Far'
+            filteredMetric = ''
             icon = <View />
         }
-        if (type == "large") {
+        if (type == 'large') {
             return (
                 <View style={styles.textRow}>
                     <View style={styles.iconContainerlarge}>
@@ -67,6 +76,7 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
             </View>
         )
     }
+
     return (
         <View style={{ ...styles.distanceBox, height: height, backgroundColor: backgroundColor, ...getBorder() }}>
             {getDistanceDisplay()}
@@ -77,10 +87,10 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
 const styles = StyleSheet.create({
     distanceBox: {
         flex: 1,
-        width: "100%",
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: 'center',
     },
     distanceTextLarge: {
         fontSize: 100
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
     },
     textRow: {
         flexDirection: 'row',
-        alignItems: "flex-end",
+        alignItems: 'flex-end',
     },
     icon: {
         width: 50,
