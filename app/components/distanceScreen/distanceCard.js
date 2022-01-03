@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { color } from 'react-native-elements/dist/helpers';
 import { CalculateDistance } from '../../utilities/distance';
 import DistanceIcon from './distanceIcon';
 
@@ -18,7 +19,7 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
     /**
      * getBorder, Function, get border style for card
      */
-     let getBorder = () => {
+    let getBorder = () => {
         if (type == 'large') {
             return styles.largeRadius
         } else if (type == 'left') {
@@ -32,8 +33,10 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
         height = 200
     }
     let backgroundColor = 'rgba(255, 255, 0, 0.8)'
+    let fontColor = 'black'
     if (target == 'front') {
         backgroundColor = 'rgba(255, 0, 0, 0.8)'
+        fontColor = 'white'
     } else if (target == 'back') {
         backgroundColor = 'rgb(255, 255, 255)'
     }
@@ -43,13 +46,13 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
     let targetLatLong = { latitude: targetLocation[target].lat, longitude: targetLocation[target].lon }
     let distance = CalculateDistance(startLatLon, targetLatLong, metric)
 
-     /**
-     * getDistanceDisplay, Function, get distance display 
-     */
-      let getDistanceDisplay = () => {
+    /**
+    * getDistanceDisplay, Function, get distance display 
+    */
+    let getDistanceDisplay = () => {
         let filteredDistance = distance
         let filteredMetric = metric
-        let icon = <DistanceIcon target={target} type={type} />
+        let icon = <DistanceIcon target={target} type={type} color={fontColor}/>
         if (distance > 999) {
             filteredDistance = 'Too Far'
             filteredMetric = ''
@@ -61,8 +64,8 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
                     <View style={styles.iconContainerlarge}>
                         {icon}
                     </View>
-                    <Text style={styles.distanceTextLarge}>{filteredDistance}</Text>
-                    <Text style={styles.metricTextLarge}>{filteredMetric}</Text>
+                    <Text style={{ ...styles.distanceTextLarge, color: fontColor }}>{filteredDistance}</Text>
+                    <Text style={{ ...styles.metricTextLarge, color: fontColor }}>{filteredMetric}</Text>
                 </View>
             )
         }
@@ -71,8 +74,8 @@ const DistanceCard = ({ target, currentLocation, targetLocation, metric, type })
                 <View style={styles.iconContainerSmall}>
                     {icon}
                 </View>
-                <Text style={styles.distanceTextSmall}>{filteredDistance}</Text>
-                <Text style={styles.metricTextSmall}>{filteredMetric}</Text>
+                <Text style={{ ...styles.distanceTextSmall, color: fontColor }}>{filteredDistance}</Text>
+                <Text style={{ ...styles.metricTextSmall, color: fontColor }}>{filteredMetric}</Text>
             </View>
         )
     }
@@ -112,11 +115,11 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50
     },
-    iconContainerSmall:{
-        paddingBottom: 10 
+    iconContainerSmall: {
+        paddingBottom: 10
     },
-    iconContainerlarge:{
-        paddingBottom: 20 
+    iconContainerlarge: {
+        paddingBottom: 20
     },
     largeRadius: {
         borderTopLeftRadius: 20,

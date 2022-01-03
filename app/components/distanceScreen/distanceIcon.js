@@ -9,7 +9,7 @@ import { StyleSheet, Image } from 'react-native'
  * @param {string} target - type of icon to display
  * @param {string} type - size of icon to display bassed on card type
  */
-const DistanceIcon = ({ target, type }) => {
+const DistanceIcon = ({ target, type, color }) => {
     let url = 'https://cdn.discordapp.com/attachments/636495064914198529/918160207098568714/middle.png'
     if (target == 'front') {
         url = 'https://cdn.discordapp.com/attachments/636495064914198529/918160207631253574/front.png'
@@ -22,6 +22,7 @@ const DistanceIcon = ({ target, type }) => {
             source={{
                 uri: url
             }}
+            tintColor={color}
         />
     }
     return <Image
@@ -29,6 +30,7 @@ const DistanceIcon = ({ target, type }) => {
         source={{
             uri: url
         }}
+        tintColor={color}
     />
 }
 

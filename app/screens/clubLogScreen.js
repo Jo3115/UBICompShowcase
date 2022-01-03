@@ -3,7 +3,7 @@
  * Also displays the log in compoent if the user is not logged in
  */
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import TopMenuBar from '../components/topMenu/topMenuBar';
 import UserNotLoggedInDisplay from '../components/userInfo/userNotLoggedInDisplay';
@@ -63,10 +63,10 @@ const ClubLogScreen = ({ navigation }) => {
 		await StoreJsonData('settings', changedSettings)
 	}
 	// run when returning to screen from settings
-	useFocusEffect(() => {
+	useFocusEffect(useCallback( ()=> {
 		GetCurrentUser()
 		GetSettings()
-	})
+	}))
 
 	return (
 		<View style={styles.container}>

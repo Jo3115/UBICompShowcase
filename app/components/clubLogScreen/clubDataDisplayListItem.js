@@ -9,8 +9,6 @@ import { ConvertRoundedDistance } from '../../utilities/distance';
 import { RemoveClub } from '../../utilities/firebase';
 import ClubDataDisplayListItemSwipable from './clubDataDisplayListItemSwipable';
 
-const metric = 'yd'
-
 /**
  * ClubDataDisplayListItem, renders club information as a list item
  * @param {string} club - the club name
@@ -19,7 +17,7 @@ const metric = 'yd'
  * @param {string} userID - string containg user id
  * @param {Function} getClubData - function used to re get club data to update the list if a club is removed
  */
-const ClubDataDisplayListItem = ({ club, distance, custom, userID, getClubData }) => {
+const ClubDataDisplayListItem = ({ club, distance, custom, userID, getClubData, metric }) => {
     const swipeableRef = useRef(null);
 
     /**

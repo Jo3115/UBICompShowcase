@@ -4,11 +4,13 @@
  */
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import TopMenuBar from '../components/topMenu/topMenuBar';
 import { GetData, StoreJsonData } from '../utilities/asyncStorage';
 import UserLoggedInDisplay from '../components/userInfo/userLoggedInDisplay';
 import UsePersonailsedClubsToggle from '../components/settings/usePersonalisedClubsToggle';
+import MetricDropdownPicker from '../components/settings/metricDropdownPicker';
+import TargetDropdownPicker from '../components/settings/targetDropdownPicker';
 
 /**
  * SettingsScreen Screen, renders current settings and appropate inputs to change them.
@@ -31,7 +33,7 @@ const SettingsScreen = ({ navigation }) => {
     const BackOnPress = () => {
         navigation.pop()
     }
-    
+
     /**
      * GetSettings, Function, gets the current settings from async storage
      */
@@ -48,13 +50,29 @@ const SettingsScreen = ({ navigation }) => {
         setSettings({ ...changedSettings })
         await StoreJsonData('settings', changedSettings)
     }
+    /**
+     * setMetric, Function, sets the metric selected to a new value
+     */
+    const setMetric = async (newMetric) => {
+        let changedSettings = settings
+        changedSettings.metric = newMetric
+        setSettings({ ...changedSettings })
+        await StoreJsonData('settings', changedSettings)
+    }
+    /**
+     * setTarget, Function, sets the metric selected to a new value
+     */
+    const setTarget = async (newTarget) => {
+        let changedSettings = settings
+        changedSettings.target = newTarget
+        setSettings({ ...changedSettings })
+        await StoreJsonData('settings', changedSettings)
+    }
 
     useEffect(() => {
         GetSettings()
         GetCurrentUser()
     }, [])
-
-    console.log(settings)
 
     return (
         <View style={styles.container}>
@@ -64,10 +82,20 @@ const SettingsScreen = ({ navigation }) => {
                 setCurrentUser={setCurrentUser}
             />
             }
-            {(currentUser != null) && <UsePersonailsedClubsToggle
-                current={settings.customDistances}
-                onValueChange={toggleCustomSwitch}
-            />}
+            {(currentUser != null) && <View style={styles.personailsedClubsToggleContainer}>
+                <UsePersonailsedClubsToggle
+                    current={settings.customDistances}
+                    onValueChange={toggleCustomSwitch}
+                />
+            </View>}
+            <View style={styles.row}>
+                <Text style={styles.settingText}>Hole Distance Metric</Text>
+                {(settings != null) && <MetricDropdownPicker metric={settings.metric} onChangeValue={setMetric} />}
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.settingText}>Primary Hole Position</Text>
+                {(settings != null) && <TargetDropdownPicker target={settings.target} onChangeValue={setTarget} />}
+            </View>
             <StatusBar style='light' />
         </View>
     );
@@ -79,6 +107,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
     },
+    row: {
+        width: "80%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "space-between",
+        paddingVertical: 5
+    },
+    settingText: {
+        fontSize: 20,
+        paddingRight: 10
+    },
+    personailsedClubsToggleContainer:{
+        paddingRight: 22
+    }
 });
 
 export default SettingsScreen;

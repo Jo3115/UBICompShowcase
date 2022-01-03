@@ -1,11 +1,8 @@
 /**
  * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
  */
-import React, { useRef } from 'react'
-import { StyleSheet, View, Text, TouchableHighlight, Switch } from 'react-native'
-import { ConvertRoundedDistance } from '../../utilities/distance';
-
-const metric = "yd"
+import React from 'react'
+import { StyleSheet, View, Text, Switch } from 'react-native'
 
 /**
  * CourseListItem, renders a seperating Line in lightgray with varying height
