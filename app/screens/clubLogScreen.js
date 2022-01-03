@@ -66,7 +66,7 @@ const ClubLogScreen = ({ navigation }) => {
 	useFocusEffect(useCallback( ()=> {
 		GetCurrentUser()
 		GetSettings()
-	},[]))
+	}))
 
 	return (
 		<View style={styles.container}>

@@ -13,7 +13,7 @@ export async function GetLocation(setCurrentLocation, setLoading) {
     if (status !== 'granted') {
         return;
     }
-    let location = await Location.watchPositionAsync(
+    return await Location.watchPositionAsync(
         {
             distanceInterval: 1,
             accuracy: Location.Accuracy.High,

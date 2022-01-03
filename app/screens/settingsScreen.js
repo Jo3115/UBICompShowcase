@@ -62,7 +62,7 @@ const SettingsScreen = ({ navigation }) => {
     /**
      * setTarget, Function, sets the metric selected to a new value
      */
-     const setTarget = async (newTarget) => {
+    const setTarget = async (newTarget) => {
         let changedSettings = settings
         changedSettings.target = newTarget
         setSettings({ ...changedSettings })
@@ -74,8 +74,6 @@ const SettingsScreen = ({ navigation }) => {
         GetCurrentUser()
     }, [])
 
-    console.log(settings)
-
     return (
         <View style={styles.container}>
             <TopMenuBar navigation={navigation} title={'Settings'} backButton={true} backOnPress={BackOnPress} />
@@ -84,10 +82,12 @@ const SettingsScreen = ({ navigation }) => {
                 setCurrentUser={setCurrentUser}
             />
             }
-            {(currentUser != null) && <UsePersonailsedClubsToggle
-                current={settings.customDistances}
-                onValueChange={toggleCustomSwitch}
-            />}
+            {(currentUser != null) && <View style={styles.personailsedClubsToggleContainer}>
+                <UsePersonailsedClubsToggle
+                    current={settings.customDistances}
+                    onValueChange={toggleCustomSwitch}
+                />
+            </View>}
             <View style={styles.row}>
                 <Text style={styles.settingText}>Hole Distance Metric</Text>
                 {(settings != null) && <MetricDropdownPicker metric={settings.metric} onChangeValue={setMetric} />}
@@ -115,8 +115,11 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },
     settingText: {
-        fontSize:20,
-        paddingRight:10
+        fontSize: 20,
+        paddingRight: 10
+    },
+    personailsedClubsToggleContainer:{
+        paddingRight: 22
     }
 });
 

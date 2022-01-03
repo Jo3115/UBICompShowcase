@@ -107,7 +107,6 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 			)
 		}
 	}
-	console.log(settings)
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.container}>

@@ -20,7 +20,7 @@ const UserLoggedInDisplay = ({ currentUser, setCurrentUser }) => {
     /**
      * logOutOnPress, Function, logs out the current user on press
      */
-    const logOutOnPress =  () => {
+    const logOutOnPress = () => {
         RemoveKey('user')
         RemoveKey('firebase:authUser:AIzaSyBvRzRFkfsJFWrwO7oa1yTTwUVkvxhYjAw:[DEFAULT]')
         SetDefault()
@@ -35,12 +35,15 @@ const UserLoggedInDisplay = ({ currentUser, setCurrentUser }) => {
                     uri: currentUser.photoURL
                 }}
             />
-            <Text> Currently Logged In As {CapitalizeWords(currentUser.displayName)}</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>Currently Logged In As:</Text>
+                <Text style={styles.text}>{CapitalizeWords(currentUser.displayName)}</Text>
+            </View>
             <TouchableOpacity
                 style={styles.logoutTouchable}
                 onPress={logOutOnPress}
             >
-                <Text>Log Out</Text>
+                <Text style={styles.text}>Log Out</Text>
             </TouchableOpacity>
         </View>
     );
@@ -51,17 +54,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 10,
     },
     userImage: {
-        width: 100,
-        height: 100
+        width: 110,
+        height: 110,
+        borderRadius: 100
     },
     logoutTouchable: {
-        width: 100,
-        height: 50,
-        justifyContent: 'center',
+        width: 150,
         alignItems: 'center',
-        backgroundColor: 'lightblue'
+        justifyContent: 'center',
+        height: 60,
+        backgroundColor: '#f4f3f4',
+        borderColor: "#a696ce",
+        borderWidth: 2,
+        borderRadius: 20
+    },
+    text: {
+        fontSize: 16
+    },
+    textContainer :{
+        paddingVertical: 10,
+        alignItems:"center"
     }
 });
 

@@ -10,7 +10,7 @@ import DistanceCard from '../components/distanceScreen/distanceCard';
 import LoadingIndicator from '../components/general/loadingIndicator';
 import SuggestedClubDisplay from '../components/distanceScreen/suggestedClubDisplay';
 import CloseButton from '../components/distanceScreen/closeButton';
-import { GetLocation } from '../utilities/location';
+import { CleanupLocation, GetLocation } from '../utilities/location';
 import Seperator from '../components/general/seperator';
 import HoleSelectModal from '../components/holeSelect/holeSelectModal';
 import { DefaultSettings } from '../utilities/globalVars';
@@ -92,6 +92,12 @@ const DistanceScreen = (props) => {
 			return targetLayout[settings.target][type]
 		}
 	}
+	/**
+     * cleanup, function to end subscription to location service
+     */
+	const cleanup = (locationSubscription) => {
+		locationSubscription.remove
+	}
 
 	useEffect(() => {
 		if (props.route.params.downloaded == 'downloaded') {
@@ -99,8 +105,9 @@ const DistanceScreen = (props) => {
 		} else {
 			getLocalOnlineCourseData()
 		}
-		GetLocation(setCurrentLocation, setLocationLoading)
-		GetSettings()
+		let locationSubscription = GetLocation(setCurrentLocation, setLocationLoading)
+		GetSettings(locationSubscription)
+		return cleanup
 	}, [])
 
 	useEffect(() => {
