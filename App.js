@@ -10,10 +10,14 @@ import MainScreen from './app/screens/mainScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SettingsScreen from './app/screens/settingsScreen';
+import {LogBox} from 'react-native';
+
 
 const Root = createStackNavigator();
 
 export default function App() {
+	// Suppress log output as Known error and correct package is being used more info at https://react-native-async-storage.github.io/async-storage/
+	LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
 	return (
 		<SafeAreaView style={styles.container}>
 			<NavigationContainer>
