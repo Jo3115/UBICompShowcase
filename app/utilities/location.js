@@ -9,9 +9,9 @@ import * as Location from 'expo-location';
  * @param {object} setLoading - set useState to say function is complete
  */
 export async function GetLocation(setCurrentLocation, setLoading) {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== 'granted') {
-        return;
+        return
     }
     return await Location.watchPositionAsync(
         {

@@ -30,6 +30,10 @@ const DistanceScreen = (props) => {
 	const [maxHoles, setMaxHoles] = useState(0)
 	const [settings, setSettings] = useState(DefaultSettings)
 
+	let locationSubscription = null
+	let getLocalCourseDataSubscription = null
+	let getLocalOnlineCourseDataSubscription = null
+
 	const targetLayout = {
 		middle: {
 			large: 'middle',
@@ -92,24 +96,22 @@ const DistanceScreen = (props) => {
 			return targetLayout[settings.target][type]
 		}
 	}
-	/**
-     * cleanup, function to end subscription to location service
-     */
-	const cleanup = (locationSubscription) => {
-		locationSubscription.remove
-	}
 
 	useEffect(() => {
 		if (props.route.params.downloaded == 'downloaded') {
-			getLocalCourseData()
+			getLocalCourseDataSubscription = getLocalCourseData()
 		} else {
-			getLocalOnlineCourseData()
+			getLocalOnlineCourseDataSubscription = getLocalOnlineCourseData()
 		}
-		let locationSubscription = GetLocation(setCurrentLocation, setLocationLoading)
-		GetSettings(locationSubscription)
-		return cleanup()
+		locationSubscription = GetLocation(setCurrentLocation, setLocationLoading)
+		GetSettings()
+		return function cleanup() {
+			locationSubscription.remove
+			getLocalCourseDataSubscription.remove
+			getLocalOnlineCourseDataSubscription.remove
+		}
 	}, [])
-
+	
 	useEffect(() => {
 		if (holeInfo !== null) {
 			setCurrentHoleInfo(holeInfo[currentHole - 1])
