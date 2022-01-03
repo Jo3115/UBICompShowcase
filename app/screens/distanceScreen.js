@@ -30,9 +30,27 @@ const DistanceScreen = (props) => {
 	const [maxHoles, setMaxHoles] = useState(0)
 	const [settings, setSettings] = useState(DefaultSettings)
 
+	const targetLayout = {
+		middle: {
+			large: 'middle',
+			left: 'front',
+			right: 'back'
+		},
+		front: {
+			large: 'front',
+			left: 'middle',
+			right: 'back'
+		},
+		back: {
+			large: 'back',
+			left: 'front',
+			right: 'middle'
+		}
+	}
+
 	/**
-     * getLocalCourseData, Function, get the course data from local storage if course is downloaded
-     */
+	 * getLocalCourseData, Function, get the course data from local storage if course is downloaded
+	 */
 	const getLocalCourseData = async () => {
 		try {
 			const jsonValue = await AsyncStorage.getItem(`course-${props.route.params.courseName}`)
@@ -45,8 +63,8 @@ const DistanceScreen = (props) => {
 	}
 
 	/**
-     * getLocalOnlineCourseData, Function, get the course data from api storage if course is not downloaded
-     */
+	 * getLocalOnlineCourseData, Function, get the course data from api storage if course is not downloaded
+	 */
 	const getLocalOnlineCourseData = async () => {
 		try {
 			const response = await fetch(`https://europe-west2-ubicompshowcase.cloudfunctions.net/getCourse?name=${props.route.params.courseName}`);
@@ -59,11 +77,21 @@ const DistanceScreen = (props) => {
 		}
 	}
 	/**
-     * GetSettings, Function, get settings from local storage
-     */
+	 * GetSettings, Function, get settings from local storage
+	 */
 	const GetSettings = async () => {
-        setSettings(JSON.parse(await GetData('settings')))
-    }
+		setSettings(JSON.parse(await GetData('settings')))
+	}
+	/**
+	 * getTarget, Function, work out order distance cards bassed on target
+	 */
+	const getTarget = (type) => {
+		if (settings.target == null) {
+			return targetLayout['middle'][type]
+		} else {
+			return targetLayout[settings.target][type]
+		}
+	}
 
 	useEffect(() => {
 		if (props.route.params.downloaded == 'downloaded') {
@@ -90,14 +118,14 @@ const DistanceScreen = (props) => {
 			<CloseButton onPress={() => props.navigation.pop()} />
 			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole} />
 			<View style={styles.distanceContainer}>
-				<DistanceCard target={'middle'} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='large' />
+				<DistanceCard target={getTarget('large')} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='large' />
 				<View style={styles.cardRow}>
-					<DistanceCard target={'front'} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='left' />
-					<DistanceCard target={'back'} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='right' />
+					<DistanceCard target={getTarget('left')} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='left' />
+					<DistanceCard target={getTarget("right")} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='right' />
 				</View>
 			</View>
 			<View style={styles.clubContainer}>
-				<SuggestedClubDisplay target={'middle'} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='large' />
+				<SuggestedClubDisplay target={getTarget('large')} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='large' />
 			</View>
 			<HoleSelectBar currentHole={currentHole} maxHoles={maxHoles} setHole={setCurrentHole} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} />
 			<Seperator height={50} />

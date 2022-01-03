@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, SectionList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GetData } from '../../utilities/asyncStorage';
 import { SaveUserDistances } from '../../utilities/firebase';
 import { GetDefaultDistances, GetUserDistances } from '../../utilities/suggestedClub';
 import ClubDataDisplayHeader from './clubDataDisplayHeader';
@@ -23,21 +24,29 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 	const [clubsLoading, setClubsLoading] = useState(true)
 	const [clubsList, setClubsList] = useState(null)
 	const [clubSorting, setClubSorting] = useState(true)
+	const [settings, setSettings] = useState(null)
+
 
 	/**
-     * getUserID, Function, return current user id if avalible
+	 * getUserID, Function, return current user id if avalible
 	 * @returns {string} - user id or empty string
-     */
+	 */
 	const getUserID = () => {
 		if (currentUser != null) {
 			return currentUser.uid
 		}
 		return ''
 	}
+	/**
+	 * GetSettings, Function, gets the current settings from async storage
+	 */
+	const GetSettings = async () => {
+		setSettings(JSON.parse(await GetData('settings')))
+	}
 
 	/**
-     * GetClubData, Function, get club data from storage 
-     */
+	 * GetClubData, Function, get club data from storage 
+	 */
 	const GetClubData = async () => {
 		setClubsLoading(true)
 		if (currentUser != null && useCustom) {
@@ -49,8 +58,8 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 	}
 
 	/**
-     * SortClubData, Function, sort club data into appropriate catagories 
-     */
+	 * SortClubData, Function, sort club data into appropriate catagories 
+	 */
 	const SortClubData = async () => {
 		if (!clubsLoading) {
 			let outObjectList = {}
@@ -83,6 +92,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 	}
 
 	useEffect(() => {
+		GetSettings()
 		GetClubData()
 	}, [currentUser, useCustom, reload])
 	useEffect(() => {
@@ -97,6 +107,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 			)
 		}
 	}
+	console.log(settings)
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.container}>
@@ -104,7 +115,7 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 					sections={clubsList}
 					keyExtractor={(item, index) => item + index}
 					renderItem={({ item }) => (
-						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} />
+						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} metric={settings.metric}/>
 					)}
 					renderSectionHeader={({ section: { title } }) => (
 						<ClubDataDisplayHeader title={title} custom={useCustom} currentUser={currentUser} modal={addClubModalVisible} setModal={setAddClubModalVisible} />
