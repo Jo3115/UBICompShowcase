@@ -107,7 +107,7 @@ const DistanceScreen = (props) => {
 		}
 		let locationSubscription = GetLocation(setCurrentLocation, setLocationLoading)
 		GetSettings(locationSubscription)
-		return cleanup
+		return cleanup()
 	}, [])
 
 	useEffect(() => {
