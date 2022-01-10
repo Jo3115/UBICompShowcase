@@ -32,7 +32,7 @@
     },
     "description": ""
   },
-  "scheme": "UBICompShowcase",
+  "scheme": "ubicompshowcase",
   "plugins": [
     [
       "async-storage",

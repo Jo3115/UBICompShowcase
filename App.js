@@ -18,6 +18,8 @@ const Root = createStackNavigator();
 export default function App() {
 	// Suppress log output as Known error and correct package is being used more info at https://react-native-async-storage.github.io/async-storage/
 	LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+	// Suppress log output as Known error and schema is configured correctly in app.json
+	LogBox.ignoreLogs(["Linking requires a build-time setting `scheme` in the project's Expo config"]);
 	return (
 		<SafeAreaView style={styles.container}>
 			<NavigationContainer>
