@@ -14,7 +14,8 @@ import { CleanupLocation, GetLocation } from '../utilities/location';
 import Seperator from '../components/general/seperator';
 import HoleSelectModal from '../components/holeSelect/holeSelectModal';
 import { DefaultSettings } from '../utilities/globalVars';
-import { GetData } from '../utilities/asyncStorage';
+import { GetData, StoreJsonData } from '../utilities/asyncStorage';
+import SwapTargetButton from '../components/distanceScreen/swapTargetButton';
 
 /**
  * DistanceScreen Screen, renders distance cards containg distance from current hole, club suggestion and hole select bar.
@@ -96,6 +97,20 @@ const DistanceScreen = (props) => {
 			return targetLayout[settings.target][type]
 		}
 	}
+	const swapTargetOnpress = () => {
+		if (settings != null) {
+			let changedSettings = settings
+			if (settings.target == 'middle') {
+				changedSettings.target = 'front'
+			} else if (settings.target == 'front') {
+				changedSettings.target = 'back'
+			} else {
+				changedSettings.target = 'middle'
+			}
+			setSettings({ ...changedSettings })
+			StoreJsonData('settings', changedSettings)
+		}
+	}
 
 	useEffect(() => {
 		if (props.route.params.downloaded == 'downloaded') {
@@ -111,7 +126,7 @@ const DistanceScreen = (props) => {
 			getLocalOnlineCourseDataSubscription.remove
 		}
 	}, [])
-	
+
 	useEffect(() => {
 		if (holeInfo !== null) {
 			setCurrentHoleInfo(holeInfo[currentHole - 1])
@@ -119,12 +134,13 @@ const DistanceScreen = (props) => {
 	}, [currentHole, holeInfo])
 
 	if (currentLocation === null || currentHoleInfo === null) {
-		return <LoadingIndicator headding={'loading'} />
+		return <LoadingIndicator headding={'Loading'} />
 	}
 
 	return (
 		<View style={styles.screen}>
 			<CloseButton onPress={() => props.navigation.pop()} />
+			<SwapTargetButton onPress={() => swapTargetOnpress()}/>
 			<HoleSelectModal currentHole={currentHole} maxHoles={maxHoles} modalVisible={selectModalVisible} setModalVisible={setSelectModalVisible} setHole={setCurrentHole} />
 			<View style={styles.distanceContainer}>
 				<DistanceCard target={getTarget('large')} currentLocation={currentLocation} targetLocation={currentHoleInfo} metric={settings.metric} type='large' />

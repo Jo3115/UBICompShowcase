@@ -67,9 +67,11 @@ const SuggestedClubDisplay = ({ target, currentLocation, targetLocation }) => {
                             {windDirectionRenderSwitch(windDirection)}: {weatherData.wind.speed}m/s
                         </Text>
                     </View>
+                    {/**
                     <Text style={styles.infoText}>
                         Height Change: {heightChange}m
                     </Text>
+                    */}
                 </View>
             );
         }

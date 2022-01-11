@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 /**
- * CloseButton, renders a spinning icon with text to display that the app is loading in the background
+ * LoadingIndicator, renders a spinning icon with text to display that the app is loading in the background
  * @param {string} headding - text to display on top of animated indicator
  */
 const LoadingIndicator = ({ headding }) => {

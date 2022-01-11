@@ -8,6 +8,7 @@ import DownloadIcon from './downloadIcon';
 import { RemoveCourse, SaveGetCourse } from '../../utilities/courses';
 import { Swipeable } from 'react-native-gesture-handler';
 import CourseListItemSwipe from './courseListItemSwipe';
+import { CapitalizeWords } from '../../utilities/strings';
 
 
 /**
@@ -58,7 +59,7 @@ const CourseListItem = ({ name, distance, onPress, downloaded }) => {
             >
                 <View style={styles.listCard}>
                     <View>
-                        <Text style={styles.nameText}>{name}</Text>
+                        <Text style={styles.nameText}>{CapitalizeWords(name)}</Text>
                         <Text style={styles.distanceText}>{Math.round((distance / 1000) * 100) / 100} km</Text>
                     </View>
                     <View style={styles.rowCard}>
