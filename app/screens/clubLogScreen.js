@@ -13,6 +13,7 @@ import ClubDataDisplay from '../components/clubLogScreen/clubDataDisplay';
 import UsePersonailsedClubsToggle from '../components/settings/usePersonalisedClubsToggle';
 import AddClubModal from '../components/clubLogScreen/addClubModal';
 import EditClubModal from '../components/clubLogScreen/editClubModal';
+import ClubLogWarningModal from '../components/clubLogScreen/clubLogWarningModal';
 
 /**
  * MainScreen Screen, renders a list of club data pulled from local storage or firebase and displays the log in compoent if the user is not logged in or the UsePersonailsedClubsToggle if they are
@@ -85,14 +86,14 @@ const ClubLogScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			{(currentUser != null) && <AddClubModal
+			{(currentUser != null && settings.customDistances) && <AddClubModal
 				modalVisible={addClubModalVisible}
 				setModalVisible={setAddClubModalVisible}
 				userID={currentUser.uid}
 				reload={reload}
 				setReload={setReload}
 			/>}
-			{(currentUser != null) && <EditClubModal
+			{(currentUser != null && settings.customDistances) && <EditClubModal
 				modalVisible={editClubModal}
 				setModalVisible={setEditClubModal}
 				userID={currentUser.uid}
@@ -101,6 +102,10 @@ const ClubLogScreen = ({ navigation }) => {
 				club={clubToEdit}
 				startingDistance={distanceToEdit}
 				startingMetric={distanceToEditMetric}
+			/>}
+			{(!settings.customDistances) && <ClubLogWarningModal
+				modalVisible={editClubModal}
+				setModalVisible={setEditClubModal}
 			/>}
 			<TopMenuBar navigation={navigation} title={'Club Data'} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
