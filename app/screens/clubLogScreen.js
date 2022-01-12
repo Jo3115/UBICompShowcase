@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import ClubDataDisplay from '../components/clubLogScreen/clubDataDisplay';
 import UsePersonailsedClubsToggle from '../components/settings/usePersonalisedClubsToggle';
 import AddClubModal from '../components/clubLogScreen/addClubModal';
+import EditClubModal from '../components/clubLogScreen/editClubModal';
 
 /**
  * MainScreen Screen, renders a list of club data pulled from local storage or firebase and displays the log in compoent if the user is not logged in or the UsePersonailsedClubsToggle if they are
@@ -22,6 +23,10 @@ const ClubLogScreen = ({ navigation }) => {
 	const [settings, setSettings] = useState({})
 	const [addClubModalVisible, setAddClubModalVisible] = useState(false)
 	const [reload, setReload] = useState(0)
+	const [clubToEdit, setClubToEdit] = useState('')
+	const [distanceToEdit, setDistanceToEdit] = useState('0')
+	const [distanceToEditMetric, setDistanceToEditMetric] = useState('m')
+	const [editClubModal, setEditClubModal] = useState(false)
 
 	/**
      * GetCurrentUser, Function, gets the current logged in user if avalible from async storage
@@ -50,6 +55,7 @@ const ClubLogScreen = ({ navigation }) => {
 		if (gotSettings != null) {
 			if (gotSettings.metric != settings.metric) {
 				setSettings({ ...gotSettings })
+				setReload(reload + 1)
 			}
 		}
 	}
@@ -61,6 +67,15 @@ const ClubLogScreen = ({ navigation }) => {
 		changedSettings.customDistances = !settings.customDistances
 		setSettings({ ...changedSettings })
 		await StoreJsonData('settings', changedSettings)
+	}
+	/**
+     * showEditClubModal, Function, shows the showEditClubModal
+     */
+	 const showEditClubModal = (clubName, distance, metric) => {
+		setClubToEdit(clubName)
+		setDistanceToEdit(distance)
+		setDistanceToEditMetric(metric)
+		setEditClubModal(true)
 	}
 	// run when returning to screen from settings
 	useFocusEffect(useCallback( ()=> {
@@ -77,6 +92,16 @@ const ClubLogScreen = ({ navigation }) => {
 				reload={reload}
 				setReload={setReload}
 			/>}
+			{(currentUser != null) && <EditClubModal
+				modalVisible={editClubModal}
+				setModalVisible={setEditClubModal}
+				userID={currentUser.uid}
+				reload={reload}
+				setReload={setReload}
+				club={clubToEdit}
+				startingDistance={distanceToEdit}
+				startingMetric={distanceToEditMetric}
+			/>}
 			<TopMenuBar navigation={navigation} title={'Club Data'} settingsButton={true} />
 			{(currentUser == null) && <UserNotLoggedInDisplay setCurrentUser={setCurrentUser} />}
 			{(currentUser != null) && <UsePersonailsedClubsToggle
@@ -89,6 +114,7 @@ const ClubLogScreen = ({ navigation }) => {
 				addClubModalVisible={addClubModalVisible}
 				setAddClubModalVisible={setAddClubModalVisible}
 				reload={reload}
+				showEditClubModal={showEditClubModal}
 			/>
 			<StatusBar style='light' />
 		</View>

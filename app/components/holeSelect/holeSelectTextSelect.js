@@ -1,12 +1,8 @@
 /**
  * @fileoverview this file represents a HoleSelectTextSelect component, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu
  */
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-
-
+import React from 'react'
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 
 /**
  * HoleSelectTextSelect, renders a component displaying current hole and allowing the user to tap to reveal a quick select menu

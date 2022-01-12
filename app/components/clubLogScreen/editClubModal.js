@@ -3,11 +3,11 @@
  */
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native'
-import { AvalibleClubs, AvalibleShotMetrics } from '../../utilities/globalVars';
-import { GetUserDistances } from '../../utilities/suggestedClub';
+import { AvalibleShotMetrics } from '../../utilities/globalVars';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { AddClub } from '../../utilities/firebase';
-import { ConvertRoundedDistanceToM } from '../../utilities/distance';
+import { AddClub, RemoveClub } from '../../utilities/firebase';
+import { ConvertRoundedDistance, ConvertRoundedDistanceToM } from '../../utilities/distance';
+import EditClubModalCloseButton from './editClubModalCancelButton';
 
 
 /**
@@ -17,18 +17,21 @@ import { ConvertRoundedDistanceToM } from '../../utilities/distance';
  * @param {string} userID - string containg user id
  * @param {number} reload - boolean telling the component to reload
  * @param {Function} setReload - function to set the reload value
+ * @param {string} club - club to edit
+ * @param {string} startingDistance - current distance for the club
+ * @param {string} startingMetric - current metric selected
  */
-const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload }) => {
-    const [userClubBounds, setUserClubBounds] = useState(null)
-    const [clubsLoading, setClubsLoading] = useState(true)
-    const [clubListOpen, setClubListOpen] = useState(false);
-    const [selectedClub, setSelectedClub] = useState(null);
-    const [clubList, setClubList] = useState([])
-    const [distance, setDistance] = useState(null);
+const EditClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload, club, startingDistance, startingMetric }) => {
+    const [distance, setDistance] = useState('0');
     const [metricListOpen, setMetricListOpen] = useState(false);
     const [selectedMetric, setSelectedMetric] = useState('m');
     const [metricList, setmetricList] = useState(AvalibleShotMetrics)
     const [showWarning, setShowWarning] = useState(false)
+
+    useEffect(() => {
+        setDistance(ConvertRoundedDistance(startingDistance, startingMetric).toString())
+        setSelectedMetric(startingMetric)
+    }, [modalVisible])
 
     /**
      * onChangeTextInput, Function, format distance input text to only allow numbers
@@ -37,50 +40,28 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
     const onChangeTextInput = (text) => {
         setDistance(text.replace(/[^0-9]/g, ''))
     }
-
     /**
-     * addClubOnPress, Function, add club to firebase with given value
+     * removeClub, removes a club from the clubs list
      */
-    const addClubOnPress = async () => {
-        if (selectedClub == null) {
-            console.log('no club')
-            setShowWarning(true)
-        } else if (distance == null) {
+    const removeClub = async () => {
+        await RemoveClub(userID, club)
+        setReload(reload + 1)        
+        setModalVisible(!modalVisible)
+    }
+    /**
+     * updateClubOnPress, Function, adds club to firebase with given value
+     */
+    const updateClubOnPress = async () => {
+        if (distance == null) {
             console.log('no distance')
             setShowWarning(true)
         } else {
-            await AddClub(userID, selectedClub, ConvertRoundedDistanceToM(distance, selectedMetric))
-            setReload(reload += 1)
+            await AddClub(userID, club, ConvertRoundedDistanceToM(distance, selectedMetric))
+            setReload(reload + 1)
             setModalVisible(false)
         }
     }
 
-    /**
-     * getClubList, Function, get list of avalible clubs and remove any clubs that already have values
-     */
-    const getClubList = async () => {
-        await GetUserDistances(setUserClubBounds, setClubsLoading)
-        if (userClubBounds != null) { 
-            let currentClubs = Object.values(userClubBounds)
-            let sortedClubs = []
-            let index = 0
-            for (let club in AvalibleClubs) {
-                if (!currentClubs.includes(AvalibleClubs[club])) {
-                    sortedClubs.push({
-                        label: AvalibleClubs[club],
-                        value: AvalibleClubs[club]
-                    })
-                    index++
-                }
-            }
-            setClubList(sortedClubs)
-        }
-    }
-    useEffect(() => {
-        setSelectedClub(null)
-        setDistance(null)
-        getClubList()
-    }, [modalVisible])
     return (
         <Modal
             transparent={true}
@@ -93,23 +74,9 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.lableText}>Select Club:</Text>
-                    <DropDownPicker
-                        zIndex={3000}
-                        zIndexInverse={1000}
-                        placeholder='Select a Club'
-                        searchable={true}
-                        searchPlaceholder='Search...'
-                        style={styles.clubDropdown}
-                        containerStyle={styles.clubDropdownContainer}
-                        open={clubListOpen}
-                        value={selectedClub}
-                        items={clubList}
-                        setOpen={setClubListOpen}
-                        setValue={setSelectedClub}
-                        setItems={setClubList}
-                    />
-                    <Text style={styles.lableText}>Input Distance:</Text>
+                    <EditClubModalCloseButton onPress={() => setModalVisible(!modalVisible)} />
+                    <Text style={styles.lableText}>Editing: {club}</Text>
+                    <Text style={styles.lableText}>Distance:</Text>
                     <View style={styles.rowContainer}>
                         <TextInput
                             style={styles.textInput}
@@ -135,15 +102,15 @@ const AddClubModal = ({ modalVisible, setModalVisible, userID, reload, setReload
                     <View style={styles.rowContainer}>
                         <Pressable
                             style={[styles.button, styles.buttonCancel]}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={() => removeClub()}
                         >
-                            <Text style={styles.buttonText}>Cancel</Text>
+                            <Text style={styles.buttonText}>Delete Club</Text>
                         </Pressable>
                         <Pressable
                             style={[styles.button, styles.buttonSubmit]}
-                            onPress={() => addClubOnPress()}
+                            onPress={() => updateClubOnPress()}
                         >
-                            <Text style={styles.buttonText}>Add Club</Text>
+                            <Text style={styles.buttonText}>Save Club</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -244,4 +211,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddClubModal;
+export default EditClubModal;

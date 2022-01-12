@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { GetData } from '../../utilities/asyncStorage';
 import { SaveUserDistances } from '../../utilities/firebase';
 import { GetDefaultDistances, GetUserDistances } from '../../utilities/suggestedClub';
+import Seperator from '../general/seperator';
 import ClubDataDisplayHeader from './clubDataDisplayHeader';
 import ClubDataDisplayListItem from './clubDataDisplayListItem';
 import ClubDataEmptyMesage from './clubDataEmptyMesage';
@@ -18,8 +19,9 @@ import ClubDataEmptyMesage from './clubDataEmptyMesage';
  * @param {boolean} addClubModalVisible - boolean determining if the addClubModal is visible
  * @param {Function} setAddClubModalVisible - function to set the addClubModal visible value
  * @param {number} reload - boolean telling the component to reload
+ * @param {Function} showEditClubModal - function to show the editClubModal
  */
-const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddClubModalVisible, reload }) => {
+const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddClubModalVisible, reload, showEditClubModal }) => {
 	const [userClubBounds, setUserClubBounds] = useState(null)
 	const [clubsLoading, setClubsLoading] = useState(true)
 	const [clubsList, setClubsList] = useState(null)
@@ -114,11 +116,17 @@ const ClubDataDisplay = ({ currentUser, useCustom, addClubModalVisible, setAddCl
 					sections={clubsList}
 					keyExtractor={(item, index) => item + index}
 					renderItem={({ item }) => (
-						<ClubDataDisplayListItem club={item.club} distance={item.distance} custom={useCustom} userID={getUserID()} getClubData={GetClubData} metric={settings.metric}/>
+						<ClubDataDisplayListItem
+							club={item.club}
+							distance={item.distance}
+							metric={settings.metric}
+							onPress={() => {showEditClubModal(item.club, item.distance, settings.metric)}}
+						/>
 					)}
 					renderSectionHeader={({ section: { title } }) => (
 						<ClubDataDisplayHeader title={title} custom={useCustom} currentUser={currentUser} modal={addClubModalVisible} setModal={setAddClubModalVisible} />
 					)}
+					ItemSeparatorComponent={Seperator}
 				/>
 			</SafeAreaView>
 		</View>

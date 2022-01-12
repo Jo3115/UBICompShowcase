@@ -1,39 +1,21 @@
 /**
  * @fileoverview this file represents a ClubDataDisplayListItem compoenent used to render club information as a list item
- * also renders a right swipable revealing a delete button
  */
-import React, { useRef } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { Swipeable } from 'react-native-gesture-handler';
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { ConvertRoundedDistance } from '../../utilities/distance';
-import { RemoveClub } from '../../utilities/firebase';
-import ClubDataDisplayListItemSwipable from './clubDataDisplayListItemSwipable';
 
 /**
  * ClubDataDisplayListItem, renders club information as a list item
  * @param {string} club - the club name
  * @param {number} distance - the distance the club travels
- * @param {boolean} custom - boolean determining if using custom club data
- * @param {string} userID - string containg user id
  * @param {Function} getClubData - function used to re get club data to update the list if a club is removed
+ * @param {Function} onPress - function to trigger when list item is pressed
  */
-const ClubDataDisplayListItem = ({ club, distance, custom, userID, getClubData, metric }) => {
-    const swipeableRef = useRef(null);
-
-    /**
-     * removeClub, removes a club from the clubs list
-     */
-    const removeClub = async () => {
-        await RemoveClub(userID, club)
-        getClubData()
-    }
-
+const ClubDataDisplayListItem = ({ club, distance, metric, onPress }) => {
     return (
-        <Swipeable
-            ref={swipeableRef}
-            renderRightActions={() => (
-                <ClubDataDisplayListItemSwipable custom={custom} removeOnPress={removeClub}/>
-            )}
+        <TouchableOpacity
+            onPress={onPress}
         >
             <View style={styles.listHeader}>
                 <Text style={styles.clubText}>
@@ -43,7 +25,7 @@ const ClubDataDisplayListItem = ({ club, distance, custom, userID, getClubData, 
                     {ConvertRoundedDistance(distance, metric)}{metric}
                 </Text>
             </View>
-        </Swipeable>
+        </TouchableOpacity>
     );
 }
 
@@ -57,10 +39,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     clubText: {
-        fontSize: 25
+        fontSize: 30
     },
     distanceText: {
-        fontSize: 25
+        fontSize: 30
     }
 });
 

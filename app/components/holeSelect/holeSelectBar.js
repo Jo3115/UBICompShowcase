@@ -2,9 +2,8 @@
  * @fileoverview this file represents a HoleSelectBar component, renders a component displaying current hole and allowing the user to navigate to a given hole.
  */
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableHighlight } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 import HoleSelectTextSelect from './holeSelectTextSelect';
 
 /**

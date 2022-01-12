@@ -1,23 +1,15 @@
 /**
- * @fileoverview this file represents a AddClubModal component, renders a modal allowing the user to input information to add a new club
+ * @fileoverview this file represents a TargetDropdownPicker component, renders a dropdown list containing different targets avalible
  */
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
-import { AvalibleClubs, AvalibleShotMetrics, AvalibleTagets } from '../../utilities/globalVars';
-import { GetUserDistances } from '../../utilities/suggestedClub';
+import React, { useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { AvalibleTagets } from '../../utilities/globalVars';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { TextInput } from 'react-native-gesture-handler';
-import { AddClub } from '../../utilities/firebase';
-import { ConvertRoundedDistanceToM } from '../../utilities/distance';
-
 
 /**
- * AddClubModal, renders a modal allowing the user to input information to add a new club
- * @param {boolean} modalVisible - boolean determining if the modal is visible
- * @param {Function} setModalVisible - function to set the modal visible value
- * @param {string} userID - string containg user id
- * @param {number} reload - boolean telling the component to reload
- * @param {Function} setReload - function to set the reload value
+ * TargetDropdownPicker, renders a dropdown list containing different targets avalible
+ * @param {string} target - current target value to display
+ * @param {Function} onChangeValue - function to run when value changes
  */
 const TargetDropdownPicker = ({ target, onChangeValue }) => {
     const [tagetListOpen, setTargetListOpen] = useState(false);

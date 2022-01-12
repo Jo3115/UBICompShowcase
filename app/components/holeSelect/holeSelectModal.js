@@ -2,9 +2,8 @@
  * @fileoverview this file represents a HoleSelectModal component, renders a modal displaying current hole and allowing the user to select a hole
  */
 import React from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import HoleSelectModalListItem from './holeSelectModalListItem';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 /**
  * ForcastListItem, renders a modal displaying current hole and allowing the user to select a hole

@@ -2,8 +2,7 @@
  * @fileoverview this file represents a CloseButton component, renders a component swap boxes symbol and allowing the user to tap to swap the taget
  */
 import React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, View, TouchableOpacity } from 'react-native'
 
 /**
  * CloseButton, renders a component swap boxes symbol and allowing the user to tap to swap the taget

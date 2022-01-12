@@ -48,11 +48,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#a696ce',
+        backgroundColor: '#bda7f4',
         height: 52
     },
     text: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     touchable: {
         borderRadius: 50,
