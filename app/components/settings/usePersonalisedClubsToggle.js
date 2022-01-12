@@ -1,12 +1,13 @@
 /**
- * @fileoverview this file represents a CourseListItem compoenent used to render a seperating line of varying height
+ * @fileoverview this file represents a UsePersonailsedClubsToggle compoenent used to render a toggle switch allowing to swap between two values
  */
 import React from 'react'
 import { StyleSheet, View, Text, Switch } from 'react-native'
 
 /**
- * CourseListItem, renders a seperating Line in lightgray with varying height
- * @param {int} height - the height of the seperator to render
+ * UsePersonailsedClubsToggle, renders a toggle switch allowing to swap between two values
+ * @param {boolean} current - the current value of the switch
+ * @param {Function} onValueChange - the function to run when the switch is pressed
  */
 const UsePersonailsedClubsToggle = ({ current, onValueChange }) => {
     return (
