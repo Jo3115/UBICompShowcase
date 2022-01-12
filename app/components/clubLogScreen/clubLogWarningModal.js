@@ -1,14 +1,8 @@
 /**
  * @fileoverview this file represents a ClubLogWarningModal component, renders a modal displaying a warning message
  */
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native'
-import { AvalibleShotMetrics } from '../../utilities/globalVars';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { AddClub, RemoveClub } from '../../utilities/firebase';
-import { ConvertRoundedDistance, ConvertRoundedDistanceToM } from '../../utilities/distance';
-import EditClubModalCloseButton from './editClubModalCancelButton';
-
+import React from 'react'
+import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
 
 /**
  * ClubLogWarningModal, renders a modal displaying a warning message
