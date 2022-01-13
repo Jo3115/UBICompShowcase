@@ -1,8 +1,8 @@
 /**
  * @fileoverview this file represents a UserNotLoggedInDisplay compoenent used to render a log in button and hand needed functions to log the user in
  */
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { LogInGoogleUser } from '../../utilities/firebase';

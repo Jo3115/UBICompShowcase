@@ -103,7 +103,7 @@ const ClubLogScreen = ({ navigation }) => {
 				startingDistance={distanceToEdit}
 				startingMetric={distanceToEditMetric}
 			/>}
-			{(!settings.customDistances) && <ClubLogWarningModal
+			{(currentUser == null||!settings.customDistances) && <ClubLogWarningModal
 				modalVisible={editClubModal}
 				setModalVisible={setEditClubModal}
 			/>}

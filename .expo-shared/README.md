@@ -1,11 +1,20 @@
-> Why do I have a folder named ".expo-shared" in my project?
+**Ubicomp Showcase Project**
+***
+***Running The project***
 
-The ".expo-shared" folder is created when running commands that produce state that is intended to be shared with all developers on the project. For example, "npx expo-optimize".
+To run the project use 
+`expo start`
 
-> What does the "assets.json" file contain?
+For all functionality to be avalible please use in developer mode as log in is not confuigured for production.
 
-The "assets.json" file describes the assets that have been optimized through "expo-optimize" and do not need to be processed again.
+***Testing User***
 
-> Should I commit the ".expo-shared" folder?
+As the aplication requiers a user to log into to access features. you may use your own google account or use a test account provided: 
 
-Yes, you should share the ".expo-shared" folder with your collaborators.
+Email: ubicompgolftest@gmail.com
+
+Password: joshuamugglestone
+
+***Course API***
+
+The course api is a google clould function and an example of the data it provides can be found in course.json

@@ -2,7 +2,8 @@
  * @fileoverview this file represents a ClubDataEmptyMesage compoenent used to render a message if no custom clubs are found
  */
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 /**
  * ClubDataEmptyMesage, renders a message if no custom clubs are found and adds a button to alow a user to add a club
@@ -16,17 +17,31 @@ const ClubDataEmptyMesage = ({ modal, setModal }) => {
             onPress={() => {setModal(!modal)}}
         >
             <Text style={styles.noContentText}>No Clubs Stored Press the + to start adding clubs </Text>
+            <View style={styles.iconContainer}>
+                <AntDesign name='plus' size={40} color='black' />
+            </View>
         </TouchableOpacity>
     )
-}
+} 
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        flexDirection: 'row',
+        paddingTop: 10,
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-between'
     },
+    iconContainer:{
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        height: 60,
+        backgroundColor: '#fff',
+        borderRadius: 100,
+        marginTop: 20,
+    }
 });
 
 export default ClubDataEmptyMesage;

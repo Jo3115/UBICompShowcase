@@ -4,7 +4,7 @@
 
 // DefaultSettings set when the user starts the app for the first time
 export const DefaultSettings = {
-	metric: 'yd',
+	metric: 'm',
 	customDistances: true,
 	target: "middle"
 }
